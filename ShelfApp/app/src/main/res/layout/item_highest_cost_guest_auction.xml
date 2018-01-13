@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Giá cao nhất: "/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thời gian còn lại :"
+        android:layout_alignParentRight="true" />
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/text">
+        <ImageView
+            android:id="@+id/iv_avatar_guest"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+        <TextView
+            android:id="@+id/tv_curren_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.000.000đ"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/iv_avatar_guest"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/tv_time_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="2:30:45"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_cost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayout"
+        android:hint="Số tiền (đ)"
+        android:layout_toLeftOf="@id/iv_gavel"/>
+    <ImageView
+        android:id="@+id/iv_gavel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_gavel_black_24dp"
+        android:padding="8dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/relativeLayout"/>
+</RelativeLayout>

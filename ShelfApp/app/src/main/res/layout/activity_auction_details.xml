@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.haihm.shelf.activity.AuctionDetailsActivity">
+    <include
+        layout="@layout/item_description_auction"
+        android:id="@+id/icl_des_auction"
+        />
+    <include
+        layout="@layout/item_highest_cost_master_auction"
+        android:id="@+id/icl_highest_cost_master"
+        />
+    <include
+        layout="@layout/item_highest_cost_guest_auction"
+        android:id="@+id/icl_highest_cost_guest"
+        />
+    <include
+        layout="@layout/item_chat_auction"
+        android:id="@+id/icl_chat"
+        />
+
+</LinearLayout>
