@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.haihm.shelf.fragments.RegisterFragment">
+
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_black_24dp"
+        android:layout_centerHorizontal="true"/>
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_username"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Họ tên: "-->
+        <!--android:layout_below="@+id/iv_avatar"/>-->
+
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/et_username"-->
+        <!--android:layout_below="@id/tv_username"/>-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_phone_number"
+        android:layout_below="@+id/iv_avatar"
+        android:text="Số điện thoại:"/>
+    
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_phone_number"
+        android:layout_below="@id/tv_phone_number"/>
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/tv_password"-->
+        <!--android:layout_below="@id/et_phone_number"-->
+        <!--android:text="Mật khẩu:"/>-->
+
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/et_password"-->
+        <!--android:layout_below="@id/tv_password"/>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/tv_reenter_password"-->
+        <!--android:layout_below="@id/et_password"-->
+        <!--android:text="Nhập lại mật khẩu:"/>-->
+
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/et_reenter_password"-->
+        <!--android:layout_below="@id/tv_reenter_password"/>-->
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_continue"
+        android:layout_below="@id/et_phone_number"
+        android:layout_centerHorizontal="true"
+        android:text="Tiếp tục"/>
+
+
+</RelativeLayout>

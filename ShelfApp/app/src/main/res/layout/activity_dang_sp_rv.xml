@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.example.haihm.shelf.activity.DangSpDGActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_anh_sp_rv"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tên sản phẩm:"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="18dp"/>
+        <EditText
+            android:id="@+id/et_ten_sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Loai sản phẩm:"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="18dp"/>
+        <Spinner
+            android:id="@+id/sp_loai_sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giá:"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="18dp"/>
+        <EditText
+            android:id="@+id/et_gia"
+            android:inputType="number"
+            android:hint="đ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Địa chỉ giao dịch: "
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="18dp"/>
+        <EditText
+            android:id="@+id/et_diaC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mô tả sản phẩm: "
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="18dp"/>
+        <EditText
+            android:id="@+id/et_mo_ta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp" />
+        <Button
+            android:id="@+id/bt_rao_ban"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Rao bán"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+</ScrollView>

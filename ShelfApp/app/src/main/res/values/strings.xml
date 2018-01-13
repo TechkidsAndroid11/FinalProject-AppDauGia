@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Shelf</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook_app_id">1669380146451942</string>
+    <string name="fb_login_protocol_scheme">fb207839289785575</string>
+    <string-array name="loai_sp">
+        <item>Đồ gia dụng</item>
+        <item>Đồ công ghệ</item>
+        <item>Xe</item>
+        <item>Nội thất</item>
+        <item>Thời trang</item>
+        <item>Làm đẹp</item>
+        <item>Khác</item>
+    </string-array>
+</resources>
