@@ -1,90 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.haihm.shelf.fragments.LoginFragment">
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/rl_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_phone_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/pad_def"
-                android:text="Số điện thoại" />
-
-            <EditText
-                android:id="@+id/et_phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_phone_number"
-                android:layout_margin="@dimen/pad_def"
-                android:inputType="number" />
-
-            <TextView
-                android:id="@+id/tv_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/et_phone_number"
-                android:padding="@dimen/pad_def"
-                android:text="Mật khẩu" />
-
-            <EditText
-                android:id="@+id/et_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_password"
-                android:layout_margin="@dimen/pad_def" />
-
-            <Button
-                android:id="@+id/bt_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/et_password"
-                android:layout_centerInParent="true"
-                android:text="Đăng nhập" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_quick_register"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_login">
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_quick_register"
+                android:id="@+id/tv_sign_in"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_margin="@dimen/pad_def"
-                android:text="Đăng nhập nhanh với" />
+                android:text="Sign In"
+                android:textColor="#fff"
+                android:textSize="22sp" />
 
-            <Button
-                android:id="@+id/bt_register_with_facebook"
+            <TextView
+                android:id="@+id/tv_sign_up"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_quick_register"
-                android:text="Facebook" />
+                android:layout_marginLeft="22dp"
+                android:text="Sign Up"
+                android:textColor="#fff"
+                android:textSize="22sp" />
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/bt_register_with_mail"
+        <EditText
+            android:inputType="number"
+            android:id="@+id/edt_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Phone number"
+            android:paddingLeft="16dp"
+            android:textColorHint="#7CFFFFFF"
+            android:textSize="15sp" />
+
+        <EditText
+            android:inputType="textPassword"
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Password"
+            android:paddingLeft="16dp"
+            android:textColorHint="#7CFFFFFF"
+            android:textSize="15sp" />
+
+        <RelativeLayout
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <CheckBox
+                android:layout_marginLeft="-5dp"
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:shadowColor="#fff"
+                android:text="Remember me"
+                android:textColor="@color/textColor"
+                android:textColorHighlight="@color/textColor"
+                android:textColorHint="@color/textColor"
+                android:textColorLink="@color/textColor" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@id/tv_quick_register"
-                android:text="Gmail" />
+                android:layout_centerVertical="true"
+                android:text="Fogot password?"
+                android:textColor="@color/textColor" />
 
         </RelativeLayout>
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/custom_textview"
+            android:gravity="center"
+            android:text="Sign In"
+            android:textColor="#fff" />
 
-</ScrollView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="or"
+            android:textColor="@color/textColor" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/custom_btn_sign_in">
+
+            <ImageView
+                android:id="@+id/icon_facebook"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/iv_facebook" />
+
+            <TextView
+                android:id="@+id/bt_register_with_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/icon_facebook"
+                android:gravity="center"
+                android:text="Sign in with Facebook"
+                android:textColor="@color/textColor" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/custom_btn_sign_in">
+
+            <ImageView
+                android:id="@+id/icon_gmail"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/iv_gmail" />
+
+            <TextView
+                android:id="@+id/bt_register_with_mail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/icon_gmail"
+                android:gravity="center"
+                android:text="Sign in with Google"
+                android:textColor="@color/textColor" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+

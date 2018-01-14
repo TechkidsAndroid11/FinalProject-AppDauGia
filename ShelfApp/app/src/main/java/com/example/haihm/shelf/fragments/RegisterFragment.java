@@ -49,19 +49,19 @@ public class RegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         setupUI(view);
-        btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendCode();
-
-            }
-        });
+//        btnContinue.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                sendCode();
+//
+//            }
+//        });
         return view;
     }
     public void setupUI(View view)
     {
-        etPhone = view.findViewById(R.id.et_phone_number);
-        btnContinue = view.findViewById(R.id.bt_continue);
+        etPhone = view.findViewById(R.id.edt_phone_number);
+        //btnContinue = view.findViewById(R.id.bt_continue);
         fbAuth = FirebaseAuth.getInstance();
     }
     public void sendCode()

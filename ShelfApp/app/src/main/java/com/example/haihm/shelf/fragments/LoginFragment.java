@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.haihm.shelf.activity.MainActivity;
@@ -57,6 +59,7 @@ import java.util.Arrays;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 import com.example.haihm.shelf.R;
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -71,7 +74,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     CallbackManager callbackManager;
     FirebaseAuth mAuth;
     LoginManager mLoginManager;
-    Button btnLoginFacebook, btnLoginGoogle, btnLoginApp;
+    TextView btnLoginFacebook, btnLoginGoogle, btnLoginApp;
     public String cover, name, phone, address;
     String avatar;
     UserModel.Rate rate;
@@ -79,6 +82,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     UserModel userModel=null;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
+    TextView tvSignIn, tvSignUp;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -108,6 +112,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("UserInfo");
+        tvSignIn = view.findViewById(R.id.tv_sign_in);
+        tvSignUp = view.findViewById(R.id.tv_sign_up);
         // xin các quyền cơ bản của user
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -141,6 +147,13 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             @Override
             public void onClick(View view) {
                 signIn();
+            }
+        });
+
+        tvSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
