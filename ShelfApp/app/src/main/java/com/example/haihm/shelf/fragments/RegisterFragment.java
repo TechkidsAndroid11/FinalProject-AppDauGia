@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.haihm.shelf.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -51,6 +53,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 sendCode();
+
             }
         });
         return view;
@@ -71,6 +74,7 @@ public class RegisterFragment extends Fragment {
                 TimeUnit.SECONDS,   // Unit of timeout
                 getActivity(),               // Activity (for callback binding)
                 verificationCallbacks);        // OnVerificationStateChangedCallbacks
+        Toast.makeText(getActivity(), "Waiting", Toast.LENGTH_SHORT).show();
 
     }
     private void setupVerificationCallbacks() {
@@ -78,8 +82,9 @@ public class RegisterFragment extends Fragment {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-                Log.d(TAG, "onVerificationCompleted: ");
-               // tvStatus.setText("Sign In");
+
+
+                // tvStatus.setText("Sign In");
                 signInWithPhoneAuthCredential(credential);
             }
 
@@ -93,7 +98,7 @@ public class RegisterFragment extends Fragment {
                 Log.d(TAG, "onCodeSent: ");
                 phoneVerificationId = verificationId;
                 resendToken = token;
-
+                Utils.openFragment(getFragmentManager(),R.id.rl_main,new VerifyPhoneFragment(phoneVerificationId));
             }
         };
     }
@@ -103,10 +108,14 @@ public class RegisterFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-
                     FirebaseUser user = task.getResult().getUser();
+                    //Utils.openFragment(getFragmentManager(),R.id.rl_main,R.l);
                 }
             }
         });
+    }
+    public void signInWithUserAndPassword(PhoneAuthCredential credential)
+    {
+
     }
 }

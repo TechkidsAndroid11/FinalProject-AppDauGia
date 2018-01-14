@@ -22,6 +22,7 @@ import java.util.Calendar;
 public class ImageUtils {
     private static File temFile;
     private static final String TAG = "ImageUtils";
+
     public static Bitmap base64ToImage(String base64Image) {
         byte[] imageBytes = Base64.decode(base64Image, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
@@ -68,5 +69,25 @@ public class ImageUtils {
         double ratio = (double)bitmap.getWidth()/bitmap.getHeight();
         Bitmap scaleBimap = bitmap.createScaledBitmap(bitmap,screenWitdh,(int)(screenWitdh/ratio),false);
         return scaleBimap;
+    }
+    public static String resizeBase64Image(String base64image){
+        byte [] encodeByte=Base64.decode(base64image.getBytes(),Base64.DEFAULT);
+        BitmapFactory.Options options=new BitmapFactory.Options();
+        options.inPurgeable = true;
+        Bitmap image = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length,options);
+
+
+        if(image.getHeight() <= 400 && image.getWidth() <= 400){
+            return base64image;
+        }
+        image = Bitmap.createScaledBitmap(image, 250, 400, false);
+
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG,100, baos);
+
+        byte [] b=baos.toByteArray();
+        System.gc();
+        return Base64.encodeToString(b, Base64.NO_WRAP);
+
     }
 }
