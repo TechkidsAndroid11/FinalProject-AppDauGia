@@ -1,50 +1,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.example.haihm.shelf.fragments.ShoppingFragment">
 
-
-
     <include
-        layout="@layout/fragment_common_item"
         android:id="@+id/incl_equipment"
-        />
+        layout="@layout/fragment_common_item" />
+
     <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
         android:id="@+id/incl_it_product_type"
-        />
+        layout="@layout/fragment_common_item"
+        android:visibility="gone" />
 
     <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
         android:id="@+id/incl_car_product_type"
-        />
+        layout="@layout/fragment_common_item"
+        android:visibility="gone" />
 
     <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
         android:id="@+id/incl_furniture"
-        />
+        layout="@layout/fragment_common_item"
+        android:visibility="gone" />
 
     <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
         android:id="@+id/incl_fashion_product_type"
-        />
+        layout="@layout/fragment_common_item"
+        android:visibility="gone" />
 
     <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
         android:id="@+id/incl_cosmetic_product_type"
-        />
+        layout="@layout/fragment_common_item"
+        android:visibility="gone" />
 
     <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
         android:id="@+id/incl_other"
-        />
+        layout="@layout/fragment_common_item"
+        android:visibility="gone" />
 </LinearLayout>
