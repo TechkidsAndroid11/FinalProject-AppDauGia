@@ -2,11 +2,13 @@ package com.example.haihm.shelf.model;
 
 import android.net.Uri;
 
+import java.io.Serializable;
+
 /**
  * Created by Trần_Tân on 10/01/2018.
  */
 
-public class UserModel {
+public class UserModel implements Serializable {
     public String id;
     public String anhAvatar;
     public String anhCover;

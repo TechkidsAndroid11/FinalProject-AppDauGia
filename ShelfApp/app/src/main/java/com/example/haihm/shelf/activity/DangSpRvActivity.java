@@ -22,12 +22,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.adapter.ThemAnhSPAdapter;
+import com.example.haihm.shelf.adapters.ThemAnhSPAdapter;
 import com.example.haihm.shelf.event.OnClickAddPhotoEvent;
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
 import com.example.haihm.shelf.model.SanPhamRaoVat;

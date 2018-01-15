@@ -16,7 +16,11 @@ import android.view.View;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.adapters.MainPagerAdapter;
+import com.example.haihm.shelf.fragments.LoginFragment;
+import com.example.haihm.shelf.model.UserModel;
+import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupUI();
+
     }
 
     private void setupUI() {

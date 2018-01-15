@@ -1,7 +1,9 @@
 package com.example.haihm.shelf.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.haihm.shelf.activity.MainActivity;
+import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -45,6 +48,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,6 +63,7 @@ import com.example.haihm.shelf.R;
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
+    public static String UserModel ="UserModel";
     private static final String TAG = "LoginFragment";
     AccessTokenTracker mAccessTokenTracker;
     public GoogleApiClient mGoogleApiClient;
@@ -70,7 +75,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     public String cover, name, phone, address;
     String avatar;
     UserModel.Rate rate;
-    String imgCover = "";
+    String imgCover;
+    UserModel userModel=null;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
 
@@ -86,7 +92,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         setupUI(view);
-
+        addListener();
+        checkLogined();
         return view;
     }
 
@@ -111,9 +118,14 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 .enableAutoManage(getActivity(), this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+    }
+    public void addListener()
+    {
         btnLoginFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getCover();
                 handleFacebookLogin();
             }
         });
@@ -132,7 +144,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             }
         });
     }
-
     private void handleFacebookAccessToken(AccessToken accessToken) {
         AuthCredential authCredential = FacebookAuthProvider.getCredential(accessToken.getToken());
         mAuth.signInWithCredential(authCredential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -141,27 +152,47 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 // đăng nhập thành công
                 if (task.isSuccessful()) {
                     FirebaseUser user = task.getResult().getUser();
-                    Toast.makeText(getActivity(), "OKKKKKKKK", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                    getCover();
-                    Log.d(TAG, "onComplete: " + imgCover);
+
                     avatar = String.valueOf(user.getPhotoUrl());
                     name = user.getDisplayName();
                     phone = user.getPhoneNumber();
-                    UserModel userModel = new UserModel(user.getUid(), avatar, imgCover, name, phone, address, rate);
+                    userModel = new UserModel(user.getUid(), avatar, imgCover, name, phone, address, rate);
+                    EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+                    Log.d(TAG, "onComplete: "+userModel.getHoten());
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                    saveLoginSuccess(user.getUid());
                     databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(getActivity(), "Add User ok", Toast.LENGTH_SHORT).show();
                         }
                     });
+                    Log.d(TAG, "onComplete: ");
                 } else {
                     Log.d(TAG, "onComplete: " + task.getException().getMessage());
                 }
 
             }
         });
+    }
+    public void saveLoginSuccess(String userId)
+    {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyPre", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("UserId",userId);
+        editor.commit();
+    }
+    public void checkLogined()
+    {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyPre", Context.MODE_PRIVATE);
+        if(!sharedPreferences.getString("UserId","NotFound").equals("NotFound"))
+        {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+            EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+//            Log.d(TAG, "checkLogined: "+userModel.getHoten());
+        }
     }
 
     private void getCover() {
@@ -270,7 +301,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -280,8 +310,19 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Log.d(TAG, "onComplete: " + user.getDisplayName());
+                            FirebaseUser user = task.getResult().getUser();
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
+                            saveLoginSuccess(user.getUid());
+                            name = user.getDisplayName();
+                            userModel = new UserModel(user.getUid(), avatar, imgCover, name, phone, address, rate);
+                            EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+                            databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(getActivity(), "Add User ok", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

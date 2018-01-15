@@ -22,7 +22,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.adapter.ThemAnhSPAdapter;
+import com.example.haihm.shelf.adapters.ThemAnhSPAdapter;
 import com.example.haihm.shelf.event.OnClickAddPhotoEvent;
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
@@ -37,10 +37,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
