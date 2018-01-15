@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.adapters.ThemAnhSPAdapter;
@@ -41,6 +43,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,7 +53,7 @@ public class DangSpRvActivity extends AppCompatActivity {
     Spinner spLoaiSP;
     Button btRaoBan;
     String []loaiSP;
-    List<String> lanhSP;
+    HashMap<String,String> lanhSP;
     RecyclerView recyclerView;
     ThemAnhSPAdapter anhSPAdapter;
     UserModel userModel;
@@ -77,42 +80,62 @@ public class DangSpRvActivity extends AppCompatActivity {
         }
     }
     private void setupUI() {
-        etTenSP = findViewById(R.id.et_ten_sp);
-        etgiaSP = findViewById(R.id.et_gia);
-        etDiaC = findViewById(R.id.et_diaC);
-        etMoTaSP = findViewById(R.id.et_mo_ta);
-        spLoaiSP = findViewById(R.id.sp_loai_sp);
-        btRaoBan = findViewById(R.id.bt_rao_ban);
-        recyclerView = findViewById(R.id.rv_anh_sp_rv);
-        loaiSP = getResources().getStringArray(R.array.loai_sp);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,loaiSP);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spLoaiSP.setAdapter(adapter);
-
-        lanhSP = new ArrayList<>();
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.add_picture);
-        lanhSP.add(ImageUtils.endcodeImageToBase64(bitmap));
-
-        anhSPAdapter = new ThemAnhSPAdapter(lanhSP,this);
-        recyclerView.setAdapter(anhSPAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        //
-        userModel = new UserModel();
-        //
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("RaoVat");
-        //format giá sản phẩm
-        etgiaSP.addTextChangedListener(onTextChangedListener());
-
-        btRaoBan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DangSp();
-            }
-        });
+//        etTenSP = findViewById(R.id.et_ten_sp);
+//        etgiaSP = findViewById(R.id.et_gia);
+//        etDiaC = findViewById(R.id.et_diaC);
+//        etMoTaSP = findViewById(R.id.et_mo_ta);
+//        spLoaiSP = findViewById(R.id.sp_loai_sp);
+//        btRaoBan = findViewById(R.id.bt_rao_ban);
+//        recyclerView = findViewById(R.id.rv_anh_sp_rv);
+//        loaiSP = getResources().getStringArray(R.array.loai_sp);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,loaiSP);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spLoaiSP.setAdapter(adapter);
+//
+//        lanhSP = new ArrayList<>();
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.add_picture);
+//        lanhSP.add(ImageUtils.endcodeImageToBase64(bitmap));
+//
+//        anhSPAdapter = new ThemAnhSPAdapter(lanhSP,this);
+//        recyclerView.setAdapter(anhSPAdapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+//        //
+//        userModel = new UserModel();
+//        //
+//        firebaseDatabase = FirebaseDatabase.getInstance();
+//        databaseReference = firebaseDatabase.getReference("RaoVat");
+//        //format giá sản phẩm
+//        etgiaSP.addTextChangedListener(onTextChangedListener());
+//
+//        btRaoBan.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                DangSp();
+//            }
+//        });
     }
 
     private void DangSp() {
+        if(TextUtils.isEmpty(etTenSP.getText())){
+            etTenSP.setError("Cannot be empty");
+            return;
+        }
+        if(TextUtils.isEmpty(etgiaSP.getText())){
+            etgiaSP.setError("Cannot be empty");
+            return;
+        }
+        if(TextUtils.isEmpty(etDiaC.getText())){
+            etDiaC.setError("Cannot be empty");
+            return;
+        }
+        if(TextUtils.isEmpty(etMoTaSP.getText())){
+            etMoTaSP.setError("Cannot be empty");
+            return;
+        }
+        if(lanhSP.size()==1) {
+            Toast.makeText(this,"Add photos!",Toast.LENGTH_SHORT).show();
+            return;
+        }
         double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",",""));
         String loaiSP = spLoaiSP.getSelectedItem().toString();
         SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(userModel.id,etTenSP.getText().toString(),lanhSP,
@@ -121,6 +144,8 @@ public class DangSpRvActivity extends AppCompatActivity {
                 userModel.hoten,userModel.sdt,etDiaC.getText().toString());
 
         databaseReference.child(loaiSP).push().setValue(sanPhamRaoVat);
+        Toast.makeText(this,"Post product successfully",Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Subscribe(sticky = true)
@@ -172,38 +197,38 @@ public class DangSpRvActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
-                Bitmap bitmap = null;
-                Log.d(TAG, "onActivityResult: ");
-                if (data != null) {
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Log.e(TAG, "Data Null!!!!");
-                }
-                lanhSP.add(0,ImageUtils.endcodeImageToBase64(bitmap));
-                anhSPAdapter.notifyDataSetChanged();
-            }
-            else if(requestCode == 2){
-                Bitmap bitmap = null;
-                if (resultCode == RESULT_OK) {
-                    Log.e("check request", "I'm here");
-                    bitmap = ImageUtils.getBitmap(this);
-                    lanhSP.add(0,ImageUtils.endcodeImageToBase64(bitmap));
-                    anhSPAdapter.notifyDataSetChanged();
-                }
-
-            }
-
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//            if (requestCode == 1) {
+//                Bitmap bitmap = null;
+//                Log.d(TAG, "onActivityResult: ");
+//                if (data != null) {
+//                    try {
+//                        bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                } else {
+//                    Log.e(TAG, "Data Null!!!!");
+//                }
+//                lanhSP.add(0,ImageUtils.endcodeImageToBase64(bitmap));
+//                anhSPAdapter.notifyDataSetChanged();
+//            }
+//            else if(requestCode == 2){
+//                Bitmap bitmap = null;
+//                if (resultCode == RESULT_OK) {
+//                    Log.e("check request", "I'm here");
+//                    bitmap = ImageUtils.getBitmap(this);
+//                    lanhSP.add(0,ImageUtils.endcodeImageToBase64(bitmap));
+//                    anhSPAdapter.notifyDataSetChanged();
+//                }
+//
+//            }
+//
+//        }
+//    }
     private TextWatcher onTextChangedListener(){
         return new TextWatcher() {
             @Override

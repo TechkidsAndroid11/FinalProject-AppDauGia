@@ -1,5 +1,6 @@
 package com.example.haihm.shelf.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
 public class SanPhamRaoVat {
     public String idNB;
     public String tenSP;
-    public List<String> anhSP ;
+    public HashMap<String,String> anhSP ;
     public double giaSP;
     public String motaSP;
     public String loaiSP;
@@ -17,7 +18,7 @@ public class SanPhamRaoVat {
     public String sdtNB;
     public String diaGD;
 
-    public SanPhamRaoVat(String idNB, String tenSP, List<String> anhSP, double giaSP,
+    public SanPhamRaoVat(String idNB, String tenSP, HashMap<String,String> anhSP, double giaSP,
                          String motaSP, String loaiSP, String hoTenNB, String sdtNB, String diaGD) {
         this.idNB = idNB;
         this.tenSP = tenSP;
