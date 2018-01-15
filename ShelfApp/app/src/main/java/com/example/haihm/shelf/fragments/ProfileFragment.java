@@ -62,7 +62,6 @@ public class ProfileFragment extends Fragment{
     @Subscribe(sticky = true)
     public void loadData(OnClickUserModelEvent onClickUserModelEvent)
     {
-        Log.d(TAG, "loadData: "+userModel);
         userModel=onClickUserModelEvent.userModel;
         Picasso.with(getActivity()).load(userModel.getAnhAvatar()).into(ivAvatar);
         Picasso.with(getActivity()).load(userModel.getAnhCover()).into(ivCover);

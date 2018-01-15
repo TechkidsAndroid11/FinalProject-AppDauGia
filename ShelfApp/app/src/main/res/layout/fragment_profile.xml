@@ -8,7 +8,8 @@
         android:id="@+id/iv_cover"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
 
     <ImageView
@@ -17,7 +18,7 @@
         android:layout_height="120dp"
         android:layout_alignTop="@+id/iv_setting"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp" />
+        android:layout_marginTop="50dp" />
 
     <ImageView
         android:id="@+id/iv_setting"
@@ -82,4 +83,77 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/rl_mini"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="80dp"-->
+    <!--android:layout_alignParentBottom="true">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="3">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_buy"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:src="@drawable/ic_add_shopping_cart_black_24dp" />-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_daugia"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:src="@drawable/ic_gavel_black_24dp" />-->
+
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_me"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:src="@drawable/ic_person_black_24dp" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="20dp"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:weightSum="3">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:text="Giao vặt"-->
+    <!--android:textColor="#231e1e"-->
+    <!--android:textSize="16dp"-->
+    <!--android:textStyle="bold" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:text="Đấu giá"-->
+    <!--android:textColor="#231e1e"-->
+    <!--android:textSize="16dp"-->
+    <!--android:textStyle="bold" />-->
+
+
+    <!--<TextView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:text="Tôi"-->
+    <!--android:textColor="#231e1e"-->
+    <!--android:textSize="16dp"-->
+    <!--android:textStyle="bold" />-->
+    <!--</LinearLayout>-->
+    <!--</RelativeLayout>-->
 </RelativeLayout>
