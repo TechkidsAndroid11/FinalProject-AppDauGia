@@ -27,7 +27,7 @@ public class ImageUtils {
         byte[] imageBytes = Base64.decode(base64Image, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 
-        return Bitmap.createScaledBitmap(bitmap, 150, 150, false);
+        return Bitmap.createScaledBitmap(bitmap, 500, 500, false);
     }
     public static String endcodeImageToBase64(Bitmap bitmap){
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
