@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         tlBottomBar.addTab(tlBottomBar.newTab().setIcon(R.drawable.ic_shopping_cart_black_24dp));
         tlBottomBar.addTab(tlBottomBar.newTab().setIcon(R.drawable.ic_attach_money_black_24dp));
         tlBottomBar.addTab(tlBottomBar.newTab().setIcon(R.drawable.ic_person_black_24dp));
+        tlBottomBar.setBackgroundColor(getResources().getColor(R.color.mainColor));
 
         tlBottomBar.getTabAt(0).setText("Rao vặt");
         tlBottomBar.getTabAt(1).setText("Đấu giá");
