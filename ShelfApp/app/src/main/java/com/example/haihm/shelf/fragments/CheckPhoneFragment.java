@@ -113,17 +113,7 @@ public class CheckPhoneFragment extends Fragment {
                 Log.d(TAG, "onCodeSent: ");
                 phoneVerificationId = verificationId;
                 resendToken = token;
-                Utils.openFragment(getFragmentManager(),R.id.rl_main,new VerifyPhoneFragment(phoneVerificationId,userModel));
-//                EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
-//                Intent intent = new Intent(getActivity(), MainActivity.class);
-//                startActivity(intent);
-//                LoginFragment.saveLoginSuccess(userModel.getId());
-//                databaseReference.child(userModel.getId()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        Toast.makeText(getActivity(), "Add User ok", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+                Utils.openFragment(getFragmentManager(),R.id.rl_main,new VerifyPhoneFragment(phoneVerificationId,userModel,etPhone.getText().toString()));
             }
         };
     }
