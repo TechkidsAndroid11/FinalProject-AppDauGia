@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff"
+    android:orientation="vertical"
     tools:context="com.example.haihm.shelf.activity.DangSpDGActivity">
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorPrimary">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
 
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:padding="8dp"
-                android:src="@drawable/ic_arrow_back_black_24dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Tạo phiên đấu giá"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="Tạo phiên đấu giá"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -103,7 +101,8 @@
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -117,7 +116,16 @@
                         android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
                         android:src="@drawable/ic_add_black_24dp" />
-
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/sk_photo1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="50dp"
+                        android:background="@drawable/custom_add_picture"
+                        style="@style/SpinKitView.DoubleBounce"
+                        android:visibility="gone"
+                        app:SpinKit_Color="@color/colorPrimary"/>
                     <ImageView
                         android:id="@+id/iv_photo2"
                         android:layout_width="70dp"
@@ -127,7 +135,17 @@
                         android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
                         android:src="@drawable/ic_add_black_24dp" />
-
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/sk_photo2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="27dp"
+                        android:layout_toRightOf="@id/iv_photo1"
+                        android:background="@drawable/custom_add_picture"
+                        style="@style/SpinKitView.Small.DoubleBounce"
+                        app:SpinKit_Color="@color/colorPrimary"
+                        android:visibility="gone"/>
                     <ImageView
                         android:id="@+id/iv_photo3"
                         android:layout_width="70dp"
@@ -138,7 +156,18 @@
                         android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
                         android:src="@drawable/ic_add_black_24dp" />
-
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/sk_photo3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="27dp"
+                        android:layout_toRightOf="@id/iv_photo1"
+                        android:layout_below="@id/iv_photo2"
+                        android:background="@drawable/custom_add_picture"
+                        style="@style/SpinKitView.Small.DoubleBounce"
+                        app:SpinKit_Color="@color/colorPrimary"
+                        android:visibility="gone"/>
                     <ImageView
                         android:id="@+id/iv_photo4"
                         android:layout_width="70dp"
@@ -148,7 +177,17 @@
                         android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
                         android:src="@drawable/ic_add_black_24dp" />
-
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/sk_photo4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="27dp"
+                        android:layout_toRightOf="@id/iv_photo2"
+                        android:background="@drawable/custom_add_picture"
+                        style="@style/SpinKitView.Small.DoubleBounce"
+                        app:SpinKit_Color="@color/colorPrimary"
+                        android:visibility="gone"/>
                     <ImageView
                         android:id="@+id/iv_photo5"
                         android:layout_width="70dp"
@@ -159,6 +198,18 @@
                         android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
                         android:src="@drawable/ic_add_black_24dp" />
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/sk_photo5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="27dp"
+                        android:layout_toRightOf="@id/iv_photo2"
+                        android:layout_below="@id/iv_photo4"
+                        android:background="@drawable/custom_add_picture"
+                        style="@style/SpinKitView.Small.DoubleBounce"
+                        app:SpinKit_Color="@color/colorPrimary"
+                        android:visibility="gone"/>
                 </RelativeLayout>
             </HorizontalScrollView>
 
@@ -224,7 +275,8 @@
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -245,7 +297,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_toRightOf="@id/tv_home_appliance"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/tv_beauty"
+                        android:layout_below="@id/tv_home_appliance"
                         android:background="@drawable/ct_textview_post_uncheck"
                         android:padding="8dp"
                         android:text="Đồ công nghệ"
@@ -255,8 +309,8 @@
                         android:id="@+id/tv_fashion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:layout_toRightOf="@id/tv_technology"
+                        android:layout_marginRight="8dp"
+                        android:layout_toRightOf="@id/tv_furniture"
                         android:background="@drawable/ct_textview_post_uncheck"
                         android:padding="8dp"
                         android:text="Thời trang"
@@ -269,7 +323,10 @@
                         android:layout_marginRight="5dp"
                         android:layout_toRightOf="@id/tv_fashion"
                         android:background="@drawable/ct_textview_post_uncheck"
-                        android:padding="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
                         android:text="Xe"
                         android:textColor="#000" />
 
@@ -290,11 +347,9 @@
                         android:id="@+id/tv_furniture"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_home_appliance"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@id/tv_beauty"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_toRightOf="@id/tv_home_appliance"
                         android:background="@drawable/ct_textview_post_uncheck"
                         android:padding="8dp"
                         android:text="Nội thất"
@@ -305,10 +360,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_home_appliance"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginRight="5dp"
                         android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@id/tv_furniture"
+                        android:layout_toRightOf="@id/tv_technology"
                         android:background="@drawable/ct_textview_post_uncheck"
                         android:padding="8dp"
                         android:text="Khác"
@@ -372,7 +427,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_below="@id/iv_icon_price"
-                    android:layout_marginRight="21dp"
                     android:text="Bước giá "
                     android:textColor="@color/mainColor" />
 
@@ -382,7 +436,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/et_gia"
                     android:layout_marginTop="8dp"
-                    android:layout_toRightOf="@id/tv_step"
+                    android:layout_toRightOf="@id/tv_start_at"
                     android:background="@drawable/custom_edittext_post"
                     android:hint="đ"
                     android:inputType="number"
@@ -421,7 +475,8 @@
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -517,22 +572,21 @@
                 android:paddingLeft="5dp"
                 android:paddingTop="3dp"
                 android:textColor="#000000" />
+            <TextView
+                android:id="@+id/iv_done"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_gravity="center"
+                android:paddingRight="25dp"
+                android:paddingLeft="25dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_textview"
+                android:text="Tạo phiên đấu giá" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/iv_done"
-            android:layout_marginBottom="10dp"
-            android:textStyle="bold"
-            android:textColor="#fff"
-            android:layout_gravity="center"
-            android:paddingRight="25dp"
-            android:paddingLeft="25dp"
-            android:paddingBottom="6dp"
-            android:paddingTop="6dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_textview"
-            android:text="Tạo phiên đấu giá" />
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

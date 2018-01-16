@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,6 +26,7 @@ import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,6 +36,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -42,12 +45,16 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
     EditText etTenSP, etgiaSP, etDiaC, etMoTaSP, etBuocG;
     HashMap<String, String> lanhSP;
     ImageView ivBack, ivPhoto1, ivPhoto2, ivPhoto3, ivPhoto4, ivPhoto5;
+    ArrayList<SpinKitView> lskPhoto = new ArrayList<>();
+    ArrayList<ImageView> livPhoto = new ArrayList<>();
+    SpinKitView skPhoto1, skPhoto2, skPhoto3, skPhoto4, skPhoto5;
     TextView tvHomeAppliance, ivDone, tvCar, tvFashion, tvTechnology, tvBeauty, tvFuniture, tvOther, tv3h, tv6h, tv12h, tv24h;
     UserModel userModel;
+    MyAsyncTask myAsyncTask;
     //
     String checkPhoto = "";
     int tgianDG = 3;
-    String loaiSP = "Home appliance";
+    String loaiSP = "Đồ gia dụng";
     //
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -75,6 +82,17 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         ivPhoto3 = findViewById(R.id.iv_photo3);
         ivPhoto4 = findViewById(R.id.iv_photo4);
         ivPhoto5 = findViewById(R.id.iv_photo5);
+
+        skPhoto1 = findViewById(R.id.sk_photo1);
+        skPhoto2 = findViewById(R.id.sk_photo2);
+        skPhoto3 = findViewById(R.id.sk_photo3);
+        skPhoto4 = findViewById(R.id.sk_photo4);
+        skPhoto5 = findViewById(R.id.sk_photo5);
+
+        lskPhoto.add(skPhoto1);lskPhoto.add(skPhoto2);lskPhoto.add(skPhoto3);
+        lskPhoto.add(skPhoto4);lskPhoto.add(skPhoto5);
+        livPhoto.add(ivPhoto1);livPhoto.add(ivPhoto2);livPhoto.add(ivPhoto3);
+        livPhoto.add(ivPhoto4);livPhoto.add(ivPhoto5);
 
         tvHomeAppliance = findViewById(R.id.tv_home_appliance);
         tvTechnology = findViewById(R.id.tv_technology);
@@ -143,28 +161,28 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
 
     private void DangSPDG() {
         if (TextUtils.isEmpty(etTenSP.getText())) {
-            etTenSP.setError("Cannot be empty");
+            etTenSP.setError("Không được để trống");
             return;
         }
         if (TextUtils.isEmpty(etMoTaSP.getText())) {
-            etMoTaSP.setError("Cannot be empty");
+            etMoTaSP.setError("Không được để trống");
             return;
         }
         if (TextUtils.isEmpty(etgiaSP.getText())) {
-            etgiaSP.setError("Cannot be empty");
+            etgiaSP.setError("Không được để trống");
             return;
         }
         if (TextUtils.isEmpty(etBuocG.getText())) {
-            etBuocG.setError("Cannot be empty");
+            etBuocG.setError("Không được để trống");
             return;
         }
         if (TextUtils.isEmpty(etDiaC.getText())) {
-            etDiaC.setError("Cannot be empty");
+            etDiaC.setError("Không được để trống");
             return;
         }
 
-        if (lanhSP.size() == 1) {
-            Toast.makeText(this, "Add photos!", Toast.LENGTH_SHORT).show();
+        if (!checkListPhoto()) {
+            Toast.makeText(this, "Thêm ảnh", Toast.LENGTH_SHORT).show();
             return;
         }
         double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",", ""));
@@ -177,27 +195,33 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
                 buocG, giaSP, tgianDG, new SanPhamDauGia.NguoiMua());
 
         databaseReference.child(loaiSP).push().setValue(sanPhamDauGia);
-        Toast.makeText(this, "Post auction successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Tạo phiên đấu giá thành công", Toast.LENGTH_SHORT).show();
         finish();
     }
 
+    private boolean checkListPhoto() {
+        for(String i : lanhSP.keySet()){
+            String tmp = lanhSP.get(i);
+            if(!tmp.equals("")) return true;
+        }
+        return false;
+    }
     @Subscribe(sticky = true)
     public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent) {
         userModel = onClickAddSanPhamEvent.userModel;
-        etDiaC.setText(userModel.diaC);
     }
 
     private void selectFuntion() {
-        final String[] item = {"Open camera", "Open the library", "Cancel"};
+        final String[] item = {"Mở camera", "Mở thư viện", "Huỷ"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(DangSpDGActivity.this);
         builder.setTitle("Thêm ảnh");
         builder.setItems(item, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (item[i].equals("Open camera")) {
+                if (item[i].equals("Mở camera")) {
                     cameraIntent();
-                } else if (item[i].equals("Open the library")) {
+                } else if (item[i].equals("Mở thư viện")) {
                     galleryIntent();
                 } else {
                     dialogInterface.dismiss();
@@ -206,7 +230,6 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         }).show();
 
     }
-
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*"); // mở tất cả các folder lưa trữ ảnh
@@ -242,52 +265,39 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     Log.e(TAG, "Data Null!!!!");
                 }
-                lanhSP.put(checkPhoto, ImageUtils.endcodeImageToBase64(bitmap));
-                showPhoto(checkPhoto);
+                myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute(bitmap);
             } else if (requestCode == 2) {
                 Bitmap bitmap = null;
                 if (resultCode == RESULT_OK) {
                     bitmap = ImageUtils.getBitmap(this);
-                    lanhSP.put(checkPhoto, ImageUtils.endcodeImageToBase64(bitmap));
-                    showPhoto(checkPhoto);
+                    myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute(bitmap);
                 }
 
             }
 
         }
     }
-
-    private void showPhoto(String i) {
-        String photoBase64 = lanhSP.get(i);
-        Log.d(TAG, "showPhoto: " + photoBase64);
-        if (photoBase64.equals("")) return;
-        else {
-            switch (i) {
-                case "1": {
-                    ivPhoto1.setImageBitmap(ImageUtils.base64ToImage(photoBase64));
-                    ivPhoto1.setScaleType(ImageView.ScaleType.FIT_XY);
-                    break;
-                }
-                case "2": {
-                    ivPhoto2.setImageBitmap(ImageUtils.base64ToImage(photoBase64));
-                    ivPhoto2.setScaleType(ImageView.ScaleType.FIT_XY);
-                    break;
-                }
-                case "3": {
-                    ivPhoto3.setImageBitmap(ImageUtils.base64ToImage(photoBase64));
-                    ivPhoto3.setScaleType(ImageView.ScaleType.FIT_XY);
-                    break;
-                }
-                case "4": {
-                    ivPhoto4.setImageBitmap(ImageUtils.base64ToImage(photoBase64));
-                    ivPhoto4.setScaleType(ImageView.ScaleType.FIT_XY);
-                    break;
-                }
-                case "5": {
-                    ivPhoto5.setImageBitmap(ImageUtils.base64ToImage(photoBase64));
-                    ivPhoto5.setScaleType(ImageView.ScaleType.FIT_XY);
-                    break;
-                }
+    public void showAnimationLoadPhoto(String i){
+        int vt = Integer.parseInt(i) - 1;
+        for(int ii = 0; ii < lskPhoto.size(); ii++){
+            if(ii == vt){
+                lskPhoto.get(ii).setVisibility(View.VISIBLE);
+                livPhoto.get(ii).setVisibility(View.INVISIBLE);
+                return;
+            }
+        }
+    }
+    public void showPhoto(String i,Bitmap bitmap) {
+        int vt = Integer.parseInt(i) - 1;
+        for(int ii = 0; ii < lskPhoto.size(); ii++){
+            if(ii == vt){
+                lskPhoto.get(ii).setVisibility(View.GONE);
+                livPhoto.get(ii).setVisibility(View.VISIBLE);
+                livPhoto.get(ii).setScaleType(ImageView.ScaleType.FIT_XY);
+                livPhoto.get(ii).setImageBitmap(bitmap);
+                return;
             }
         }
     }
@@ -419,105 +429,60 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void selectTime() {
-        if (tgianDG == 3) {
-            tv3h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            tv6h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tv12h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tv24h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-        }
-        if (tgianDG == 6) {
-            tv3h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tv6h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            tv12h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tv24h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-        }
-        if (tgianDG == 12) {
-            tv3h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tv6h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tv12h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            tv24h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-        }
-        if (tgianDG == 24) {
-            tv3h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tv6h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tv12h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tv24h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
+        ArrayList<TextView> list = new ArrayList<>();
+        list.add(tv3h);
+        list.add(tv6h);
+        list.add(tv12h);
+        list.add(tv24h);
+        String time = tgianDG+" Giờ";
+        for(int i = 0; i < list.size(); i++){
+            if(time.equals(list.get(i).getText().toString())){
+
+                list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
+            }
+            else list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
     }
 
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void selectCategory() {
-        if (loaiSP.equals(tvHomeAppliance.getText().toString())) {
-            tvHomeAppliance.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            //
-            tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFashion.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvCar.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvBeauty.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-        }
-        if (loaiSP.equals(tvTechnology.getText().toString())) {
-            tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            //
-            tvHomeAppliance.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFashion.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvCar.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvBeauty.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-        }
-        if (loaiSP.equals(tvFashion.getText().toString())) {
-            tvFashion.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            //
-            tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvHomeAppliance.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvCar.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvBeauty.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-        }
-        if (loaiSP.equals(tvCar.getText().toString())) {
-            tvCar.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            //
-            tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFashion.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvHomeAppliance.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvBeauty.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-        }
-        if (loaiSP.equals(tvBeauty.getText().toString())) {
-            tvBeauty.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            //
-            tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFashion.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvCar.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvHomeAppliance.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-        }
-        if (loaiSP.equals(tvFuniture.getText().toString())) {
-            tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            //
-            tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFashion.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvCar.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvBeauty.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvHomeAppliance.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-        }
-        if (loaiSP.equals(tvOther.getText().toString())) {
-            tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            //
-            tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFashion.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvCar.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvBeauty.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
-            tvHomeAppliance.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
+        ArrayList<TextView> list = new ArrayList<>();
+        list.add(tvHomeAppliance);
+        list.add(tvCar);
+        list.add(tvFashion);
+        list.add(tvTechnology);
+        list.add(tvBeauty);
+        list.add(tvFuniture);
+        list.add(tvOther);
+        for(int i = 0; i < list.size(); i++){
+            if(loaiSP.equals(list.get(i).getText().toString())){
+
+                list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
+            }
+            else list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
     }
+    public class MyAsyncTask extends AsyncTask<Bitmap,Void,Bitmap>{
 
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showAnimationLoadPhoto(checkPhoto);
+        }
+
+        @Override
+        protected Bitmap doInBackground(Bitmap... bitmaps) {
+            lanhSP.put(checkPhoto,ImageUtils.endcodeImageToBase64(bitmaps[0]));
+            Bitmap bitmap = ImageUtils.base64ToImage(lanhSP.get(checkPhoto));
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            showPhoto(checkPhoto,bitmap);
+        }
+    }
 }

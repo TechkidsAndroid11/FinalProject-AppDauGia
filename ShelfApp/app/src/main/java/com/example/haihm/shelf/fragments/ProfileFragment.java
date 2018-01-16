@@ -113,12 +113,12 @@ public class ProfileFragment extends Fragment{
 }
     private void intentPostClassified() {
 
-        Intent intent = new Intent(getActivity(), DangSpDGActivity.class);
+        Intent intent = new Intent(getActivity(), DangSpRvActivity.class);
         startActivity(intent);
     }
 
     private void intentPostAution() {
-        Intent intent = new Intent(getActivity(), DangSpRvActivity.class);
+        Intent intent = new Intent(getActivity(), DangSpDGActivity.class);
         startActivity(intent);
     }
 }
