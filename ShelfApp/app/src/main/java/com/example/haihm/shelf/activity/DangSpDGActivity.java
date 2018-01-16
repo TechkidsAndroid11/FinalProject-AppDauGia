@@ -1,37 +1,26 @@
 package com.example.haihm.shelf.activity;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.adapters.ThemAnhSPAdapter;
-import com.example.haihm.shelf.event.OnClickAddPhotoEvent;
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.UserModel;
@@ -45,17 +34,15 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 public class DangSpDGActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "DangSpDGActivity";
-    EditText etTenSP,etgiaSP,etDiaC,etMoTaSP,etBuocG;
-    HashMap<String,String> lanhSP;
-    ImageView ivBack,ivDone,ivPhoto1,ivPhoto2,ivPhoto3,ivPhoto4,ivPhoto5;
-    TextView tvHomeAppliance,tvCar,tvFashion,tvTechnology,tvBeauty,tvFuniture,tvOther,tv3h,tv6h,tv12h,tv24h;
+    EditText etTenSP, etgiaSP, etDiaC, etMoTaSP, etBuocG;
+    HashMap<String, String> lanhSP;
+    ImageView ivBack, ivPhoto1, ivPhoto2, ivPhoto3, ivPhoto4, ivPhoto5;
+    TextView tvHomeAppliance, ivDone, tvCar, tvFashion, tvTechnology, tvBeauty, tvFuniture, tvOther, tv3h, tv6h, tv12h, tv24h;
     UserModel userModel;
     //
     String checkPhoto = "";
@@ -64,6 +51,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
     //
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +60,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         setupUI();
         addController();
     }
+
     private void setupUI() {
         etTenSP = findViewById(R.id.et_ten_sp);
         etgiaSP = findViewById(R.id.et_gia);
@@ -101,13 +90,13 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         tv24h = findViewById(R.id.tv_24h);
         //
         lanhSP = new HashMap<>();
-        lanhSP.put("1","");
-        lanhSP.put("2","");
-        lanhSP.put("3","");
-        lanhSP.put("4","");
-        lanhSP.put("5","");
+        lanhSP.put("1", "");
+        lanhSP.put("2", "");
+        lanhSP.put("3", "");
+        lanhSP.put("4", "");
+        lanhSP.put("5", "");
         //
-        userModel =  new UserModel();
+        userModel = new UserModel();
         //
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Auction");
@@ -116,8 +105,8 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         etgiaSP.addTextChangedListener(onTextChangedListener(etgiaSP));
 
 
-
     }
+
     private void addController() {
         ivDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,70 +142,71 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void DangSPDG() {
-        if(TextUtils.isEmpty(etTenSP.getText())){
+        if (TextUtils.isEmpty(etTenSP.getText())) {
             etTenSP.setError("Cannot be empty");
             return;
         }
-        if(TextUtils.isEmpty(etMoTaSP.getText())){
+        if (TextUtils.isEmpty(etMoTaSP.getText())) {
             etMoTaSP.setError("Cannot be empty");
             return;
         }
-        if(TextUtils.isEmpty(etgiaSP.getText())){
+        if (TextUtils.isEmpty(etgiaSP.getText())) {
             etgiaSP.setError("Cannot be empty");
             return;
         }
-        if(TextUtils.isEmpty(etBuocG.getText())){
+        if (TextUtils.isEmpty(etBuocG.getText())) {
             etBuocG.setError("Cannot be empty");
             return;
         }
-        if(TextUtils.isEmpty(etDiaC.getText())){
+        if (TextUtils.isEmpty(etDiaC.getText())) {
             etDiaC.setError("Cannot be empty");
             return;
         }
 
-        if(lanhSP.size()==1) {
-            Toast.makeText(this,"Add photos!",Toast.LENGTH_SHORT).show();
+        if (lanhSP.size() == 1) {
+            Toast.makeText(this, "Add photos!", Toast.LENGTH_SHORT).show();
             return;
         }
-        double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",",""));
-        double buocG = Double.parseDouble(etBuocG.getText().toString().replaceAll(",",""));
+        double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",", ""));
+        double buocG = Double.parseDouble(etBuocG.getText().toString().replaceAll(",", ""));
 
-        SanPhamDauGia sanPhamDauGia = new SanPhamDauGia(userModel.id,etTenSP.getText().toString(),
-                lanhSP,giaSP,
-                etMoTaSP.getText().toString(),loaiSP,
-                userModel.hoten,userModel.sdt,etDiaC.getText().toString(),
-                buocG,giaSP,tgianDG,new SanPhamDauGia.NguoiMua());
+        SanPhamDauGia sanPhamDauGia = new SanPhamDauGia(userModel.id, etTenSP.getText().toString(),
+                lanhSP, giaSP,
+                etMoTaSP.getText().toString(), loaiSP,
+                userModel.hoten, userModel.sdt, etDiaC.getText().toString(),
+                buocG, giaSP, tgianDG, new SanPhamDauGia.NguoiMua());
 
         databaseReference.child(loaiSP).push().setValue(sanPhamDauGia);
-        Toast.makeText(this,"Post auction successfully",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Post auction successfully", Toast.LENGTH_SHORT).show();
         finish();
     }
+
     @Subscribe(sticky = true)
-    public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent){
+    public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent) {
         userModel = onClickAddSanPhamEvent.userModel;
         etDiaC.setText(userModel.diaC);
     }
+
     private void selectFuntion() {
         final String[] item = {"Open camera", "Open the library", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(DangSpDGActivity.this);
-        builder.setTitle("Add photos");
+        builder.setTitle("Thêm ảnh");
         builder.setItems(item, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(item[i].equals("Open camera")){
+                if (item[i].equals("Open camera")) {
                     cameraIntent();
-                }
-                else if(item[i].equals("Open the library")){
+                } else if (item[i].equals("Open the library")) {
                     galleryIntent();
-                }
-                else{
+                } else {
                     dialogInterface.dismiss();
                 }
             }
         }).show();
 
     }
+
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*"); // mở tất cả các folder lưa trữ ảnh
@@ -228,10 +218,10 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Uri uri = ImageUtils.getUriFromImage(this);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         //check xem co ton tai intent nao khong
 
-        if(intent.resolveActivity(getPackageManager()) != null){
+        if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, 2);
         }
     }
@@ -252,15 +242,13 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     Log.e(TAG, "Data Null!!!!");
                 }
-                lanhSP.put(checkPhoto,ImageUtils.endcodeImageToBase64(bitmap));
+                lanhSP.put(checkPhoto, ImageUtils.endcodeImageToBase64(bitmap));
                 showPhoto(checkPhoto);
-            }
-            else if(requestCode == 2){
+            } else if (requestCode == 2) {
                 Bitmap bitmap = null;
                 if (resultCode == RESULT_OK) {
-                    Log.e("check request", "I'm here");
                     bitmap = ImageUtils.getBitmap(this);
-                    lanhSP.put(checkPhoto,ImageUtils.endcodeImageToBase64(bitmap));
+                    lanhSP.put(checkPhoto, ImageUtils.endcodeImageToBase64(bitmap));
                     showPhoto(checkPhoto);
                 }
 
@@ -271,10 +259,10 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
 
     private void showPhoto(String i) {
         String photoBase64 = lanhSP.get(i);
-        Log.d(TAG, "showPhoto: "+photoBase64);
-        if(photoBase64.equals("")) return;
+        Log.d(TAG, "showPhoto: " + photoBase64);
+        if (photoBase64.equals("")) return;
         else {
-            switch (i){
+            switch (i) {
                 case "1": {
                     ivPhoto1.setImageBitmap(ImageUtils.base64ToImage(photoBase64));
                     ivPhoto1.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -304,7 +292,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private TextWatcher onTextChangedListener(final EditText editText){
+    private TextWatcher onTextChangedListener(final EditText editText) {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -323,8 +311,8 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
                     String tmp = editable.toString();
 
                     Long longVar;
-                    if(tmp.contains(",")){
-                        tmp = tmp.replaceAll(",","");
+                    if (tmp.contains(",")) {
+                        tmp = tmp.replaceAll(",", "");
                     }
                     longVar = Long.parseLong(tmp);
 
@@ -335,7 +323,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
                     editText.setText(formatTmp);
                     editText.setSelection(editText.getText().length());
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 editText.addTextChangedListener(this);
@@ -345,83 +333,83 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.iv_photo1:{
+        switch (view.getId()) {
+            case R.id.iv_photo1: {
                 checkPhoto = "1";
                 selectFuntion();
                 break;
             }
-            case R.id.iv_photo2:{
+            case R.id.iv_photo2: {
                 checkPhoto = "2";
                 selectFuntion();
                 break;
             }
-            case R.id.iv_photo3:{
+            case R.id.iv_photo3: {
                 checkPhoto = "3";
                 selectFuntion();
                 break;
             }
-            case R.id.iv_photo4:{
+            case R.id.iv_photo4: {
                 checkPhoto = "4";
                 selectFuntion();
                 break;
             }
-            case R.id.iv_photo5:{
+            case R.id.iv_photo5: {
                 checkPhoto = "5";
                 selectFuntion();
                 break;
             }
-            case R.id.tv_home_appliance:{
+            case R.id.tv_home_appliance: {
                 loaiSP = tvHomeAppliance.getText().toString();
                 selectCategory();
                 break;
             }
-            case R.id.tv_technology:{
+            case R.id.tv_technology: {
                 loaiSP = tvTechnology.getText().toString();
                 selectCategory();
                 break;
             }
-            case R.id.tv_fashion:{
+            case R.id.tv_fashion: {
                 loaiSP = tvFashion.getText().toString();
                 selectCategory();
                 break;
             }
-            case R.id.tv_car:{
+            case R.id.tv_car: {
                 loaiSP = tvCar.getText().toString();
                 selectCategory();
                 break;
             }
-            case R.id.tv_beauty:{
+            case R.id.tv_beauty: {
                 loaiSP = tvBeauty.getText().toString();
                 selectCategory();
                 break;
             }
-            case R.id.tv_furniture:{
+            case R.id.tv_furniture: {
                 loaiSP = tvFuniture.getText().toString();
                 selectCategory();
                 break;
             }
-            case R.id.tv_other:{
+            case R.id.tv_other: {
                 loaiSP = tvOther.getText().toString();
                 selectCategory();
                 break;
             }
-            case R.id.tv_3h:{
+            case R.id.tv_3h: {
                 tgianDG = 3;
                 selectTime();
                 break;
             }
-            case R.id.tv_6h:{
+            case R.id.tv_6h: {
                 tgianDG = 6;
                 selectTime();
                 break;
             }
-            case R.id.tv_12h:{
+            case R.id.tv_12h: {
                 tgianDG = 12;
                 selectTime();
                 break;
             }
-            case R.id.tv_24h:{
+            case R.id.tv_24h: {
                 tgianDG = 24;
                 selectTime();
                 break;
@@ -431,25 +419,25 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void selectTime() {
-        if(tgianDG == 3){
+        if (tgianDG == 3) {
             tv3h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
             tv6h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tv12h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tv24h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
-        if(tgianDG == 6){
+        if (tgianDG == 6) {
             tv3h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tv6h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
             tv12h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tv24h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
-        if(tgianDG == 12){
+        if (tgianDG == 12) {
             tv3h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tv6h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tv12h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
             tv24h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
-        if(tgianDG == 24){
+        if (tgianDG == 24) {
             tv3h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tv6h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tv12h.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
@@ -460,7 +448,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void selectCategory() {
-        if(loaiSP.equals(tvHomeAppliance.getText().toString())){
+        if (loaiSP.equals(tvHomeAppliance.getText().toString())) {
             tvHomeAppliance.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
             //
             tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
@@ -470,7 +458,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
             tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
-        if(loaiSP.equals(tvTechnology.getText().toString())){
+        if (loaiSP.equals(tvTechnology.getText().toString())) {
             tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
             //
             tvHomeAppliance.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
@@ -480,7 +468,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
             tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
-        if(loaiSP.equals(tvFashion.getText().toString())){
+        if (loaiSP.equals(tvFashion.getText().toString())) {
             tvFashion.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
             //
             tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
@@ -490,7 +478,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
             tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
-        if(loaiSP.equals(tvCar.getText().toString())){
+        if (loaiSP.equals(tvCar.getText().toString())) {
             tvCar.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
             //
             tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
@@ -500,7 +488,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
             tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
-        if(loaiSP.equals(tvBeauty.getText().toString())){
+        if (loaiSP.equals(tvBeauty.getText().toString())) {
             tvBeauty.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
             //
             tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
@@ -510,7 +498,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
             tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
-        if(loaiSP.equals(tvFuniture.getText().toString())){
+        if (loaiSP.equals(tvFuniture.getText().toString())) {
             tvFuniture.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
             //
             tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
@@ -520,7 +508,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
             tvHomeAppliance.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
             tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
-        if(loaiSP.equals(tvOther.getText().toString())){
+        if (loaiSP.equals(tvOther.getText().toString())) {
             tvOther.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
             //
             tvTechnology.setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));

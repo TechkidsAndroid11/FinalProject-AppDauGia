@@ -29,19 +29,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="New Auction"
+                android:text="Tạo phiên đấu giá"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/iv_done"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:padding="8dp"
-                android:src="@drawable/ic_check_black_24dp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -49,427 +41,498 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
 
                 <ImageView
                     android:id="@+id/iv_icon_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_name_product" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@id/iv_icon_name"
-                    android:text="Auction name"
+                    android:text="Tên sản phẩm"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="16dp"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
+
             <EditText
                 android:id="@+id/et_ten_sp"
-                android:textColor="#000000"
-                android:paddingLeft="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_edittext_post"/>
+                android:background="@drawable/custom_edittext_post"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="3dp"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
 
                 <ImageView
                     android:id="@+id/iv_icon_camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_camera_alt_black_24dp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@id/iv_icon_camera"
-                    android:text="Picture"
+                    android:text="Chọn ảnh"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="16dp"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
+
             <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="160dp">
+
                     <ImageView
                         android:id="@+id/iv_photo1"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:src="@drawable/ic_add_black_24dp"
-                        android:scaleType="center"
                         android:layout_margin="5dp"
-                        android:background="@drawable/custom_add_picture"/>
+                        android:background="@drawable/custom_add_picture"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_add_black_24dp" />
+
                     <ImageView
                         android:id="@+id/iv_photo2"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:layout_toRightOf="@id/iv_photo1"
                         android:layout_margin="5dp"
-                        android:src="@drawable/ic_add_black_24dp"
+                        android:layout_toRightOf="@id/iv_photo1"
+                        android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
-                        android:background="@drawable/custom_add_picture"/>
+                        android:src="@drawable/ic_add_black_24dp" />
+
                     <ImageView
                         android:id="@+id/iv_photo3"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:layout_toRightOf="@id/iv_photo1"
                         android:layout_below="@id/iv_photo2"
                         android:layout_margin="5dp"
-                        android:src="@drawable/ic_add_black_24dp"
+                        android:layout_toRightOf="@id/iv_photo1"
+                        android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
-                        android:background="@drawable/custom_add_picture"/>
+                        android:src="@drawable/ic_add_black_24dp" />
+
                     <ImageView
                         android:id="@+id/iv_photo4"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:layout_toRightOf="@id/iv_photo2"
                         android:layout_margin="5dp"
-                        android:src="@drawable/ic_add_black_24dp"
+                        android:layout_toRightOf="@id/iv_photo2"
+                        android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
-                        android:background="@drawable/custom_add_picture"/>
+                        android:src="@drawable/ic_add_black_24dp" />
+
                     <ImageView
                         android:id="@+id/iv_photo5"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:layout_toRightOf="@id/iv_photo2"
                         android:layout_below="@id/iv_photo4"
                         android:layout_margin="5dp"
-                        android:src="@drawable/ic_add_black_24dp"
+                        android:layout_toRightOf="@id/iv_photo2"
+                        android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
-                        android:background="@drawable/custom_add_picture"/>
+                        android:src="@drawable/ic_add_black_24dp" />
                 </RelativeLayout>
             </HorizontalScrollView>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
 
                 <ImageView
                     android:id="@+id/iv_icon_des"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_description" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@id/iv_icon_des"
-                    android:text="Description"
+                    android:text="Thông tin sản phẩm"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="16dp"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <EditText
+                android:gravity="top"
+                android:inputType="textMultiLine"
                 android:id="@+id/et_mo_ta"
-                android:textColor="#000000"
-                android:paddingLeft="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_edittext_post"/>
+                android:layout_height="70dp"
+                android:background="@drawable/custom_edittext_post"
+                android:paddingBottom="3dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="3dp"
+                android:textColor="#000000" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
 
                 <ImageView
                     android:id="@+id/iv_icon_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_category" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@id/iv_icon_category"
-                    android:text="Category"
+                    android:text="Loại sản phẩm"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="16dp"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
+
             <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/tv_home_appliance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Home appliance"
-                        android:textColor="#000"
+                        android:background="@drawable/ct_textview_post_check"
                         android:padding="8dp"
-                        android:background="@drawable/ct_textview_post_check"/>
+                        android:text="Đồ gia dụng"
+                        android:textColor="#000" />
+
                     <TextView
                         android:id="@+id/tv_technology"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Technology"
-                        android:layout_toRightOf="@id/tv_home_appliance"
-                        android:textColor="#000"
-                        android:padding="8dp"
-                        android:background="@drawable/ct_textview_post_uncheck"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"/>
+                        android:layout_marginRight="5dp"
+                        android:layout_toRightOf="@id/tv_home_appliance"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Đồ công nghệ"
+                        android:textColor="#000" />
+
                     <TextView
                         android:id="@+id/tv_fashion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fashsion"
-                        android:layout_toRightOf="@id/tv_technology"
-                        android:textColor="#000"
-                        android:padding="8dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/ct_textview_post_uncheck"/>
+                        android:layout_toRightOf="@id/tv_technology"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Thời trang"
+                        android:textColor="#000" />
+
                     <TextView
                         android:id="@+id/tv_car"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Car"
-                        android:layout_toRightOf="@id/tv_fashion"
-                        android:textColor="#000"
-                        android:padding="8dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/ct_textview_post_uncheck"/>
+                        android:layout_toRightOf="@id/tv_fashion"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Xe"
+                        android:textColor="#000" />
+
                     <TextView
                         android:id="@+id/tv_beauty"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Beauty"
                         android:layout_below="@id/tv_home_appliance"
-                        android:textColor="#000"
-                        android:padding="8dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginLeft="40dp"
+                        android:layout_marginRight="5dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/ct_textview_post_uncheck"/>
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Làm đẹp"
+                        android:textColor="#000" />
+
                     <TextView
                         android:id="@+id/tv_furniture"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Furniture"
                         android:layout_below="@id/tv_home_appliance"
-                        android:layout_toRightOf="@id/tv_beauty"
-                        android:textColor="#000"
-                        android:padding="8dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginLeft="30dp"
+                        android:layout_marginRight="5dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/ct_textview_post_uncheck"/>
+                        android:layout_toRightOf="@id/tv_beauty"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Nội thất"
+                        android:textColor="#000" />
+
                     <TextView
                         android:id="@+id/tv_other"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Other"
                         android:layout_below="@id/tv_home_appliance"
-                        android:layout_toRightOf="@id/tv_furniture"
-                        android:textColor="#000"
-                        android:padding="8dp"
-                        android:layout_marginRight="5dp"
                         android:layout_marginLeft="30dp"
+                        android:layout_marginRight="5dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/ct_textview_post_uncheck"/>
+                        android:layout_toRightOf="@id/tv_furniture"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Khác"
+                        android:textColor="#000" />
                 </RelativeLayout>
             </HorizontalScrollView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
                 <ImageView
                     android:id="@+id/iv_icon_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_price" />
+
                 <TextView
                     android:id="@+id/tv_texview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_above="@id/et_gia"
+                    android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@id/iv_icon_price"
-                    android:text="Price"
+                    android:text="Đề xuất giá"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_above="@id/et_gia"
-                    android:layout_marginLeft="16dp"/>
+                    android:textStyle="bold" />
+
                 <TextView
+                    android:layout_marginBottom="5dp"
                     android:id="@+id/tv_start_at"
-                    android:layout_above="@id/et_buoc_gia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start at "
-                    android:textColor="#000"/>
+                    android:layout_above="@id/et_buoc_gia"
+                    android:text="Giá khởi điểm "
+                    android:textColor="@color/mainColor" />
+
                 <EditText
                     android:id="@+id/et_gia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="đ"
-                    android:paddingRight="5dp"
-                    android:textColorHint="#b1b1b1"
-                    android:textColor="#000"
-                    android:inputType="number"
-                    android:background="@drawable/custom_edittext_post"
-                    android:gravity="end"
                     android:layout_below="@id/iv_icon_price"
+                    android:layout_marginTop="8dp"
                     android:layout_toRightOf="@id/tv_start_at"
-                    android:layout_marginTop="8dp"/>
+                    android:background="@drawable/custom_edittext_post"
+                    android:hint="đ"
+                    android:inputType="number"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:textColor="#000"
+                    android:textColorHint="#b1b1b1" />
+
                 <TextView
+                    android:paddingBottom="5dp"
                     android:id="@+id/tv_step"
-                    android:layout_below="@id/iv_icon_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Step"
-                    android:layout_marginRight="21dp"
                     android:layout_alignParentBottom="true"
-                    android:textColor="#000"/>
+                    android:layout_below="@id/iv_icon_price"
+                    android:layout_marginRight="21dp"
+                    android:text="Bước giá "
+                    android:textColor="@color/mainColor" />
+
                 <EditText
                     android:id="@+id/et_buoc_gia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="đ"
-                    android:paddingRight="5dp"
-                    android:textColorHint="#b1b1b1"
-                    android:textColor="#000"
-                    android:inputType="number"
-                    android:background="@drawable/custom_edittext_post"
-                    android:gravity="end"
                     android:layout_below="@id/et_gia"
+                    android:layout_marginTop="8dp"
                     android:layout_toRightOf="@id/tv_step"
-                    android:layout_marginTop="8dp"/>
+                    android:background="@drawable/custom_edittext_post"
+                    android:hint="đ"
+                    android:inputType="number"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="3dp"
+                    android:textColor="#000"
+                    android:textColorHint="#b1b1b1" />
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
 
                 <ImageView
                     android:id="@+id/iv_icon_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_time" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@id/iv_icon_time"
-                    android:text="Time"
+                    android:text="Thời gian"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="16dp"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
+
             <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/tv_3h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3 hours"
-                        android:textColor="#000"
+                        android:background="@drawable/ct_textview_post_check"
+                        android:paddingBottom="8dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:background="@drawable/ct_textview_post_check"/>
+                        android:text="3 Giờ"
+                        android:textColor="#000" />
+
                     <TextView
                         android:id="@+id/tv_6h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="6 hours"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
                         android:layout_toRightOf="@id/tv_3h"
-                        android:textColor="#000"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:paddingBottom="8dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:background="@drawable/ct_textview_post_uncheck"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"/>
+                        android:text="6 Giờ"
+                        android:textColor="#000" />
+
                     <TextView
                         android:id="@+id/tv_12h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12 hours"
+                        android:layout_marginRight="5dp"
                         android:layout_toRightOf="@id/tv_6h"
-                        android:textColor="#000"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:paddingBottom="8dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:layout_marginRight="5dp"
-                        android:background="@drawable/ct_textview_post_uncheck"/>
+                        android:text="12 Giờ"
+                        android:textColor="#000" />
+
                     <TextView
                         android:id="@+id/tv_24h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="24 hours"
+                        android:layout_marginRight="5dp"
                         android:layout_toRightOf="@id/tv_12h"
-                        android:textColor="#000"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:paddingBottom="8dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:layout_marginRight="5dp"
-                        android:background="@drawable/ct_textview_post_uncheck"/>
+                        android:text="24 Giờ"
+                        android:textColor="#000" />
                 </RelativeLayout>
             </HorizontalScrollView>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
 
                 <ImageView
                     android:id="@+id/iv_icon_place"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_place" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@id/iv_icon_place"
-                    android:text="Address"
+                    android:text="Địa điểm giao dịch"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="16dp"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
+
             <EditText
                 android:id="@+id/et_diaC"
-                android:textColor="#000000"
-                android:paddingLeft="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_edittext_post"/>
+                android:background="@drawable/custom_edittext_post"
+                android:paddingBottom="3dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="3dp"
+                android:textColor="#000000" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/iv_done"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:layout_gravity="center"
+            android:paddingRight="25dp"
+            android:paddingLeft="25dp"
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_textview"
+            android:text="Tạo phiên đấu giá" />
+
     </LinearLayout>
 </ScrollView>
