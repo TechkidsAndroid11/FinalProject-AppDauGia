@@ -63,8 +63,9 @@ public class ProfileFragment extends Fragment{
     public void loadData(OnClickUserModelEvent onClickUserModelEvent)
     {
         userModel=onClickUserModelEvent.userModel;
+        Log.d(TAG, "loadData: "+userModel.getHoten()+" "+userModel.getAnhAvatar());
         Picasso.with(getActivity()).load(userModel.getAnhAvatar()).into(ivAvatar);
-        Picasso.with(getActivity()).load(userModel.getAnhCover()).into(ivCover);
+//        Picasso.with(getActivity()).load(userModel.getAnhCover()).into(ivCover);
         tvName.setText(userModel.getHoten());
     }
     private void setupUI() {

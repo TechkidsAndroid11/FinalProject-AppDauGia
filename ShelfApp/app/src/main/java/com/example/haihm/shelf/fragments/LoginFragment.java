@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.haihm.shelf.activity.MainActivity;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
+import com.example.haihm.shelf.utils.Utils;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -67,7 +68,7 @@ import com.google.firebase.database.ValueEventListener;
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
-    public static String UserModel ="UserModel";
+
     private static final String TAG = "LoginFragment";
     AccessTokenTracker mAccessTokenTracker;
     public GoogleApiClient mGoogleApiClient;
@@ -77,10 +78,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     LoginManager mLoginManager;
     Button btnLoginFacebook, btnLoginGoogle, btnLoginApp;
     public String cover, name, phone, address;
-
     String avatar;
     UserModel.Rate rate;
-    String imgCover;
     UserModel userModel;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
@@ -141,7 +140,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         btnLoginApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
             }
         });
 
@@ -158,13 +156,27 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         String Uid = sharedPreferences.getString("UserId","NotFound");
         if(!Uid.equals("NotFound"))
         {
-//            userModel = getUserInfoByUid(Uid);
-//            Log.d(TAG, "checkLogined: "+userModel.getHoten()+" "+userModel.getAnhCover()+" "+userModel.getAnhAvatar());
-//            EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
+            databaseReference.orderByChild("id").equalTo(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot userSnapshot: dataSnapshot.getChildren())
+                    {
+                        userModel = userSnapshot.getValue(UserModel.class);
+                        EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                }
 
-//            Log.d(TAG, "checkLogined: "+userModel.getHoten());
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+
+
         }
         else
         {
@@ -183,7 +195,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     avatar = String.valueOf(user.getPhotoUrl());
                     name = user.getDisplayName();
                     phone = user.getPhoneNumber();
-                    userModel = new UserModel(user.getUid(), avatar, imgCover, name, phone, address, rate);
+                    userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
                     EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -251,7 +263,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                                 e.printStackTrace();
                             }
                         }
-                        imgCover = cover;
+                        Log.d(TAG, "onCompleted: "+cover);
                     }
                 }).executeAsync();
     }
@@ -332,7 +344,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                             startActivity(intent);
                             saveLoginSuccess(user.getUid());
                             name = user.getDisplayName();
-                            userModel = new UserModel(user.getUid(), avatar, imgCover, name, phone, address, rate);
+                            avatar = String.valueOf(user.getPhotoUrl());
+                            userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
                             EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                             databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -367,33 +380,12 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
             }
         }
+
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-    public UserModel getUserInfoByUid(String userId)
-    {
-        final ArrayList<UserModel> listUser = new ArrayList<>();
-        Log.d(TAG, "getUserInfoByUid: "+databaseReference.getKey());
-        databaseReference.orderByChild("id").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnap : dataSnapshot.getChildren())
-                {
-                    UserModel user = userSnap.getValue(com.example.haihm.shelf.model.UserModel.class);
-                    Log.d(TAG, "onDataChange: "+user.getHoten());
-                    listUser.add(user);
-                }
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        return listUser.get(0);
-    }
 }

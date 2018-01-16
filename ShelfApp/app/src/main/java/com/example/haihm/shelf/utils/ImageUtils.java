@@ -22,7 +22,16 @@ import java.util.Calendar;
 public class ImageUtils {
     private static File temFile;
     private static final String TAG = "ImageUtils";
+    public static String encodeTobase64(Bitmap image) {
+        Bitmap immagex=image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b,Base64.DEFAULT);
 
+        Log.e("base64   ", imageEncoded);
+        return imageEncoded;
+    }
     public static Bitmap base64ToImage(String base64Image) {
         byte[] imageBytes = Base64.decode(base64Image, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
