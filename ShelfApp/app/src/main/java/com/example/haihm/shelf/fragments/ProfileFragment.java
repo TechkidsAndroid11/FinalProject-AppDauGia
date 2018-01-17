@@ -3,8 +3,6 @@ package com.example.haihm.shelf.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.DangSpDGActivity;
 import com.example.haihm.shelf.activity.DangSpRvActivity;
-import com.example.haihm.shelf.adapters.ViewPagerProfileAdapter;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
 import com.squareup.picasso.Picasso;
@@ -74,7 +71,6 @@ public class ProfileFragment extends Fragment{
         userModel=onClickUserModelEvent.userModel;
         Log.d(TAG, "loadData: "+userModel.getHoten()+" "+userModel.getAnhAvatar());
         Picasso.with(getActivity()).load(userModel.getAnhAvatar()).transform(new CropCircleTransformation()).into(ivAvatar);
-//        Picasso.with(getActivity()).load(userModel.getAnhCover()).into(ivCover);
         tvName.setText(userModel.getHoten());
     }
     private void setupUI() {

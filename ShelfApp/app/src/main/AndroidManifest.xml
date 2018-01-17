@@ -34,7 +34,8 @@
         <activity android:name=".activity.DangSpDGActivity"></activity>
         <activity
             android:theme="@style/Theme.Design.NoActionBar"
-            android:name=".activity.LoginActivity">
+            android:name=".activity.LoginActivity"
+            android:configChanges="keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
