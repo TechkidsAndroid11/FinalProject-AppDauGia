@@ -2,6 +2,7 @@ package com.example.haihm.shelf.fragments;
 
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,9 +37,12 @@ import com.squareup.picasso.Picasso;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import static android.app.Activity.RESULT_OK;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 import com.example.haihm.shelf.R;
+
+import java.io.IOException;
 
 
 /**
@@ -92,7 +97,7 @@ public class MainRegisterFragment extends Fragment {
         rlAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cameraIntent();
+                selectFuntion();
             }
         });
         btRegister.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +143,35 @@ public class MainRegisterFragment extends Fragment {
             }
         });
     }
+    private void selectFuntion() {
+        final String[] item = {"Chụp ảnh", "Mở Bộ sưu tập", "Huỷ"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Thêm Ảnh");
+        builder.setItems(item, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(item[i].equals("Chụp ảnh")){
+                    cameraIntent();
+                }
+                else if(item[i].equals("Mở Bộ sưu tập")){
+                    galleryIntent();
+                }
+                else{
+                    dialogInterface.dismiss();
+                }
+            }
+        }).show();
+
+    }
+
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*"); // mở tất cả các folder lưa trữ ảnh
+        intent.setAction(Intent.ACTION_GET_CONTENT); // đi đến folder mình chọn
+        startActivityForResult(Intent.createChooser(intent, "Chọn Ảnh"), 1);
+    }
+
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -153,19 +187,45 @@ public class MainRegisterFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 2){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                if (data != null) {
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("MainActivity", "Data Null!!!!");
+                }
 
-            if (resultCode == RESULT_OK) {
-
-                bitmap = ImageUtils.getBitmap(getActivity());
-//                ImageUtils imU = new ImageUtils();
                 ImageUtils imU = new ImageUtils();
-                String tempBase64 = ImageUtils.endcodeImageToBase64(bitmap);
+
+                String tempBase64 = imU.encodeTobase64(bitmap);
                 base64 = ImageUtils.resizeBase64Image(tempBase64);
+                ivAvatar.setPadding(0,0,0,0);
+
+
+                Picasso.with(getActivity()).load(data.getData()).transform(new CropCircleTransformation()).into((ivAvatar));
+
+            }
+            else if(requestCode == 2){
+                Log.e("check request", "I'm here 222");
+                if (resultCode == RESULT_OK) {
+                    Log.e("check request", "I'm here");
+                    bitmap = ImageUtils.getBitmap(getActivity());
+
+                    ImageUtils imU = new ImageUtils();
+
+                    String tempBase64 = imU .encodeTobase64(bitmap);
+                    base64 = ImageUtils.resizeBase64Image(tempBase64);
+                }
+                ivAvatar.setPadding(0,0,0,0);
+                Picasso.with(getActivity()).load(data.getData()).transform(new CropCircleTransformation()).into((ivAvatar));
+
             }
 
-            Picasso.with(getActivity()).load(uri).transform(new CropCircleTransformation()).into(ivAvatar);
-
         }
+
     }
 }

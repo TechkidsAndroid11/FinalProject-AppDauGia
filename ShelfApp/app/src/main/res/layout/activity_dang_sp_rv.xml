@@ -1,98 +1,464 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ffffff"
+    android:orientation="vertical"
     tools:context="com.example.haihm.shelf.activity.DangSpDGActivity">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:orientation="vertical">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_anh_sp_rv"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tên sản phẩm:"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="18dp"/>
-        <EditText
-            android:id="@+id/et_ten_sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Loai sản phẩm:"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="18dp"/>
-        <Spinner
-            android:id="@+id/sp_loai_sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Giá:"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="18dp"/>
-        <EditText
-            android:id="@+id/et_gia"
-            android:inputType="number"
-            android:hint="đ"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Địa chỉ giao dịch: "
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="18dp"/>
-        <EditText
-            android:id="@+id/et_diaC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mô tả sản phẩm: "
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="18dp"/>
-        <EditText
-            android:id="@+id/et_mo_ta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp" />
-        <Button
-            android:id="@+id/bt_rao_ban"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="Rao bán"
-            android:layout_gravity="center"/>
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
 
-    </LinearLayout>
-</ScrollView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Rao bán sản phẩm"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_icon_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_name_product" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/iv_icon_name"
+                    android:text="Tên sản phẩm"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/et_ten_sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittext_post"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="3dp"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_icon_camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_camera_alt_black_24dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/iv_icon_camera"
+                    android:text="Chọn ảnh"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp">
+
+                    <ImageView
+                        android:id="@+id/iv_photo1"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/custom_add_picture"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_add_black_24dp" />
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/sk_photo1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="50dp"
+                        android:background="@drawable/custom_add_picture"
+                        style="@style/SpinKitView.DoubleBounce"
+                        android:visibility="gone"
+                        app:SpinKit_Color="@color/colorPrimary"/>
+                    <ImageView
+                        android:id="@+id/iv_photo2"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="5dp"
+                        android:layout_toRightOf="@id/iv_photo1"
+                        android:background="@drawable/custom_add_picture"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_add_black_24dp" />
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/sk_photo2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="27dp"
+                        android:layout_toRightOf="@id/iv_photo1"
+                        android:background="@drawable/custom_add_picture"
+                        style="@style/SpinKitView.Small.DoubleBounce"
+                        app:SpinKit_Color="@color/colorPrimary"
+                        android:visibility="gone"/>
+                    <ImageView
+                        android:id="@+id/iv_photo3"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_below="@id/iv_photo2"
+                        android:layout_margin="5dp"
+                        android:layout_toRightOf="@id/iv_photo1"
+                        android:background="@drawable/custom_add_picture"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_add_black_24dp" />
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/sk_photo3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="27dp"
+                        android:layout_toRightOf="@id/iv_photo1"
+                        android:layout_below="@id/iv_photo2"
+                        android:background="@drawable/custom_add_picture"
+                        style="@style/SpinKitView.Small.DoubleBounce"
+                        app:SpinKit_Color="@color/colorPrimary"
+                        android:visibility="gone"/>
+                    <ImageView
+                        android:id="@+id/iv_photo4"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="5dp"
+                        android:layout_toRightOf="@id/iv_photo2"
+                        android:background="@drawable/custom_add_picture"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_add_black_24dp" />
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/sk_photo4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="27dp"
+                        android:layout_toRightOf="@id/iv_photo2"
+                        android:background="@drawable/custom_add_picture"
+                        style="@style/SpinKitView.Small.DoubleBounce"
+                        app:SpinKit_Color="@color/colorPrimary"
+                        android:visibility="gone"/>
+                    <ImageView
+                        android:id="@+id/iv_photo5"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_below="@id/iv_photo4"
+                        android:layout_margin="5dp"
+                        android:layout_toRightOf="@id/iv_photo2"
+                        android:background="@drawable/custom_add_picture"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_add_black_24dp" />
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/sk_photo5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="27dp"
+                        android:layout_toRightOf="@id/iv_photo2"
+                        android:layout_below="@id/iv_photo4"
+                        android:background="@drawable/custom_add_picture"
+                        style="@style/SpinKitView.Small.DoubleBounce"
+                        app:SpinKit_Color="@color/colorPrimary"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+            </HorizontalScrollView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_icon_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_description" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/iv_icon_des"
+                    android:text="Thông tin sản phẩm"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <EditText
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:id="@+id/et_mo_ta"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@drawable/custom_edittext_post"
+                android:paddingBottom="3dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="3dp"
+                android:textColor="#000000" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_icon_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_category" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/iv_icon_category"
+                    android:text="Loại sản phẩm"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_home_appliance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ct_textview_post_check"
+                        android:padding="8dp"
+                        android:text="Đồ gia dụng"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/tv_technology"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/tv_beauty"
+                        android:layout_below="@id/tv_home_appliance"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Đồ công nghệ"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/tv_fashion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_toRightOf="@id/tv_furniture"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Thời trang"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/tv_car"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_toRightOf="@id/tv_fashion"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="Xe"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/tv_beauty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_home_appliance"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Làm đẹp"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/tv_furniture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_toRightOf="@id/tv_home_appliance"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Nội thất"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/tv_other"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_home_appliance"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/tv_technology"
+                        android:background="@drawable/ct_textview_post_uncheck"
+                        android:padding="8dp"
+                        android:text="Khác"
+                        android:textColor="#000" />
+                </RelativeLayout>
+            </HorizontalScrollView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_icon_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_price" />
+
+                <TextView
+                    android:id="@+id/tv_texview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/et_gia"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/iv_icon_price"
+                    android:text="Giá bán"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <EditText
+                    android:id="@+id/et_gia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_icon_price"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/tv_start_at"
+                    android:background="@drawable/custom_edittext_post"
+                    android:hint="đ"
+                    android:inputType="number"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="3dp"
+                    android:textColor="#000"
+                    android:textColorHint="#b1b1b1" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_icon_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_place" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/iv_icon_place"
+                    android:text="Địa điểm giao dịch"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/et_diaC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittext_post"
+                android:paddingBottom="3dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="3dp"
+                android:textColor="#000000" />
+            <TextView
+                android:id="@+id/iv_done"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_gravity="center"
+                android:paddingRight="25dp"
+                android:paddingLeft="25dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_textview"
+                android:text="Rao bán" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

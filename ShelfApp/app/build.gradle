@@ -42,6 +42,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:11.6.2'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    //animation
+    compile 'com.github.ybq:Android-SpinKit:1.1.0'
     //Smart tab layout
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
 

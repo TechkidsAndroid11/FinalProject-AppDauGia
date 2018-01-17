@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="com.example.haihm.shelf.fragments.CheckPhoneFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="Xác nhận số điện thoại"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <EditText
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_title"
+        android:id="@+id/edt_phone_number"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/custom_edit_text"
+        android:hint="Nhập số điện thoại của bạn"
+        android:inputType="number"
+        android:paddingLeft="16dp"
+        android:textColorHint="#7CFFFFFF"
+        android:textSize="15sp" />
+    <Button
+        android:id="@+id/bt_SendCode"
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/edt_phone_number"
+        android:textColor="#fff"
+        android:layout_centerHorizontal="true"
+        android:text="Tiếp tục"
+        android:background="@drawable/rounded_corner_red"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

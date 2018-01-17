@@ -94,7 +94,7 @@
     </RelativeLayout>
 
     <TableLayout
-        android:id="@+id/tl_history"
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/rl_button">

@@ -78,6 +78,7 @@ public class ShoppingFragment extends Fragment {
             databaseReference = firebaseDatabase.getReference("Auction");
         }
 
+<<<<<<< HEAD
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -92,6 +93,35 @@ public class ShoppingFragment extends Fragment {
 
 //        loadData(view);
         setupProductTypeTab();
+=======
+        loadData(view);
+
+    }
+
+    private void loadData(final View view) {
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                //load data from firebase
+//                for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()){
+//                    SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);
+//                    sanPhamRaoVatList.add(sanPhamRaoVat);
+//                }
+//
+//                //setup recycler view
+//                ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(sanPhamRaoVatList);
+//                rvItemTypeList.setAdapter(productTypeAdapter);
+//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+//                linearLayoutManager.canScrollHorizontally();
+//                rvItemTypeList.setLayoutManager(linearLayoutManager);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+//            }
+//        });
+>>>>>>> 8fa175a7e3111129e155c05df7f740ca8878880e
     }
 
     private void setupProductTypeTab() {

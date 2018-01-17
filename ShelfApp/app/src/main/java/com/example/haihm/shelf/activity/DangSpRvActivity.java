@@ -1,36 +1,39 @@
 package com.example.haihm.shelf.activity;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.adapters.ThemAnhSPAdapter;
 import com.example.haihm.shelf.event.OnClickAddPhotoEvent;
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -41,91 +44,149 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
 
-public class DangSpRvActivity extends AppCompatActivity {
+public class DangSpRvActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "DangSpRvActivity";
     EditText etTenSP,etgiaSP,etDiaC,etMoTaSP;
-    Spinner spLoaiSP;
-    Button btRaoBan;
-    String []loaiSP;
-    List<String> lanhSP;
-    RecyclerView recyclerView;
-    ThemAnhSPAdapter anhSPAdapter;
-    UserModel userModel;
+    ImageView ivBack, ivPhoto1, ivPhoto2, ivPhoto3, ivPhoto4, ivPhoto5;
+    ArrayList<SpinKitView> lskPhoto = new ArrayList<>();
+    ArrayList<ImageView> livPhoto = new ArrayList<>();
+    SpinKitView skPhoto1, skPhoto2, skPhoto3, skPhoto4, skPhoto5;
+    TextView tvHomeAppliance, ivDone, tvCar, tvFashion, tvTechnology, tvBeauty, tvFuniture, tvOther;
+    HashMap<String,String> lanhSP;
 
+    UserModel userModel;
+    MyAsyncTask myAsyncTask;
+    //
+    String checkPhoto = "";
+    String loaiSP = "Đồ gia dụng";
+    //
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_sp_rv);
-        initPermission();
-        EventBus.getDefault().register(this);
         setupUI();
-    }
-    private void initPermission() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            // >= API 23
-            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED){//neu chua duoc cap phep
-                ActivityCompat.requestPermissions(this,
-                        new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        1);
-            }
-        }
+        addController();
     }
     private void setupUI() {
         etTenSP = findViewById(R.id.et_ten_sp);
         etgiaSP = findViewById(R.id.et_gia);
         etDiaC = findViewById(R.id.et_diaC);
         etMoTaSP = findViewById(R.id.et_mo_ta);
-        spLoaiSP = findViewById(R.id.sp_loai_sp);
-        btRaoBan = findViewById(R.id.bt_rao_ban);
-        recyclerView = findViewById(R.id.rv_anh_sp_rv);
-        loaiSP = getResources().getStringArray(R.array.loai_sp);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,loaiSP);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spLoaiSP.setAdapter(adapter);
 
-        lanhSP = new ArrayList<>();
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.add_picture);
-        lanhSP.add(ImageUtils.endcodeImageToBase64(bitmap));
+        ivDone = findViewById(R.id.iv_done);
+        ivBack = findViewById(R.id.iv_back);
+        ivPhoto1 = findViewById(R.id.iv_photo1);
+        ivPhoto2 = findViewById(R.id.iv_photo2);
+        ivPhoto3 = findViewById(R.id.iv_photo3);
+        ivPhoto4 = findViewById(R.id.iv_photo4);
+        ivPhoto5 = findViewById(R.id.iv_photo5);
 
-        anhSPAdapter = new ThemAnhSPAdapter(lanhSP,this);
-        recyclerView.setAdapter(anhSPAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        skPhoto1 = findViewById(R.id.sk_photo1);
+        skPhoto2 = findViewById(R.id.sk_photo2);
+        skPhoto3 = findViewById(R.id.sk_photo3);
+        skPhoto4 = findViewById(R.id.sk_photo4);
+        skPhoto5 = findViewById(R.id.sk_photo5);
+
+        lskPhoto.add(skPhoto1);lskPhoto.add(skPhoto2);lskPhoto.add(skPhoto3);
+        lskPhoto.add(skPhoto4);lskPhoto.add(skPhoto5);
+        livPhoto.add(ivPhoto1);livPhoto.add(ivPhoto2);livPhoto.add(ivPhoto3);
+        livPhoto.add(ivPhoto4);livPhoto.add(ivPhoto5);
+
+        tvHomeAppliance = findViewById(R.id.tv_home_appliance);
+        tvTechnology = findViewById(R.id.tv_technology);
+        tvCar = findViewById(R.id.tv_car);
+        tvBeauty = findViewById(R.id.tv_beauty);
+        tvFashion = findViewById(R.id.tv_fashion);
+        tvFuniture = findViewById(R.id.tv_furniture);
+        tvOther = findViewById(R.id.tv_other);
+
+        lanhSP = new HashMap<>();
+        lanhSP.put("1", "");
+        lanhSP.put("2", "");
+        lanhSP.put("3", "");
+        lanhSP.put("4", "");
+        lanhSP.put("5", "");
         //
         userModel = new UserModel();
         //
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("RaoVat");
+        databaseReference = firebaseDatabase.getReference("Product");
         //format giá sản phẩm
         etgiaSP.addTextChangedListener(onTextChangedListener());
-
-        btRaoBan.setOnClickListener(new View.OnClickListener() {
+    }
+    private void addController() {
+        ivDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DangSp();
             }
         });
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        ivPhoto1.setOnClickListener(this);
+        ivPhoto2.setOnClickListener(this);
+        ivPhoto3.setOnClickListener(this);
+        ivPhoto4.setOnClickListener(this);
+        ivPhoto5.setOnClickListener(this);
+        //
+        tvHomeAppliance.setOnClickListener(this);
+        tvTechnology.setOnClickListener(this);
+        tvFashion.setOnClickListener(this);
+        tvCar.setOnClickListener(this);
+        tvBeauty.setOnClickListener(this);
+        tvFuniture.setOnClickListener(this);
+        tvOther.setOnClickListener(this);
     }
 
     private void DangSp() {
+        if (TextUtils.isEmpty(etTenSP.getText())) {
+            etTenSP.setError("Không được để trống");
+            return;
+        }
+        if (TextUtils.isEmpty(etMoTaSP.getText())) {
+            etMoTaSP.setError("Không được để trống");
+            return;
+        }
+        if (TextUtils.isEmpty(etgiaSP.getText())) {
+            etgiaSP.setError("Không được để trống");
+            return;
+        }
+
+        if (TextUtils.isEmpty(etDiaC.getText())) {
+            etDiaC.setError("Không được để trống");
+            return;
+        }
+
+        if (!checkListPhoto()) {
+            Toast.makeText(this, "Thêm ảnh", Toast.LENGTH_SHORT).show();
+            return;
+        }
         double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",",""));
-        String loaiSP = spLoaiSP.getSelectedItem().toString();
         SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(userModel.id,etTenSP.getText().toString(),lanhSP,
                 giaSP,
                 etMoTaSP.getText().toString(),loaiSP,
                 userModel.hoten,userModel.sdt,etDiaC.getText().toString());
 
         databaseReference.child(loaiSP).push().setValue(sanPhamRaoVat);
+        Toast.makeText(this,"Rao bán thành công",Toast.LENGTH_SHORT).show();
+        finish();
     }
-
-    @Subscribe(sticky = true)
-    public void OnReceivedOnClickAddPhotoEvent(OnClickAddPhotoEvent onClickAddPhotoEvent){
-        selectFuntion();
+    private boolean checkListPhoto() {
+        for(String i : lanhSP.keySet()){
+            String tmp = lanhSP.get(i);
+            if(!tmp.equals("")) return true;
+        }
+        return false;
     }
     @Subscribe(sticky = true)
     public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent){
@@ -188,20 +249,42 @@ public class DangSpRvActivity extends AppCompatActivity {
                 } else {
                     Log.e(TAG, "Data Null!!!!");
                 }
-                lanhSP.add(0,ImageUtils.endcodeImageToBase64(bitmap));
-                anhSPAdapter.notifyDataSetChanged();
+                myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute(bitmap);
             }
             else if(requestCode == 2){
                 Bitmap bitmap = null;
                 if (resultCode == RESULT_OK) {
                     Log.e("check request", "I'm here");
                     bitmap = ImageUtils.getBitmap(this);
-                    lanhSP.add(0,ImageUtils.endcodeImageToBase64(bitmap));
-                    anhSPAdapter.notifyDataSetChanged();
+                    myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute(bitmap);
                 }
 
             }
 
+        }
+    }
+    public void showAnimationLoadPhoto(String i){
+        int vt = Integer.parseInt(i) - 1;
+        for(int ii = 0; ii < lskPhoto.size(); ii++){
+            if(ii == vt){
+                lskPhoto.get(ii).setVisibility(View.VISIBLE);
+                livPhoto.get(ii).setVisibility(View.INVISIBLE);
+                return;
+            }
+        }
+    }
+    public void showPhoto(String i,Bitmap bitmap) {
+        int vt = Integer.parseInt(i) - 1;
+        for(int ii = 0; ii < lskPhoto.size(); ii++){
+            if(ii == vt){
+                lskPhoto.get(ii).setVisibility(View.GONE);
+                livPhoto.get(ii).setVisibility(View.VISIBLE);
+                livPhoto.get(ii).setScaleType(ImageView.ScaleType.FIT_XY);
+                livPhoto.get(ii).setImageBitmap(bitmap);
+                return;
+            }
         }
     }
     private TextWatcher onTextChangedListener(){
@@ -241,5 +324,109 @@ public class DangSpRvActivity extends AppCompatActivity {
                 etgiaSP.addTextChangedListener(this);
             }
         };
+    }
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_photo1: {
+                checkPhoto = "1";
+                selectFuntion();
+                break;
+            }
+            case R.id.iv_photo2: {
+                checkPhoto = "2";
+                selectFuntion();
+                break;
+            }
+            case R.id.iv_photo3: {
+                checkPhoto = "3";
+                selectFuntion();
+                break;
+            }
+            case R.id.iv_photo4: {
+                checkPhoto = "4";
+                selectFuntion();
+                break;
+            }
+            case R.id.iv_photo5: {
+                checkPhoto = "5";
+                selectFuntion();
+                break;
+            }
+            case R.id.tv_home_appliance: {
+                loaiSP = tvHomeAppliance.getText().toString();
+                selectCategory();
+                break;
+            }
+            case R.id.tv_technology: {
+                loaiSP = tvTechnology.getText().toString();
+                selectCategory();
+                break;
+            }
+            case R.id.tv_fashion: {
+                loaiSP = tvFashion.getText().toString();
+                selectCategory();
+                break;
+            }
+            case R.id.tv_car: {
+                loaiSP = tvCar.getText().toString();
+                selectCategory();
+                break;
+            }
+            case R.id.tv_beauty: {
+                loaiSP = tvBeauty.getText().toString();
+                selectCategory();
+                break;
+            }
+            case R.id.tv_furniture: {
+                loaiSP = tvFuniture.getText().toString();
+                selectCategory();
+                break;
+            }
+            case R.id.tv_other: {
+                loaiSP = tvOther.getText().toString();
+                selectCategory();
+                break;
+            }
+        }
+    }
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void selectCategory() {
+        ArrayList<TextView> list = new ArrayList<>();
+        list.add(tvHomeAppliance);
+        list.add(tvCar);
+        list.add(tvFashion);
+        list.add(tvTechnology);
+        list.add(tvBeauty);
+        list.add(tvFuniture);
+        list.add(tvOther);
+        for(int i = 0; i < list.size(); i++){
+            if(loaiSP.equals(list.get(i).getText().toString())){
+
+                list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
+            }
+            else list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
+        }
+    }
+    public class MyAsyncTask extends AsyncTask<Bitmap,Void,Bitmap> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showAnimationLoadPhoto(checkPhoto);
+        }
+
+        @Override
+        protected Bitmap doInBackground(Bitmap... bitmaps) {
+            lanhSP.put(checkPhoto,ImageUtils.endcodeImageToBase64(bitmaps[0]));
+            Bitmap bitmap = ImageUtils.base64ToImage(lanhSP.get(checkPhoto));
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            showPhoto(checkPhoto,bitmap);
+        }
     }
 }
