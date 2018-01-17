@@ -11,11 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.MainActivity;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
@@ -52,6 +51,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -61,10 +61,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
-
-import com.example.haihm.shelf.R;
-import com.squareup.picasso.Picasso;
-import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -187,8 +183,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
                 }
             });
-
-
         }
     }
 
@@ -241,8 +235,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         editor.putString("UserId", userId);
         editor.commit();
     }
-
-
 
     private void setupFacebookStuff() {
 

@@ -75,28 +75,28 @@ public class ShoppingFragment extends Fragment {
     }
 
     private void loadData(final View view) {
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //load data from firebase
-                for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()){
-                    SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);
-                    sanPhamRaoVatList.add(sanPhamRaoVat);
-                }
-
-                //setup recycler view
-                ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(sanPhamRaoVatList);
-                rvItemTypeList.setAdapter(productTypeAdapter);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-                linearLayoutManager.canScrollHorizontally();
-                rvItemTypeList.setLayoutManager(linearLayoutManager);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
-            }
-        });
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                //load data from firebase
+//                for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()){
+//                    SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);
+//                    sanPhamRaoVatList.add(sanPhamRaoVat);
+//                }
+//
+//                //setup recycler view
+//                ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(sanPhamRaoVatList);
+//                rvItemTypeList.setAdapter(productTypeAdapter);
+//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+//                linearLayoutManager.canScrollHorizontally();
+//                rvItemTypeList.setLayoutManager(linearLayoutManager);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+//            }
+//        });
     }
 
 }
