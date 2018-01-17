@@ -1,34 +1,26 @@
 package com.example.haihm.shelf.activity;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.event.OnClickAddPhotoEvent;
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.model.UserModel;
@@ -36,10 +28,8 @@ import com.example.haihm.shelf.utils.ImageUtils;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -49,13 +39,13 @@ import java.util.Locale;
 
 public class DangSpRvActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "DangSpRvActivity";
-    EditText etTenSP,etgiaSP,etDiaC,etMoTaSP;
+    EditText etTenSP, etgiaSP, etDiaC, etMoTaSP;
     ImageView ivBack, ivPhoto1, ivPhoto2, ivPhoto3, ivPhoto4, ivPhoto5;
     ArrayList<SpinKitView> lskPhoto = new ArrayList<>();
     ArrayList<ImageView> livPhoto = new ArrayList<>();
     SpinKitView skPhoto1, skPhoto2, skPhoto3, skPhoto4, skPhoto5;
     TextView tvHomeAppliance, ivDone, tvCar, tvFashion, tvTechnology, tvBeauty, tvFuniture, tvOther;
-    HashMap<String,String> lanhSP;
+    HashMap<String, String> lanhSP;
 
     UserModel userModel;
     MyAsyncTask myAsyncTask;
@@ -65,6 +55,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
     //
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +63,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
         setupUI();
         addController();
     }
+
     private void setupUI() {
         etTenSP = findViewById(R.id.et_ten_sp);
         etgiaSP = findViewById(R.id.et_gia);
@@ -92,10 +84,16 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
         skPhoto4 = findViewById(R.id.sk_photo4);
         skPhoto5 = findViewById(R.id.sk_photo5);
 
-        lskPhoto.add(skPhoto1);lskPhoto.add(skPhoto2);lskPhoto.add(skPhoto3);
-        lskPhoto.add(skPhoto4);lskPhoto.add(skPhoto5);
-        livPhoto.add(ivPhoto1);livPhoto.add(ivPhoto2);livPhoto.add(ivPhoto3);
-        livPhoto.add(ivPhoto4);livPhoto.add(ivPhoto5);
+        lskPhoto.add(skPhoto1);
+        lskPhoto.add(skPhoto2);
+        lskPhoto.add(skPhoto3);
+        lskPhoto.add(skPhoto4);
+        lskPhoto.add(skPhoto5);
+        livPhoto.add(ivPhoto1);
+        livPhoto.add(ivPhoto2);
+        livPhoto.add(ivPhoto3);
+        livPhoto.add(ivPhoto4);
+        livPhoto.add(ivPhoto5);
 
         tvHomeAppliance = findViewById(R.id.tv_home_appliance);
         tvTechnology = findViewById(R.id.tv_technology);
@@ -119,6 +117,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
         //format giá sản phẩm
         etgiaSP.addTextChangedListener(onTextChangedListener());
     }
+
     private void addController() {
         ivDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,28 +170,31 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "Thêm ảnh", Toast.LENGTH_SHORT).show();
             return;
         }
-        double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",",""));
-        SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(userModel.id,etTenSP.getText().toString(),lanhSP,
+        double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",", ""));
+        SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(userModel.id, etTenSP.getText().toString(), lanhSP,
                 giaSP,
-                etMoTaSP.getText().toString(),loaiSP,
-                userModel.hoten,userModel.sdt,etDiaC.getText().toString());
+                etMoTaSP.getText().toString(), loaiSP,
+                userModel.hoten, userModel.sdt, etDiaC.getText().toString());
 
         databaseReference.child(loaiSP).push().setValue(sanPhamRaoVat);
-        Toast.makeText(this,"Rao bán thành công",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Rao bán thành công", Toast.LENGTH_SHORT).show();
         finish();
     }
+
     private boolean checkListPhoto() {
-        for(String i : lanhSP.keySet()){
+        for (String i : lanhSP.keySet()) {
             String tmp = lanhSP.get(i);
-            if(!tmp.equals("")) return true;
+            if (!tmp.equals("")) return true;
         }
         return false;
     }
+
     @Subscribe(sticky = true)
-    public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent){
+    public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent) {
         userModel = onClickAddSanPhamEvent.userModel;
         etDiaC.setText(userModel.diaC);
     }
+
     private void selectFuntion() {
         final String[] item = {"Chụp ảnh", "Mở Bộ sưu tập", "Huỷ"};
 
@@ -201,19 +203,18 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
         builder.setItems(item, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(item[i].equals("Chụp ảnh")){
+                if (item[i].equals("Chụp ảnh")) {
                     cameraIntent();
-                }
-                else if(item[i].equals("Mở Bộ sưu tập")){
+                } else if (item[i].equals("Mở Bộ sưu tập")) {
                     galleryIntent();
-                }
-                else{
+                } else {
                     dialogInterface.dismiss();
                 }
             }
         }).show();
 
     }
+
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*"); // mở tất cả các folder lưa trữ ảnh
@@ -225,10 +226,10 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Uri uri = ImageUtils.getUriFromImage(this);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         //check xem co ton tai intent nao khong
 
-        if(intent.resolveActivity(getPackageManager()) != null){
+        if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, 2);
         }
     }
@@ -251,8 +252,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
                 }
                 myAsyncTask = new MyAsyncTask();
                 myAsyncTask.execute(bitmap);
-            }
-            else if(requestCode == 2){
+            } else if (requestCode == 2) {
                 Bitmap bitmap = null;
                 if (resultCode == RESULT_OK) {
                     Log.e("check request", "I'm here");
@@ -265,20 +265,22 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
 
         }
     }
-    public void showAnimationLoadPhoto(String i){
+
+    public void showAnimationLoadPhoto(String i) {
         int vt = Integer.parseInt(i) - 1;
-        for(int ii = 0; ii < lskPhoto.size(); ii++){
-            if(ii == vt){
+        for (int ii = 0; ii < lskPhoto.size(); ii++) {
+            if (ii == vt) {
                 lskPhoto.get(ii).setVisibility(View.VISIBLE);
                 livPhoto.get(ii).setVisibility(View.INVISIBLE);
                 return;
             }
         }
     }
-    public void showPhoto(String i,Bitmap bitmap) {
+
+    public void showPhoto(String i, Bitmap bitmap) {
         int vt = Integer.parseInt(i) - 1;
-        for(int ii = 0; ii < lskPhoto.size(); ii++){
-            if(ii == vt){
+        for (int ii = 0; ii < lskPhoto.size(); ii++) {
+            if (ii == vt) {
                 lskPhoto.get(ii).setVisibility(View.GONE);
                 livPhoto.get(ii).setVisibility(View.VISIBLE);
                 livPhoto.get(ii).setScaleType(ImageView.ScaleType.FIT_XY);
@@ -287,7 +289,8 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             }
         }
     }
-    private TextWatcher onTextChangedListener(){
+
+    private TextWatcher onTextChangedListener() {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -306,8 +309,8 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
                     String tmp = editable.toString();
 
                     Long longVar;
-                    if(tmp.contains(",")){
-                        tmp = tmp.replaceAll(",","");
+                    if (tmp.contains(",")) {
+                        tmp = tmp.replaceAll(",", "");
                     }
                     longVar = Long.parseLong(tmp);
 
@@ -318,13 +321,14 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
 
                     etgiaSP.setText(formatTmp);
                     etgiaSP.setSelection(etgiaSP.getText().length());
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 etgiaSP.addTextChangedListener(this);
             }
         };
     }
+
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_photo1: {
@@ -389,6 +393,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             }
         }
     }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void selectCategory() {
         ArrayList<TextView> list = new ArrayList<>();
@@ -399,15 +404,15 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
         list.add(tvBeauty);
         list.add(tvFuniture);
         list.add(tvOther);
-        for(int i = 0; i < list.size(); i++){
-            if(loaiSP.equals(list.get(i).getText().toString())){
-
+        for (int i = 0; i < list.size(); i++) {
+            if (loaiSP.equals(list.get(i).getText().toString())) {
                 list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            }
-            else list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
+            } else
+                list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
     }
-    public class MyAsyncTask extends AsyncTask<Bitmap,Void,Bitmap> {
+
+    public class MyAsyncTask extends AsyncTask<Bitmap, Void, Bitmap> {
 
 
         @Override
@@ -418,7 +423,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected Bitmap doInBackground(Bitmap... bitmaps) {
-            lanhSP.put(checkPhoto,ImageUtils.endcodeImageToBase64(bitmaps[0]));
+            lanhSP.put(checkPhoto, ImageUtils.endcodeImageToBase64(bitmaps[0]));
             Bitmap bitmap = ImageUtils.base64ToImage(lanhSP.get(checkPhoto));
             return bitmap;
         }
@@ -426,7 +431,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            showPhoto(checkPhoto,bitmap);
+            showPhoto(checkPhoto, bitmap);
         }
     }
 }

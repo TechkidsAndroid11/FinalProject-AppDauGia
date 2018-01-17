@@ -5,12 +5,14 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +53,7 @@ import java.io.IOException;
 @SuppressLint("ValidFragment")
 public class MainRegisterFragment extends Fragment {
     private static final String TAG = "MainRegisterFragment";
-    public EditText etUsername,etPassword,etVerifyPassword;
+    public EditText etUsername,etPassword,etVerifyPassword,etPhone;
     TextView tvNotify;
     Button btRegister;
     ImageView ivAvatar;
@@ -62,11 +64,12 @@ public class MainRegisterFragment extends Fragment {
     FirebaseUser user;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
+    String phone;
     @SuppressLint("ValidFragment")
-    public MainRegisterFragment(FirebaseUser user) {
+    public MainRegisterFragment(FirebaseUser user,String phone) {
         // Required empty public constructor
         this.user=user;
-
+        this.phone=phone;
     }
 
 
@@ -85,10 +88,13 @@ public class MainRegisterFragment extends Fragment {
         etUsername = view.findViewById(R.id.et_username);
         etVerifyPassword = view.findViewById(R.id.et_verifyPassword);
         etPassword = view.findViewById(R.id.et_password);
-        btRegister = view.findViewById(R.id.bt_register);
+        btRegister = view.findViewById(R.id.bt_sign_in);
         ivAvatar =view.findViewById(R.id.iv_avatar);
         rlAvatar = view.findViewById(R.id.rl_avatar);
         tvNotify = view.findViewById(R.id.tv_notify);
+        etPhone = view.findViewById(R.id.et_phone);
+        etPhone.setText(phone);
+        etPhone.setEnabled(false);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("UserInfo");
     }
@@ -106,7 +112,7 @@ public class MainRegisterFragment extends Fragment {
                 if(etPassword.getText().toString().equals("")|| etUsername.getText().toString().equals("")||etVerifyPassword.getText().toString().equals(""))
                 {
                     tvNotify.setText("Bạn phải điền đầy đủ các thông tin chi tiết!");
-                }else if(uri==null)
+                }else if(base64==null)
                 {
                     tvNotify.setText("Bạn phải thêm ảnh đại diện!");
                 }else if(etPassword.getText().toString().length()<6)
@@ -127,14 +133,13 @@ public class MainRegisterFragment extends Fragment {
     {
         String id = user.getUid();
         String address="";
-        String cover="";
         String phone = user.getPhoneNumber();
         String userName = etUsername.getText().toString();
         String password = etPassword.getText().toString();
         String verifyPass = etVerifyPassword.getText().toString();
-        String avatar = String.valueOf(uri);
+        String avatar = base64;
 
-        UserModel userModel = new UserModel(id,avatar,cover,userName,phone,address,null);
+        UserModel userModel = new UserModel(id,avatar,null,userName,password,verifyPass,phone,address,null);
         databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -206,23 +211,37 @@ public class MainRegisterFragment extends Fragment {
                 ivAvatar.setPadding(0,0,0,0);
 
 
-                Picasso.with(getActivity()).load(data.getData()).transform(new CropCircleTransformation()).into((ivAvatar));
+                String[] sBase64 = base64.split(",");
+                Bitmap bitmap = BitmapFactory.decodeByteArray(
+                        Base64.decode(sBase64[0],Base64.DEFAULT),
+                        0,// offset: vị trí bđ
+                        (Base64.decode(sBase64[0],Base64.DEFAULT)).length
+
+                );
+//                Picasso.with(getActivity()).load(uri).into((ivAvatar));
+                ivAvatar.setImageBitmap(bitmap);
 
             }
             else if(requestCode == 2){
-                Log.e("check request", "I'm here 222");
                 if (resultCode == RESULT_OK) {
-                    Log.e("check request", "I'm here");
                     bitmap = ImageUtils.getBitmap(getActivity());
 
                     ImageUtils imU = new ImageUtils();
-
                     String tempBase64 = imU .encodeTobase64(bitmap);
                     base64 = ImageUtils.resizeBase64Image(tempBase64);
                 }
                 ivAvatar.setPadding(0,0,0,0);
-                Picasso.with(getActivity()).load(data.getData()).transform(new CropCircleTransformation()).into((ivAvatar));
 
+                String[] sBase64 = base64.split(",");
+                Bitmap bitmap = BitmapFactory.decodeByteArray(
+                        Base64.decode(sBase64[0],Base64.DEFAULT),
+                        0,// offset: vị trí bđ
+                        (Base64.decode(sBase64[0],Base64.DEFAULT)).length
+
+                );
+
+                //Picasso.with(getActivity()).load(uri).into((ivAvatar));
+                ivAvatar.setImageBitmap(bitmap);
             }
 
         }

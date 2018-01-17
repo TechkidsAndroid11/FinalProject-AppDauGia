@@ -89,10 +89,16 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         skPhoto4 = findViewById(R.id.sk_photo4);
         skPhoto5 = findViewById(R.id.sk_photo5);
 
-        lskPhoto.add(skPhoto1);lskPhoto.add(skPhoto2);lskPhoto.add(skPhoto3);
-        lskPhoto.add(skPhoto4);lskPhoto.add(skPhoto5);
-        livPhoto.add(ivPhoto1);livPhoto.add(ivPhoto2);livPhoto.add(ivPhoto3);
-        livPhoto.add(ivPhoto4);livPhoto.add(ivPhoto5);
+        lskPhoto.add(skPhoto1);
+        lskPhoto.add(skPhoto2);
+        lskPhoto.add(skPhoto3);
+        lskPhoto.add(skPhoto4);
+        lskPhoto.add(skPhoto5);
+        livPhoto.add(ivPhoto1);
+        livPhoto.add(ivPhoto2);
+        livPhoto.add(ivPhoto3);
+        livPhoto.add(ivPhoto4);
+        livPhoto.add(ivPhoto5);
 
         tvHomeAppliance = findViewById(R.id.tv_home_appliance);
         tvTechnology = findViewById(R.id.tv_technology);
@@ -200,12 +206,13 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean checkListPhoto() {
-        for(String i : lanhSP.keySet()){
+        for (String i : lanhSP.keySet()) {
             String tmp = lanhSP.get(i);
-            if(!tmp.equals("")) return true;
+            if (!tmp.equals("")) return true;
         }
         return false;
     }
+
     @Subscribe(sticky = true)
     public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent) {
         userModel = onClickAddSanPhamEvent.userModel;
@@ -230,6 +237,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         }).show();
 
     }
+
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*"); // mở tất cả các folder lưa trữ ảnh
@@ -279,20 +287,22 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
 
         }
     }
-    public void showAnimationLoadPhoto(String i){
+
+    public void showAnimationLoadPhoto(String i) {
         int vt = Integer.parseInt(i) - 1;
-        for(int ii = 0; ii < lskPhoto.size(); ii++){
-            if(ii == vt){
+        for (int ii = 0; ii < lskPhoto.size(); ii++) {
+            if (ii == vt) {
                 lskPhoto.get(ii).setVisibility(View.VISIBLE);
                 livPhoto.get(ii).setVisibility(View.INVISIBLE);
                 return;
             }
         }
     }
-    public void showPhoto(String i,Bitmap bitmap) {
+
+    public void showPhoto(String i, Bitmap bitmap) {
         int vt = Integer.parseInt(i) - 1;
-        for(int ii = 0; ii < lskPhoto.size(); ii++){
-            if(ii == vt){
+        for (int ii = 0; ii < lskPhoto.size(); ii++) {
+            if (ii == vt) {
                 lskPhoto.get(ii).setVisibility(View.GONE);
                 livPhoto.get(ii).setVisibility(View.VISIBLE);
                 livPhoto.get(ii).setScaleType(ImageView.ScaleType.FIT_XY);
@@ -434,13 +444,13 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         list.add(tv6h);
         list.add(tv12h);
         list.add(tv24h);
-        String time = tgianDG+" Giờ";
-        for(int i = 0; i < list.size(); i++){
-            if(time.equals(list.get(i).getText().toString())){
+        String time = tgianDG + " Giờ";
+        for (int i = 0; i < list.size(); i++) {
+            if (time.equals(list.get(i).getText().toString())) {
 
                 list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            }
-            else list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
+            } else
+                list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
     }
 
@@ -455,15 +465,16 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         list.add(tvBeauty);
         list.add(tvFuniture);
         list.add(tvOther);
-        for(int i = 0; i < list.size(); i++){
-            if(loaiSP.equals(list.get(i).getText().toString())){
+        for (int i = 0; i < list.size(); i++) {
+            if (loaiSP.equals(list.get(i).getText().toString())) {
 
                 list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_check));
-            }
-            else list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
+            } else
+                list.get(i).setBackground(getResources().getDrawable(R.drawable.ct_textview_post_uncheck));
         }
     }
-    public class MyAsyncTask extends AsyncTask<Bitmap,Void,Bitmap>{
+
+    public class MyAsyncTask extends AsyncTask<Bitmap, Void, Bitmap> {
 
 
         @Override
@@ -474,7 +485,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected Bitmap doInBackground(Bitmap... bitmaps) {
-            lanhSP.put(checkPhoto,ImageUtils.endcodeImageToBase64(bitmaps[0]));
+            lanhSP.put(checkPhoto, ImageUtils.endcodeImageToBase64(bitmaps[0]));
             Bitmap bitmap = ImageUtils.base64ToImage(lanhSP.get(checkPhoto));
             return bitmap;
         }
@@ -482,7 +493,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            showPhoto(checkPhoto,bitmap);
+            showPhoto(checkPhoto, bitmap);
         }
     }
 }
