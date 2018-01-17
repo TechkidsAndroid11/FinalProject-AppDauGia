@@ -4,6 +4,7 @@ package com.example.haihm.shelf.fragments;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +31,13 @@ import java.util.List;
  */
 public class ShoppingFragment extends Fragment {
     private static final String TAG = ShoppingFragment.class.toString();
-    List<SanPhamRaoVat> sanPhamRaoVatList;
+    List<SanPhamRaoVat> sanPhamRaoVatList, productTypeList;
     RecyclerView rvItemTypeList;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     ConstraintLayout clAuction;
+    SmartTabLayout stlProductType;
+    ViewPager vpProductList;
     boolean isAuction;
 
     public ShoppingFragment() {
@@ -54,6 +58,8 @@ public class ShoppingFragment extends Fragment {
     private void setupUI(final View view) {
         rvItemTypeList = view.findViewById(R.id.rv_list_product);
         clAuction = view.findViewById(R.id.cl_auction);
+        stlProductType = view.findViewById(R.id.stl_product_type);
+        vpProductList = view.findViewById(R.id.vp_product_list);
 
         //is auction or not
         Bundle bundle = this.getArguments();
@@ -63,40 +69,58 @@ public class ShoppingFragment extends Fragment {
 
         //load database
         sanPhamRaoVatList = new ArrayList<>();
+        productTypeList = new ArrayList<>();
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         if (!isAuction) {
-            databaseReference = firebaseDatabase.getReference("RaoVat").child("Nội thất");
+            databaseReference = firebaseDatabase.getReference("Product");
         } else {
-            databaseReference = firebaseDatabase.getReference("DauGia").child("Làm đẹp");
+            databaseReference = firebaseDatabase.getReference("Auction");
         }
 
-        loadData(view);
-
-    }
-
-    private void loadData(final View view) {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //load data from firebase
-                for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()){
-                    SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);
-                    sanPhamRaoVatList.add(sanPhamRaoVat);
-                }
 
-                //setup recycler view
-                ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(sanPhamRaoVatList);
-                rvItemTypeList.setAdapter(productTypeAdapter);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-                linearLayoutManager.canScrollHorizontally();
-                rvItemTypeList.setLayoutManager(linearLayoutManager);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+
             }
-        });
+        })
+
+//        loadData(view);
+        setupProductTypeTab();
     }
+
+    private void setupProductTypeTab() {
+        stlProductType.setViewPager(vpProductList);
+    }
+
+//    private void loadData(final View view) {
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                //load data from firebase
+//                for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()){
+//                    SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);
+//                    sanPhamRaoVatList.add(sanPhamRaoVat);
+//                }
+//
+//                //setup recycler view
+//                ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(sanPhamRaoVatList);
+//                rvItemTypeList.setAdapter(productTypeAdapter);
+//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+//                linearLayoutManager.canScrollHorizontally();
+//                rvItemTypeList.setLayoutManager(linearLayoutManager);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
+//            }
+//        });
+//    }
 
 }

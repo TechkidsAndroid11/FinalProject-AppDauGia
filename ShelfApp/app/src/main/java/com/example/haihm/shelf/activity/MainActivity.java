@@ -1,28 +1,17 @@
 package com.example.haihm.shelf.activity;
 
-import android.app.Activity;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.adapters.MainPagerAdapter;
-import com.example.haihm.shelf.fragments.LoginFragment;
-import com.example.haihm.shelf.model.UserModel;
-import com.squareup.picasso.Picasso;
-
-import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 public class MainActivity extends AppCompatActivity {
     SearchView searchView;
@@ -44,13 +33,15 @@ public class MainActivity extends AppCompatActivity {
         vpMain = findViewById(R.id.vp_main_activity);
         clAuction = findViewById(R.id.cl_auction);
 
-        setupTabLayout();
+        setupBottomTabLayout();
+
         MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
         vpMain.setAdapter(mainPagerAdapter);
         vpMain.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tlBottomBar));
     }
 
-    private void setupTabLayout() {
+
+    private void setupBottomTabLayout() {
         tlBottomBar.addTab(tlBottomBar.newTab().setIcon(R.drawable.ic_shopping_cart_black_24dp));
         tlBottomBar.addTab(tlBottomBar.newTab().setIcon(R.drawable.ic_attach_money_black_24dp));
         tlBottomBar.addTab(tlBottomBar.newTab().setIcon(R.drawable.ic_person_black_24dp));
@@ -92,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//
+
 
 
 }

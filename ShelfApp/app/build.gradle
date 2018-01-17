@@ -42,6 +42,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:11.6.2'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    //Smart tab layout
+    compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+
 
 }
 apply plugin: 'com.google.gms.google-services'
