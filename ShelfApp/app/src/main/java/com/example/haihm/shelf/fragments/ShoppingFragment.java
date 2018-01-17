@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.adapters.MainPagerAdapter;
-import com.example.haihm.shelf.adapters.ProductTypeAdapter;
+import com.example.haihm.shelf.model.ProductTypeModel;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,8 @@ import java.util.List;
  */
 public class ShoppingFragment extends Fragment {
     private static final String TAG = ShoppingFragment.class.toString();
-    List<SanPhamRaoVat> sanPhamRaoVatList, productTypeList;
+    List<SanPhamRaoVat> sanPhamRaoVatList;
+    List<ProductTypeModel> productTypeList;
     RecyclerView rvItemTypeList;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -73,7 +76,7 @@ public class ShoppingFragment extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         if (!isAuction) {
-            databaseReference = firebaseDatabase.getReference("Product");
+            databaseReference = firebaseDatabase.getReference("Product").child("Xe");
         } else {
             databaseReference = firebaseDatabase.getReference("Auction");
         }
@@ -81,17 +84,23 @@ public class ShoppingFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                Log.d(TAG, "onDataChange: " + dataSnapshot.getChildren());
+                for (DataSnapshot productTypeSnapShot : dataSnapshot.getChildren()){
+                    ProductTypeModel productTypeModel = productTypeSnapShot.getValue(ProductTypeModel.class);
+                    productTypeList.add(productTypeModel);
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d(TAG, "onCancelled: " + databaseError.getMessage());
             }
         });
 
+        Log.d(TAG, "setupUI: " + productTypeList.size());
+
 //        loadData(view);
-        setupProductTypeTab();
+        setupProductTypeTab(view);
         loadData(view);
 
     }
@@ -121,8 +130,19 @@ public class ShoppingFragment extends Fragment {
 //        });
     }
 
-    private void setupProductTypeTab() {
+    private void setupProductTypeTab(View view) {
+        FragmentPagerItems.Creator fragmentPagerItems = new FragmentPagerItems.Creator(view.getContext());
+        String[] productTypes = getResources().getStringArray(R.array.loai_sp);
+        for (String productType : productTypes) {
+            fragmentPagerItems.add(productType, ProductTypeFragment.class);
+        }
+        Log.d(TAG, "setupProductTypeTab: " + productTypeList.size());
+        FragmentPagerItemAdapter fragmentPagerItemAdapter = new FragmentPagerItemAdapter(getFragmentManager(), fragmentPagerItems.create());
+
+        vpProductList.setAdapter(fragmentPagerItemAdapter);
         stlProductType.setViewPager(vpProductList);
+
+
     }
 
 //    private void loadData(final View view) {

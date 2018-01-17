@@ -46,6 +46,7 @@ dependencies {
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
     //Smart tab layout
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+    compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
 
 
 }
