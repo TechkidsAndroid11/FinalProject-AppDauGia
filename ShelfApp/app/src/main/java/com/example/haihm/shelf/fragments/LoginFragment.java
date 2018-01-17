@@ -216,7 +216,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getActivity(), "Add User ok", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -306,21 +306,32 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = task.getResult().getUser();
-                            Intent intent = new Intent(getActivity(), MainActivity.class);
-                            startActivity(intent);
-                            saveLoginSuccess(user.getUid());
-                            name = user.getDisplayName();
-                            avatar = String.valueOf(user.getPhotoUrl());
-                            userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
-                            EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
-                            databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(getActivity(), "Add User ok", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            Log.d(TAG, "onComplete: "+user.getPhoneNumber());
+                            if(user.getPhoneNumber()==null)
+                            {
+                                avatar = String.valueOf(user.getPhotoUrl());
+                                name = user.getDisplayName();
+                                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+                                Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
+
+                            }
+                            else
+                            {
+                                avatar = String.valueOf(user.getPhotoUrl());
+                                name = user.getDisplayName();
+                                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+                                EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intent);
+                                saveLoginSuccess(user.getUid());
+                                databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

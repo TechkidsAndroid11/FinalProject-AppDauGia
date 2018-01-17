@@ -92,7 +92,7 @@ public class RegisterFragment extends Fragment {
                 Log.d(TAG, "onCodeSent: ");
                 phoneVerificationId = verificationId;
                 resendToken = token;
-                Utils.openFragment(getFragmentManager(),R.id.rl_main,new VerifyPhoneFragment(phoneVerificationId,null));
+                Utils.openFragment(getFragmentManager(),R.id.rl_main,new VerifyPhoneFragment(phoneVerificationId,null,null));
             }
         };
     }

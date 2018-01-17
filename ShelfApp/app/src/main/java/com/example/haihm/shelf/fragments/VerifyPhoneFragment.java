@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,19 +36,22 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class VerifyPhoneFragment extends Fragment {
     private static final String TAG = "VerifyPhoneFragment";
-    public TextView tvDes;
+    public TextView tvDes,tvResend;
     public EditText etCode;
     public Button btVerify;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     public UserModel userModel;
     public String phoneVerificationId;
+    String phone;
     public PhoneAuthProvider.OnVerificationStateChangedCallbacks verificationCallbacks;
     public PhoneAuthProvider.ForceResendingToken resendToken;
     public FirebaseAuth fbAuth;
@@ -55,9 +60,10 @@ public class VerifyPhoneFragment extends Fragment {
 
     }
     @SuppressLint("ValidFragment")
-    public VerifyPhoneFragment(String phoneVerificationId, UserModel userModel) {
+    public VerifyPhoneFragment(String phoneVerificationId, UserModel userModel,String phone) {
         this.phoneVerificationId =phoneVerificationId;
         this.userModel=userModel;
+        this.phone=phone;
     }
 
 
@@ -72,12 +78,21 @@ public class VerifyPhoneFragment extends Fragment {
     }
 
     private void setupUI(View view) {
+        tvResend= view.findViewById(R.id.tv_resend);
         tvDes = view.findViewById(R.id.tv_des);
         etCode = view.findViewById(R.id.et_verifyCode);
         btVerify = view.findViewById(R.id.bt_Verify);
         fbAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("UserInfo");
+        underLine();
+    }
+    public void underLine()
+    {
+
+        SpannableString content = new SpannableString("Gửi lại");
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tvResend.setText(content);
     }
     public void addListener()
     {
@@ -85,6 +100,12 @@ public class VerifyPhoneFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 verifyCode();
+            }
+        });
+        tvResend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resendCode();
             }
         });
     }
@@ -101,7 +122,7 @@ public class VerifyPhoneFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-                    userModel.setSdt(etCode.getText().toString());
+                    userModel.setSdt(phone);
                     Log.d(TAG, "onComplete: "+userModel.getHoten()+" "+userModel.getSdt());
                     EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                 Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -110,7 +131,7 @@ public class VerifyPhoneFragment extends Fragment {
                 databaseReference.child(userModel.getId()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getActivity(), "Add User ok", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                     }
                 });
                 }
@@ -118,4 +139,39 @@ public class VerifyPhoneFragment extends Fragment {
         });
     }
 
+
+    private void setupVerificationCallbacks() {
+        verificationCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+            @Override
+            public void onVerificationCompleted(PhoneAuthCredential credential) {
+                // tvStatus.setText("Sign In");
+//                signInWithPhoneAuthCredential(credential);
+            }
+
+            @Override
+            public void onVerificationFailed(FirebaseException e) {
+                Log.d(TAG, "onVerificationFailed: "+e.getMessage());
+            }
+            @Override
+            public void onCodeSent(String verificationId,
+                                   PhoneAuthProvider.ForceResendingToken token) {
+                Log.d(TAG, "onCodeSent: ");
+                phoneVerificationId = verificationId;
+                resendToken = token;
+            }
+        };
+    }
+    public void resendCode()
+    {
+        String phoneNumber = phone;
+        setupVerificationCallbacks();
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                getActivity(),               // Activity (for callback binding)
+                verificationCallbacks,
+                resendToken);        // OnVerificationStateChangedCallbacks
+    }
 }
