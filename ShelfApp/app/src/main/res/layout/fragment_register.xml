@@ -51,16 +51,16 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/edt_user_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="25dp"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint="User name"
-                    android:paddingLeft="16dp"
-                    android:textColorHint="#7CFFFFFF"
-                    android:textSize="15sp" />
+                <!--<EditText-->
+                    <!--android:id="@+id/edt_user_name"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="35dp"-->
+                    <!--android:layout_marginTop="25dp"-->
+                    <!--android:background="@drawable/custom_edit_text"-->
+                    <!--android:hint="User name"-->
+                    <!--android:paddingLeft="16dp"-->
+                    <!--android:textColorHint="#7CFFFFFF"-->
+                    <!--android:textSize="15sp" />-->
 
                 <EditText
                     android:id="@+id/edt_phone_number"
@@ -73,37 +73,37 @@
                     android:textColorHint="#7CFFFFFF"
                     android:textSize="15sp" />
 
-                <EditText
-                    android:id="@+id/edt_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint="Password"
-                    android:paddingLeft="16dp"
-                    android:textColorHint="#7CFFFFFF"
-                    android:textSize="15sp" />
+                <!--<EditText-->
+                    <!--android:id="@+id/edt_password"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="35dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:background="@drawable/custom_edit_text"-->
+                    <!--android:hint="Password"-->
+                    <!--android:paddingLeft="16dp"-->
+                    <!--android:textColorHint="#7CFFFFFF"-->
+                    <!--android:textSize="15sp" />-->
 
-                <EditText
-                    android:id="@+id/edt_confirm_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint="Confirm Password"
-                    android:paddingLeft="16dp"
-                    android:textColorHint="#7CFFFFFF"
-                    android:textSize="15sp" />
+                <!--<EditText-->
+                    <!--android:id="@+id/edt_confirm_password"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="35dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:background="@drawable/custom_edit_text"-->
+                    <!--android:hint="Confirm Password"-->
+                    <!--android:paddingLeft="16dp"-->
+                    <!--android:textColorHint="#7CFFFFFF"-->
+                    <!--android:textSize="15sp" />-->
 
 
-                <TextView
-                    android:id="@+id/bt_login"
+                <Button
+                    android:id="@+id/bt_sign_in"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/custom_textview"
                     android:gravity="center"
-                    android:text="Sign In"
+                    android:text="Tiếp Tục"
                     android:textColor="#fff" />
 
 

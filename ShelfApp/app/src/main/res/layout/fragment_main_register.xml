@@ -1,119 +1,140 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:weightSum="10">
 
-    <RelativeLayout
-        android:id="@+id/rl_header"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:padding="16dp">
+        android:layout_height="0dp"
+        android:layout_weight="2" />
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_arrow_back_black_24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Đăng ký"
-            android:textColor="#000"
-            android:textSize="20dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/rl_header"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:layout_height="0dp"
+        android:layout_weight="7">
 
-        <EditText
-            android:id="@+id/et_phone"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="01652000018" />
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/et_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/et_phone"
-            android:hint="Tên đăng nhập" />
-
-        <EditText
-            android:inputType="textPassword"
-            android:id="@+id/et_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/et_username"
-            android:hint="Mật khẩu" />
-
-        <EditText
-            android:id="@+id/et_verifyPassword"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/et_password"
-            android:hint="Xác nhận mật khẩu" />
-
-        <RelativeLayout
-            android:id="@+id/rl_avatar"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_below="@id/et_verifyPassword">
-
-            <ImageView
-                android:id="@+id/iv_avatar"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_centerVertical="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
-                android:layout_toRightOf="@+id/iv_avatar"
-                android:text="Chạm thể thêm ảnh đại diện"
-                android:textSize="18dp" />
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="22dp"
+                        android:text="Đăng ký"
+                        android:textColor="#fff"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Tên tài khoản"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="#7CFFFFFF"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Số điện thoại"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="#7CFFFFFF"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Mật khẩu"
+                    android:inputType="textPassword"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="#7CFFFFFF"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/et_verifyPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Nhập lại mật khẩu"
+                    android:inputType="textPassword"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="#7CFFFFFF"
+                    android:textSize="15sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:layout_below="@id/et_verifyPassword">
+
+                    <ImageView
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/default_avatar"
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_centerVertical="true"
+                        android:background="#fff" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@+id/iv_avatar"
+                        android:text="Chạm thể thêm ảnh đại diện"
+                        android:textColor="#fff"
+                        android:textSize="18dp" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/bt_sign_in"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/custom_textview"
+                    android:gravity="center"
+                    android:text="Đăng ký"
+                    android:textColor="#fff" />
+                <TextView
+                    android:id="@+id/tv_notify"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#ff0000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/bt_register"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@+id/rl_avatar"
-            android:text="Đăng ký" />
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/tv_notify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/bt_register"
-            android:layout_margin="8dp"
-            android:textColor="#ff0101" />
-
-        <TextView
-            android:id="@+id/tv_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="48dp"
-            android:text="Bằng việc đăng ký, bạn đã đồng ý với " />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:text="Điều khoản Dịch vụ và Chính xác bảo mật của ShelfApp " />
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

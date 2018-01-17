@@ -4,9 +4,13 @@ package com.example.haihm.shelf.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.MainActivity;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
+import com.example.haihm.shelf.utils.ImageUtils;
 import com.example.haihm.shelf.utils.Utils;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -52,6 +57,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -82,6 +88,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     String avatar;
     UserModel.Rate rate;
     UserModel userModel;
+    String base64;
+    Bitmap bitmap;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     TextView tvSignIn, tvSignUp;
@@ -144,7 +152,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         btnLoginApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+           //     Utils.openFragment(getFragmentManager(),R.id.rl_main,new MainRegisterFragment(null,""));
             }
         });
 
@@ -310,6 +318,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                             Log.d(TAG, "onComplete: "+user.getPhoneNumber());
                             if(user.getPhoneNumber()==null)
                             {
+//                                bitmap = ImageUtils.getBitmapFromURL(String.valueOf(user.getPhotoUrl()));
+//                                String tempBase64 = ImageUtils.encodeTobase64(bitmap);
+//                                base64 = ImageUtils.resizeBase64Image(tempBase64);
+
                                 avatar = String.valueOf(user.getPhotoUrl());
                                 name = user.getDisplayName();
                                 userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
@@ -318,6 +330,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                             }
                             else
                             {
+//                                bitmap = ImageUtils.getBitmapFromURL(String.valueOf(user.getPhotoUrl()));
+//                                String tempBase64 = ImageUtils.encodeTobase64(bitmap);
+//                                base64 = ImageUtils.resizeBase64Image(tempBase64);
+
                                 avatar = String.valueOf(user.getPhotoUrl());
                                 name = user.getDisplayName();
                                 userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
