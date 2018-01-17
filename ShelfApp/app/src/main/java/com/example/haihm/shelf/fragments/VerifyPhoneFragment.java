@@ -13,9 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.haihm.shelf.R;
+import com.example.haihm.shelf.activity.MainActivity;
+import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.fragments.MainRegisterFragment;
+import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +29,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -35,7 +43,9 @@ public class VerifyPhoneFragment extends Fragment {
     public TextView tvDes;
     public EditText etCode;
     public Button btVerify;
-
+    DatabaseReference databaseReference;
+    FirebaseDatabase firebaseDatabase;
+    public UserModel userModel;
     public String phoneVerificationId;
     public PhoneAuthProvider.OnVerificationStateChangedCallbacks verificationCallbacks;
     public PhoneAuthProvider.ForceResendingToken resendToken;
@@ -45,8 +55,9 @@ public class VerifyPhoneFragment extends Fragment {
 
     }
     @SuppressLint("ValidFragment")
-    public VerifyPhoneFragment(String phoneVerificationId) {
+    public VerifyPhoneFragment(String phoneVerificationId, UserModel userModel) {
         this.phoneVerificationId =phoneVerificationId;
+        this.userModel=userModel;
     }
 
 
@@ -65,6 +76,8 @@ public class VerifyPhoneFragment extends Fragment {
         etCode = view.findViewById(R.id.et_verifyCode);
         btVerify = view.findViewById(R.id.bt_Verify);
         fbAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference().child("UserInfo");
     }
     public void addListener()
     {
@@ -88,12 +101,18 @@ public class VerifyPhoneFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-
-                    Log.d(TAG, "signInWithPhoneAuthCredential: "+credential);
-                    Log.d(TAG, "signInWithPhoneAuthCredential: "+credential.getProvider());
-                    Log.d(TAG, "onVerificationCompleted: "+credential.getSmsCode());
-                    FirebaseUser user = task.getResult().getUser();
-                    Utils.openFragment(getFragmentManager(),R.id.rl_main,new MainRegisterFragment(user));
+                    userModel.setSdt(etCode.getText().toString());
+                    Log.d(TAG, "onComplete: "+userModel.getHoten()+" "+userModel.getSdt());
+                    EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                LoginFragment.saveLoginSuccess(userModel.getId());
+                databaseReference.child(userModel.getId()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getActivity(), "Add User ok", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 }
             }
         });

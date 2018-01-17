@@ -2,34 +2,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    >
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/tv_des"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#ededed"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
         android:padding="8dp"
-        android:text="  Vui lòng điền mã xác minh được gửi đến *********18"
-        android:textSize="15sp" />
+        android:text="Enter Code"
+        android:textColor="#fff"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/et_verifyCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_des"
-        android:hint="Mã xác minh"
-        android:padding="16dp" />
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/tv_des"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/custom_edit_text"
+        android:hint="Enter your code here"
+        android:inputType="number"
+        android:paddingLeft="16dp"
+        android:textColorHint="#7CFFFFFF"
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/bt_Verify"
-        android:layout_width="match_parent"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_verifyCode"
-        android:layout_marginTop="8dp"
-        android:padding="16dp"
-        android:text="Xác Minh" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/rounded_corner_red"
+        android:text="Send Code"
+        android:textColor="#fff" />
 
+    <TextView
+        android:id="@+id/tv_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_Verify"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Did not receive the verification code?"
+        android:textColor="#fff" />
+
+    <TextView
+
+        android:id="@+id/tv_resend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_Verify"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/tv_a"
+        android:text="Resend Code"
+        android:textColor="#fff" />
 
 </RelativeLayout>

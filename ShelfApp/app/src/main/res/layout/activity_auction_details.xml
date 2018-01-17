@@ -6,19 +6,21 @@
     android:orientation="vertical"
     tools:context="com.example.haihm.shelf.activity.AuctionDetailsActivity">
     <include
-        layout="@layout/item_description_auction"
+        layout="@layout/layout_description_auction"
         android:id="@+id/icl_des_auction"
         />
     <include
-        layout="@layout/item_highest_cost_master_auction"
+        android:visibility="gone"
+        layout="@layout/layout_highest_cost_master_auction"
         android:id="@+id/icl_highest_cost_master"
         />
     <include
-        layout="@layout/item_highest_cost_guest_auction"
+        android:visibility="gone"
+        layout="@layout/layout_highest_cost_guest_auction"
         android:id="@+id/icl_highest_cost_guest"
         />
     <include
-        layout="@layout/item_chat_auction"
+        layout="@layout/layout_chat_auction"
         android:id="@+id/icl_chat"
         />
 

@@ -1,159 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.haihm.shelf.fragments.ProfileFragment">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_cover"
+    <RelativeLayout
+        android:id="@+id/rl_header"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_height="260dp"
+        android:background="@color/colorPrimary"
+        android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/iv_avatar"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_alignTop="@+id/iv_setting"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        <ImageView
+            android:id="@+id/iv_shopping_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shopping_cart_black_24dp" />
 
-    <ImageView
-        android:id="@+id/iv_setting"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_settings_applications_black_24dp" />
+        <TextView
 
-    <TextView
-        android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/iv_shopping_cart"
+            android:text="Profile"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_create_black_24dp" />
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@id/iv_shopping_cart"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:src="@color/cardview_light_background" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_avatar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Phạm Quang Thắng"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Address:322311020"
+            android:textColor="#b9ffffff" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_avatar"
+        android:layout_below="@id/rl_header"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Thang Pham"
-        android:textColor="#000"
-        android:textSize="18dp" />
-
-    <LinearLayout
-        android:id="@+id/rl_buy"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/tv_name"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:weightSum="10">
-
-        <Button
-            android:id="@+id/btBuy"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_weight="5"
-            android:text="Rao bán sản phẩm" />
+        android:layout_marginTop="8dp">
 
         <Button
             android:id="@+id/btDauGia"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_weight="5"
-            android:text="Tạo Phiên đấu giá" />
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
+            android:padding="8dp"
+            android:text="Rao bán sản phẩm"
+            android:textColor="@color/colorPrimary" />
 
-    <TextView
-        android:id="@+id/tv_history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rl_buy"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Lịch sử"
-        android:textColor="#000"
-        android:textSize="18dp" />
+        <Button
+            android:id="@+id/btBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/btDauGia"
+            android:background="@drawable/rounded_corner"
+            android:padding="8dp"
+            android:text="Tạo phiên đấu giá"
+            android:textColor="@color/colorPrimary" />
+    </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <TableLayout
+        android:id="@+id/tl_history"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/rl_button">
+
+    </TableLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tv_history">
+        android:layout_below="@id/tabLayout">
 
-    </android.support.v7.widget.RecyclerView>
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/rl_mini"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="80dp"-->
-    <!--android:layout_alignParentBottom="true">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="60dp"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:weightSum="3">-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/iv_buy"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="60dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:src="@drawable/ic_add_shopping_cart_black_24dp" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/iv_daugia"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="60dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:src="@drawable/ic_gavel_black_24dp" />-->
-
-
-    <!--<ImageView-->
-    <!--android:id="@+id/iv_me"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="60dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:src="@drawable/ic_person_black_24dp" />-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="20dp"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:weightSum="3">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="1"-->
-    <!--android:gravity="center"-->
-    <!--android:text="Giao vặt"-->
-    <!--android:textColor="#231e1e"-->
-    <!--android:textSize="16dp"-->
-    <!--android:textStyle="bold" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="1"-->
-    <!--android:gravity="center"-->
-    <!--android:text="Đấu giá"-->
-    <!--android:textColor="#231e1e"-->
-    <!--android:textSize="16dp"-->
-    <!--android:textStyle="bold" />-->
-
-
-    <!--<TextView-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="1"-->
-    <!--android:gravity="center"-->
-    <!--android:text="Tôi"-->
-    <!--android:textColor="#231e1e"-->
-    <!--android:textSize="16dp"-->
-    <!--android:textStyle="bold" />-->
-    <!--</LinearLayout>-->
-    <!--</RelativeLayout>-->
+    </android.support.v4.view.ViewPager>
 </RelativeLayout>

@@ -3,7 +3,10 @@ package com.example.haihm.shelf.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +18,15 @@ import android.widget.TextView;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.DangSpDGActivity;
 import com.example.haihm.shelf.activity.DangSpRvActivity;
+import com.example.haihm.shelf.adapters.ViewPagerProfileAdapter;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +38,8 @@ public class ProfileFragment extends Fragment{
     ImageView ivCover,ivAvatar;
     TextView tvName;
     UserModel userModel;
+   // TabLayout tabLayout;
+    ViewPager viewPager;
     public ProfileFragment() {
         // Required empty public constructor
 
@@ -43,6 +51,7 @@ public class ProfileFragment extends Fragment{
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         setupUI();
+        loadDataForTabLayout();
         EventBus.getDefault().register(this);
         btnAuction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,19 +73,44 @@ public class ProfileFragment extends Fragment{
     {
         userModel=onClickUserModelEvent.userModel;
         Log.d(TAG, "loadData: "+userModel.getHoten()+" "+userModel.getAnhAvatar());
-        Picasso.with(getActivity()).load(userModel.getAnhAvatar()).into(ivAvatar);
+        Picasso.with(getActivity()).load(userModel.getAnhAvatar()).transform(new CropCircleTransformation()).into(ivAvatar);
 //        Picasso.with(getActivity()).load(userModel.getAnhCover()).into(ivCover);
         tvName.setText(userModel.getHoten());
     }
     private void setupUI() {
         btnAuction = view.findViewById(R.id.btBuy);
         btnClassified = view.findViewById(R.id.btDauGia);
-        ivCover = view.findViewById(R.id.iv_cover);
         ivAvatar = view.findViewById(R.id.iv_avatar);
         tvName = view.findViewById(R.id.tv_name);
+
+        viewPager = view.findViewById(R.id.vp_history);
+       // tabLayout = view.findViewById(R.id.tl_history);
     }
 
-
+    public void loadDataForTabLayout()
+    {
+//        tabLayout.addTab(tabLayout.newTab().setContentDescription("PRODUCTS"));
+//        tabLayout.addTab(tabLayout.newTab().setContentDescription("AUCTIONS"));
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                viewPager.setCurrentItem(tab.getPosition());
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
+//        ViewPagerProfileAdapter viewPagerProfileAdapter = new ViewPagerProfileAdapter(getFragmentManager());
+//        viewPager.setAdapter(viewPagerProfileAdapter);
+//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+}
     private void intentPostClassified() {
 
         Intent intent = new Intent(getActivity(), DangSpDGActivity.class);

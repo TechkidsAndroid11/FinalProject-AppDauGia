@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
-        android:padding="16dp"
-        android:background="@color/colorPrimary"
+        android:id="@+id/rl_header"
         android:layout_width="match_parent"
-        android:layout_height="270dp">
+        android:layout_height="260dp"
+        android:background="@color/colorPrimary"
+        android:padding="16dp">
+
         <ImageView
             android:id="@+id/iv_shopping_cart"
-            android:src="@drawable/ic_shopping_cart_black_24dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shopping_cart_black_24dp" />
+
         <TextView
 
-            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/iv_shopping_cart"
-            android:textColor="#fff"
             android:text="Profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="#fff"
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -30,34 +33,79 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/ic_create_black_24dp" />
+
         <ImageView
             android:id="@+id/iv_avatar"
-            android:src="@color/cardview_light_background"
-            android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/iv_shopping_cart"
             android:layout_width="120dp"
-            android:layout_height="120dp" />
+            android:layout_height="120dp"
+            android:layout_below="@id/iv_shopping_cart"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:src="@color/cardview_light_background" />
+
         <TextView
             android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_avatar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:layout_below="@id/iv_avatar"
-            android:textSize="18sp"
-            android:textColor="#fff"
             android:text="Phạm Quang Thắng"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
         <TextView
-            android:layout_marginTop="8dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="#b9ffffff"
-            android:text="Address:322311020"
-            android:layout_below="@id/tv_name"
             android:id="@+id/tv_address"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Address:322311020"
+            android:textColor="#b9ffffff" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_header"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp">
 
+        <Button
+            android:id="@+id/btDauGia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
+            android:padding="8dp"
+            android:text="Rao bán sản phẩm"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/btBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/btDauGia"
+            android:background="@drawable/rounded_corner"
+            android:padding="8dp"
+            android:text="Tạo phiên đấu giá"
+            android:textColor="@color/colorPrimary" />
+    </RelativeLayout>
+
+    <TableLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/rl_button">
+
+    </TableLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabLayout">
+
+    </android.support.v4.view.ViewPager>
 </RelativeLayout>

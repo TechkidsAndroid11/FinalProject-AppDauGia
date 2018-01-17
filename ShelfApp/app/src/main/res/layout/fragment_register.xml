@@ -1,75 +1,116 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.haihm.shelf.fragments.RegisterFragment">
+    android:weightSum="10"
+    android:orientation="vertical"
+    android:background="@drawable/background">
 
-    <ImageView
-        android:id="@+id/iv_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_black_24dp"
-        android:layout_centerHorizontal="true"/>
-
-    <!--<TextView-->
-        <!--android:id="@+id/tv_username"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Họ tên: "-->
-        <!--android:layout_below="@+id/iv_avatar"/>-->
-
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/et_username"-->
-        <!--android:layout_below="@id/tv_username"/>-->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_phone_number"
-        android:layout_below="@+id/iv_avatar"
-        android:text="Số điện thoại:"/>
-    
-    <EditText
+    <View
+        android:layout_weight="2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et_phone_number"
-        android:layout_below="@id/tv_phone_number"/>
+        android:layout_height="0dp"/>
 
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/tv_password"-->
-        <!--android:layout_below="@id/et_phone_number"-->
-        <!--android:text="Mật khẩu:"/>-->
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7">
 
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/et_password"-->
-        <!--android:layout_below="@id/tv_password"/>-->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/tv_reenter_password"-->
-        <!--android:layout_below="@id/et_password"-->
-        <!--android:text="Nhập lại mật khẩu:"/>-->
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
 
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/et_reenter_password"-->
-        <!--android:layout_below="@id/tv_reenter_password"/>-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bt_continue"
-        android:layout_below="@id/et_phone_number"
-        android:layout_centerHorizontal="true"
-        android:text="Tiếp tục"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sign In"
+                        android:textColor="#fff"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="22dp"
+                        android:text="Sign Up"
+                        android:textColor="#fff"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edt_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="User name"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="#7CFFFFFF"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/edt_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Phone number"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="#7CFFFFFF"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/edt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Password"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="#7CFFFFFF"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/edt_confirm_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:hint="Confirm Password"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="#7CFFFFFF"
+                    android:textSize="15sp" />
 
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/bt_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/custom_textview"
+                    android:gravity="center"
+                    android:text="Sign In"
+                    android:textColor="#fff" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>
