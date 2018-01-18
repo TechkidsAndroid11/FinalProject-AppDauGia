@@ -33,9 +33,17 @@
         <activity android:name=".activity.DangSpRvActivity" />
         <activity android:name=".activity.DangSpDGActivity" />
         <activity
+            android:theme="@style/Theme.Design.NoActionBar"
             android:name=".activity.LoginActivity"
+<<<<<<< HEAD
             android:theme="@style/Theme.Design.NoActionBar">
 			<intent-filter>
+=======
+            android:configChanges="keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden">
+
+            <intent-filter>
+>>>>>>> 9138cf14209d457575137a8c4b80889c2f7daaf5
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
