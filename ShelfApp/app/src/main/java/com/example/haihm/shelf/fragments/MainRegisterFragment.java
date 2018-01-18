@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.haihm.shelf.activity.LoginActivity;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
 import com.example.haihm.shelf.utils.Utils;
@@ -131,7 +132,9 @@ public class MainRegisterFragment extends Fragment {
     }
     public void registerAccount()
     {
+
         String id = user.getUid();
+        Log.d(TAG, "registerAccount: "+id);
         String address="";
         String phone = user.getPhoneNumber();
         String userName = etUsername.getText().toString();
@@ -144,7 +147,8 @@ public class MainRegisterFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(getActivity(), "Đăng ký thành công!!", Toast.LENGTH_SHORT).show();
-                Utils.openFragment(getFragmentManager(),R.id.rl_main,new LoginFragment());
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
             }
         });
     }

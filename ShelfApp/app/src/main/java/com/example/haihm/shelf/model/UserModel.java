@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by Trần_Tân on 10/01/2018.
  */
 
-public class UserModel implements Serializable {
+public class UserModel {
     public String id;
     public String anhAvatar;
     public String anhCover;
@@ -18,16 +18,19 @@ public class UserModel implements Serializable {
     public String sdt;
     public String diaC;
     public Rate rate;
+    public UserModel()
+    {
 
-    public UserModel() {
-        id = "";
-        anhAvatar ="";
-        anhCover ="";
-        hoten = "";
-        sdt = "";
-        diaC = "";
-        rate = new Rate();
     }
+//    public UserModel() {
+////        id = "";
+////        anhAvatar ="";
+////        anhCover ="";
+////        hoten = "";
+////        sdt = "";
+////        diaC = "";
+////        rate = new Rate();
+//    }
 
     public UserModel(String id, String anhAvatar, String anhCover, String hoten, String sdt, String diaC, Rate rate) {
         this.id = id;
@@ -70,6 +73,31 @@ public class UserModel implements Serializable {
     public class Rate {
         public int tongD;
         public int tongVote;
+        public Rate()
+        {
+
+        }
+
+        public Rate(int tongD, int tongVote) {
+            this.tongD = tongD;
+            this.tongVote = tongVote;
+        }
+
+        public int getTongD() {
+            return tongD;
+        }
+
+        public void setTongD(int tongD) {
+            this.tongD = tongD;
+        }
+
+        public int getTongVote() {
+            return tongVote;
+        }
+
+        public void setTongVote(int tongVote) {
+            this.tongVote = tongVote;
+        }
     }
 
     public String getId() {
