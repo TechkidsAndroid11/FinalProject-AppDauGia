@@ -1,5 +1,6 @@
 package com.example.haihm.shelf.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,42 +9,35 @@ import java.util.List;
  */
 
 public class SanPhamRaoVat {
-    public String idNB;
     public String tenSP;
-    public HashMap<String,String> anhSP ;
+    public ArrayList<String> anhSP ;
     public double giaSP;
     public String motaSP;
     public String loaiSP;
-    public String hoTenNB;
-    public String sdtNB;
     public String diaGD;
-
-    public SanPhamRaoVat(String idNB, String tenSP, HashMap<String,String> anhSP, double giaSP,
-                         String motaSP, String loaiSP, String hoTenNB, String sdtNB, String diaGD) {
-        this.idNB = idNB;
+    public UserModel nguoiB;
+    public SanPhamRaoVat(UserModel nguoiB, String tenSP, ArrayList<String> anhSP, double giaSP,
+                         String motaSP, String loaiSP, String diaGD) {
+        this.nguoiB = nguoiB;
         this.tenSP = tenSP;
         this.anhSP = anhSP;
         this.giaSP = giaSP;
         this.motaSP = motaSP;
         this.loaiSP = loaiSP;
-        this.hoTenNB = hoTenNB;
-        this.sdtNB = sdtNB;
         this.diaGD = diaGD;
     }
 
     public SanPhamRaoVat() {
+
     }
 
     @Override
     public String toString() {
         return "SanPhamRaoVat{" +
-                "idNB='" + idNB + '\'' +
                 ", tenSP='" + tenSP + '\'' +
                 ", giaSP=" + giaSP +
                 ", motaSP='" + motaSP + '\'' +
                 ", loaiSP='" + loaiSP + '\'' +
-                ", hoTenNB='" + hoTenNB + '\'' +
-                ", sdtNB='" + sdtNB + '\'' +
                 '}';
     }
 }

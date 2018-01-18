@@ -1,6 +1,7 @@
 package com.example.haihm.shelf.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,28 +12,19 @@ import java.util.List;
 public class SanPhamDauGia extends SanPhamRaoVat {
     public double buocGia;
     public double giaCaoNhat;
-    public int thoiGian;
-    public NguoiMua nguoiMua;
+    public Date tgianKthuc;
+    public UserModel nguoiMua;
 
     public SanPhamDauGia() {
     }
 
-    public SanPhamDauGia(String idNB, String tenSP, HashMap<String,String> anhSP, double giaSP, String motaSP, String loaiSP,
-                         String hoTenNB, String sdtNB, String diaGD,
-                         double buocGia, double giaCaoNhat, int thoiGian, NguoiMua nguoiMua) {
-        super(idNB, tenSP, anhSP, giaSP, motaSP, loaiSP, hoTenNB, sdtNB, diaGD);
+    public SanPhamDauGia(UserModel nguoiB, String tenSP, ArrayList<String> anhSP, double giaSP,
+                         String motaSP, String loaiSP, String diaGD, double buocGia, double giaCaoNhat,
+                         Date date, UserModel nguoiMua) {
+        super(nguoiB, tenSP, anhSP, giaSP, motaSP, loaiSP, diaGD);
         this.buocGia = buocGia;
         this.giaCaoNhat = giaCaoNhat;
-        this.thoiGian = thoiGian;
+        this.tgianKthuc = date;
         this.nguoiMua = nguoiMua;
-    }
-
-    public static class NguoiMua {
-        public String id;
-        public String ten;
-        public String avatar;
-
-        public NguoiMua() {
-        }
     }
 }

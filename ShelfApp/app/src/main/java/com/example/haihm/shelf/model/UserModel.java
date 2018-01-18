@@ -26,7 +26,6 @@ public class UserModel implements Serializable {
         hoten = "";
         sdt = "";
         diaC = "";
-        rate = new Rate();
     }
 
     public UserModel(String id, String anhAvatar, String anhCover, String hoten, String sdt, String diaC, Rate rate) {
@@ -67,9 +66,12 @@ public class UserModel implements Serializable {
         this.confirmPassword = confirmPassword;
     }
 
-    public class Rate {
+    public static class Rate{
         public int tongD;
-        public int tongVote;
+        public int tongLuotVote;
+
+        public Rate() {
+        }
     }
 
     public String getId() {
