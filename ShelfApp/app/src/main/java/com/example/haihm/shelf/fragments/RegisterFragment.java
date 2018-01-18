@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,11 +34,12 @@ import com.example.haihm.shelf.R;
 public class RegisterFragment extends Fragment {
     private static final String TAG = "RegisterFragment";
     public EditText etPhone;
-    public Button btnContinue;
+    public Button btnSignIn;
     public String phoneVerificationId;
     public PhoneAuthProvider.OnVerificationStateChangedCallbacks verificationCallbacks;
     public PhoneAuthProvider.ForceResendingToken resendToken;
     public FirebaseAuth fbAuth;
+
     public RegisterFragment() {
         // Required empty public constructor
     }
@@ -49,14 +51,28 @@ public class RegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         setupUI(view);
-//
+        addListener();
         return view;
     }
     public void setupUI(View view)
     {
         etPhone = view.findViewById(R.id.edt_phone_number);
-        //btnContinue = view.findViewById(R.id.bt_continue);
+//        etUser= view.findViewById(R.id.edt_user_name);
+//        etPass = view.findViewById(R.id.edt_password);
+//        etConfirmPass = view.findViewById(R.id.edt_confirm_password);
+        btnSignIn = view.findViewById(R.id.bt_sign_in);
         fbAuth = FirebaseAuth.getInstance();
+    }
+    public void addListener()
+    {
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendCode();
+
+
+            }
+        });
     }
     public void sendCode()
     {
@@ -79,7 +95,7 @@ public class RegisterFragment extends Fragment {
 
 
                 // tvStatus.setText("Sign In");
-                signInWithPhoneAuthCredential(credential);
+//                signInWithPhoneAuthCredential(credential);
             }
 
             @Override
@@ -92,24 +108,21 @@ public class RegisterFragment extends Fragment {
                 Log.d(TAG, "onCodeSent: ");
                 phoneVerificationId = verificationId;
                 resendToken = token;
-                Utils.openFragment(getFragmentManager(),R.id.rl_main,new VerifyPhoneFragment(phoneVerificationId,null,null));
+                Utils.openFragment(getFragmentManager(),R.id.rl_main,new VerifyPhoneRegisterFragment(phoneVerificationId,etPhone.getText().toString()));
             }
         };
     }
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        fbAuth.signInWithCredential(credential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful())
-                {
-                    FirebaseUser user = task.getResult().getUser();
-                    //Utils.openFragment(getFragmentManager(),R.id.rl_main,R.l);
-                }
-            }
-        });
-    }
-    public void signInWithUserAndPassword(PhoneAuthCredential credential)
-    {
+//    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+//        fbAuth.signInWithCredential(credential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if(task.isSuccessful())
+//                {
+//                    FirebaseUser user = task.getResult().getUser();
+//                    //Utils.openFragment(getFragmentManager(),R.id.rl_main,R.l);
+//                }
+//            }
+//        });
+//    }
 
-    }
 }

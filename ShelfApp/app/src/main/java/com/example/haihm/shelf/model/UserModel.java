@@ -13,6 +13,8 @@ public class UserModel implements Serializable {
     public String anhAvatar;
     public String anhCover;
     public String hoten;
+    public String password;
+    public String confirmPassword;
     public String sdt;
     public String diaC;
     public Rate rate;
@@ -35,6 +37,34 @@ public class UserModel implements Serializable {
         this.sdt = sdt;
         this.diaC = diaC;
         this.rate = rate;
+    }
+
+    public UserModel(String id, String anhAvatar, String anhCover, String hoten, String password, String confirmPassword, String sdt, String diaC, Rate rate) {
+        this.id = id;
+        this.anhAvatar = anhAvatar;
+        this.anhCover = anhCover;
+        this.hoten = hoten;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.sdt = sdt;
+        this.diaC = diaC;
+        this.rate = rate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public class Rate {
