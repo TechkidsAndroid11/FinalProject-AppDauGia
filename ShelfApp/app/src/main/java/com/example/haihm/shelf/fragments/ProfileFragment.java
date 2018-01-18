@@ -2,11 +2,14 @@ package com.example.haihm.shelf.fragments;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +36,13 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
  */
 public class ProfileFragment extends Fragment{
     private static final String TAG = "ProfileFragment";
+    CropCircleTransformation cropCircleTransformation =new CropCircleTransformation();
     View view;
     Button btnAuction, btnClassified;
     ImageView ivCover,ivAvatar;
     TextView tvName;
     UserModel userModel;
+    String base64;
    // TabLayout tabLayout;
     ViewPager viewPager;
     public ProfileFragment() {
@@ -73,8 +78,18 @@ public class ProfileFragment extends Fragment{
     {
         userModel=onClickUserModelEvent.userModel;
         Log.d(TAG, "loadData: "+userModel.getHoten()+" "+userModel.getAnhAvatar());
-        Picasso.with(getActivity()).load(userModel.getAnhAvatar()).transform(new CropCircleTransformation()).into(ivAvatar);
-//        Picasso.with(getActivity()).load(userModel.getAnhCover()).into(ivCover);
+     //   Picasso.with(getActivity()).load(userModel.getAnhAvatar()).transform(new CropCircleTransformation()).into(ivAvatar);
+        base64=userModel.getAnhAvatar();
+        String[] sBase64 = base64.split(",");
+        Bitmap bitmap = BitmapFactory.decodeByteArray(
+                Base64.decode(sBase64[0],Base64.DEFAULT),
+                0,// offset: vị trí bđ
+                (Base64.decode(sBase64[0],Base64.DEFAULT)).length
+
+        );
+
+       // Picasso.with(getActivity()).load(sBase64[0]).into((ivAvatar));
+        ivAvatar.setImageBitmap(cropCircleTransformation.transform(bitmap));
         tvName.setText(userModel.getHoten());
     }
     private void setupUI() {

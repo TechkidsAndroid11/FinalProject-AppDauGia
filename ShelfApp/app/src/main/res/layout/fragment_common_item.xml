@@ -5,33 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="160dp">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tv_type_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:text="Equipment"
-            android:textColor="#000000" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:text="Xem tất cả"
-            android:layout_marginEnd="@dimen/pad_def"/>
-    </RelativeLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list_product"
         android:layout_width="0dp"
