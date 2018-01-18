@@ -2,9 +2,12 @@ package com.example.haihm.shelf.fragments;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,15 +31,18 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment{
+public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
+    CropCircleTransformation cropCircleTransformation = new CropCircleTransformation();
     View view;
     Button btnAuction, btnClassified;
-    ImageView ivCover,ivAvatar;
+    ImageView ivCover, ivAvatar;
     TextView tvName;
     UserModel userModel;
-   // TabLayout tabLayout;
+    String base64;
+    // TabLayout tabLayout;
     ViewPager viewPager;
+
     public ProfileFragment() {
         // Required empty public constructor
 
@@ -65,14 +71,28 @@ public class ProfileFragment extends Fragment{
         });
         return view;
     }
+
     @Subscribe(sticky = true)
-    public void loadData(OnClickUserModelEvent onClickUserModelEvent)
-    {
-        userModel=onClickUserModelEvent.userModel;
-        Log.d(TAG, "loadData: "+userModel.getHoten()+" "+userModel.getAnhAvatar());
+    public void loadData(OnClickUserModelEvent onClickUserModelEvent) {
+        userModel = onClickUserModelEvent.userModel;
+        Log.d(TAG, "loadData: " + userModel.getHoten() + " " + userModel.getAnhAvatar());
+
         Picasso.with(getActivity()).load(userModel.getAnhAvatar()).transform(new CropCircleTransformation()).into(ivAvatar);
+
+        base64 = userModel.getAnhAvatar();
+        String[] sBase64 = base64.split(",");
+        Bitmap bitmap = BitmapFactory.decodeByteArray(
+                Base64.decode(sBase64[0], Base64.DEFAULT),
+                0,// offset: vị trí bđ
+                (Base64.decode(sBase64[0], Base64.DEFAULT)).length
+
+        );
+
+        // Picasso.with(getActivity()).load(sBase64[0]).into((ivAvatar));
+        ivAvatar.setImageBitmap(cropCircleTransformation.transform(bitmap));
         tvName.setText(userModel.getHoten());
     }
+
     private void setupUI() {
         btnAuction = view.findViewById(R.id.btBuy);
         btnClassified = view.findViewById(R.id.btDauGia);
@@ -80,11 +100,10 @@ public class ProfileFragment extends Fragment{
         tvName = view.findViewById(R.id.tv_name);
 
         viewPager = view.findViewById(R.id.vp_history);
-       // tabLayout = view.findViewById(R.id.tl_history);
+        // tabLayout = view.findViewById(R.id.tl_history);
     }
 
-    public void loadDataForTabLayout()
-    {
+    public void loadDataForTabLayout() {
 //        tabLayout.addTab(tabLayout.newTab().setContentDescription("PRODUCTS"));
 //        tabLayout.addTab(tabLayout.newTab().setContentDescription("AUCTIONS"));
 //        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -106,7 +125,8 @@ public class ProfileFragment extends Fragment{
 //        ViewPagerProfileAdapter viewPagerProfileAdapter = new ViewPagerProfileAdapter(getFragmentManager());
 //        viewPager.setAdapter(viewPagerProfileAdapter);
 //        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-}
+    }
+
     private void intentPostClassified() {
 
         Intent intent = new Intent(getActivity(), DangSpRvActivity.class);

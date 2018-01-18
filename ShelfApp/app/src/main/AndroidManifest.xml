@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,16 +30,14 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DangSpRvActivity">
-
-        </activity>
-        <activity android:name=".activity.DangSpDGActivity">
-
-        </activity>
+        <activity android:name=".activity.DangSpRvActivity" />
+        <activity android:name=".activity.DangSpDGActivity" />
         <activity
             android:theme="@style/Theme.Design.NoActionBar"
             android:name=".activity.LoginActivity"
-            android:configChanges="keyboardHidden">
+            android:configChanges="keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,8 +56,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-        <activity android:name=".activity.AuctionDetailsActivity">
+        <activity android:name=".activity.AuctionDetailsActivity" />
+        <activity android:name=".activity.ProductDetailActivity">
 
         </activity>
     </application>

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.MainActivity;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
+import com.example.haihm.shelf.utils.ImageUtils;
 import com.example.haihm.shelf.utils.Utils;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -51,6 +55,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -76,10 +84,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     UserModel.Rate rate;
     UserModel userModel;
     String base64;
-    Bitmap bitmap;
+    public static Bitmap bitmap;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     TextView tvSignIn, tvSignUp;
+    EditText etUsername, etPass;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -114,6 +123,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         databaseReference = firebaseDatabase.getReference().child("UserInfo");
         tvSignIn = view.findViewById(R.id.tv_sign_in);
         tvSignUp = view.findViewById(R.id.tv_sign_up);
+        etUsername = view.findViewById(R.id.edt_username);
+        etPass = view.findViewById(R.id.et_password);
         // xin các quyền cơ bản của user
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -124,7 +135,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 .enableAutoManage(getActivity(), this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
     }
 
     public void addListener() {
@@ -138,7 +148,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         btnLoginApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-           //     Utils.openFragment(getFragmentManager(),R.id.rl_main,new MainRegisterFragment(null,""));
+                loginWithPhone();
             }
         });
 
@@ -158,6 +168,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     }
 
     public void checkLogined() {
+
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyPre", Context.MODE_PRIVATE);
         String Uid = sharedPreferences.getString("UserId", "NotFound");
         if (!Uid.equals("NotFound")) {
@@ -166,6 +177,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         userModel = userSnapshot.getValue(UserModel.class);
+                        Log.d(TAG, "onDataChange: " + userModel.getSdt());
                         EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
@@ -180,6 +192,24 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         }
     }
 
+    public void loginWithPhone() {
+        String username = etUsername.getText().toString();
+        final String pass = etPass.getText().toString();
+        databaseReference.orderByChild("hoten").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     private void handleFacebookAccessToken(AccessToken accessToken) {
         AuthCredential authCredential = FacebookAuthProvider.getCredential(accessToken.getToken());
@@ -188,31 +218,33 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             public void onComplete(@NonNull Task<AuthResult> task) {
                 // đăng nhập thành công
                 if (task.isSuccessful()) {
-                    FirebaseUser user = task.getResult().getUser();
-                    Log.d(TAG, "onComplete: "+user.getPhoneNumber());
-                    if(user.getPhoneNumber()==null)
-                    {
-                        avatar = String.valueOf(user.getPhotoUrl());
-                        name = user.getDisplayName();
-                        userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
-                        Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
-
-                    }
-                    else
-                    {
-                        avatar = String.valueOf(user.getPhotoUrl());
-                        name = user.getDisplayName();
-                        userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
-                        EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        startActivity(intent);
-                        saveLoginSuccess(user.getUid());
-                        databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    final FirebaseUser user = task.getResult().getUser();
+                    Log.d(TAG, "onComplete: " + user.getPhoneNumber());
+                    if (user.getPhoneNumber() == null) {
+                        executeMyAsync(user);
+//                        bitmap = ImageUtils.getBitmapFromURL(String.valueOf(user.getPhotoUrl()));
+//                        String tempBase64 = ImageUtils.encodeTobase64(bitmap);
+//                        base64 = ImageUtils.resizeBase64Image(tempBase64);
+//
+//                        avatar = String.valueOf(base64);
+//                        name = user.getDisplayName();
+//                        userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+//                        Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
+                    } else {
+                        executeMyAsync2(user);
+//                        avatar = String.valueOf(base64);
+//                        name = user.getDisplayName();
+//                        userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+//                        EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+//                        Intent intent = new Intent(getActivity(), MainActivity.class);
+//                        startActivity(intent);
+//                        saveLoginSuccess(user.getUid());
+//                        databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
                     }
 
                 } else {
@@ -250,8 +282,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             public void onSuccess(LoginResult loginResult) {
                 updateFacebookButtonUI();
                 handleFacebookAccessToken(loginResult.getAccessToken());
-                Log.e("checkLogin", "success");
-
             }
 
             @Override
@@ -261,7 +291,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
             @Override
             public void onError(FacebookException error) {
-                Log.d(TAG, "onError: " + error.getMessage());
+
             }
         });
     }
@@ -300,39 +330,32 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = task.getResult().getUser();
-                            Log.d(TAG, "onComplete: "+user.getPhoneNumber());
-                            if(user.getPhoneNumber()==null)
-                            {
-//                                bitmap = ImageUtils.getBitmapFromURL(String.valueOf(user.getPhotoUrl()));
-//                                String tempBase64 = ImageUtils.encodeTobase64(bitmap);
-//                                base64 = ImageUtils.resizeBase64Image(tempBase64);
+                            final FirebaseUser user = task.getResult().getUser();
+                            Log.d(TAG, "onComplete: " + user.getPhoneNumber());
+                            if (user.getPhoneNumber() == null) {
 
-                                avatar = String.valueOf(user.getPhotoUrl());
-                                name = user.getDisplayName();
-                                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
-                                Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
+                                executeMyAsync(user);
+//                                avatar = String.valueOf(base64);
+//                                name = user.getDisplayName();
+//                                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+//                                Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
 
-                            }
-                            else
-                            {
-//                                bitmap = ImageUtils.getBitmapFromURL(String.valueOf(user.getPhotoUrl()));
-//                                String tempBase64 = ImageUtils.encodeTobase64(bitmap);
-//                                base64 = ImageUtils.resizeBase64Image(tempBase64);
-
-                                avatar = String.valueOf(user.getPhotoUrl());
-                                name = user.getDisplayName();
-                                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
-                                EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
-                                Intent intent = new Intent(getActivity(), MainActivity.class);
-                                startActivity(intent);
-                                saveLoginSuccess(user.getUid());
-                                databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                            } else {
+//
+                                executeMyAsync2(user);
+//                                avatar = String.valueOf(base64);
+//                                name = user.getDisplayName();
+//                                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+//                                EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+//                                Intent intent = new Intent(getActivity(), MainActivity.class);
+//                                startActivity(intent);
+//                                saveLoginSuccess(user.getUid());
+//                                databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
                             }
                         } else {
                             // If sign in fails, display a message to the user.
@@ -367,6 +390,71 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    public void executeMyAsync(final FirebaseUser user) {
+        MyAsync obj = new MyAsync() {
+            @Override
+            protected void onPostExecute(Bitmap bmp) {
+                super.onPostExecute(bmp);
+
+                Bitmap bitmap = bmp;
+                String tempBase64 = ImageUtils.encodeTobase64(bitmap);
+                base64 = ImageUtils.resizeBase64Image(tempBase64);
+                avatar = String.valueOf(base64);
+                name = user.getDisplayName();
+                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+                Utils.openFragment(getFragmentManager(), R.id.rl_main, new CheckPhoneFragment(userModel));
+            }
+        };
+        obj.execute(String.valueOf(user.getPhotoUrl()));
+    }
+
+    public void executeMyAsync2(final FirebaseUser user) {
+        MyAsync obj = new MyAsync() {
+            @Override
+            protected void onPostExecute(Bitmap bmp) {
+                super.onPostExecute(bmp);
+
+                Bitmap bitmap = bmp;
+                String tempBase64 = ImageUtils.encodeTobase64(bitmap);
+                base64 = ImageUtils.resizeBase64Image(tempBase64);
+                avatar = String.valueOf(base64);
+                name = user.getDisplayName();
+                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+                EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                saveLoginSuccess(user.getUid());
+                databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        };
+        obj.execute(String.valueOf(user.getPhotoUrl()));
+    }
+
+    public class MyAsync extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            try {
+                URL url = new URL(strings[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                return myBitmap;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+        }
     }
 }
 

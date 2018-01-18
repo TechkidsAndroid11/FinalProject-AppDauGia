@@ -171,14 +171,22 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",", ""));
-        SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(userModel.id, etTenSP.getText().toString(), lanhSP,
+        SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(userModel, etTenSP.getText().toString(), getList(lanhSP),
                 giaSP,
                 etMoTaSP.getText().toString(), loaiSP,
-                userModel.hoten, userModel.sdt, etDiaC.getText().toString());
-
+                etDiaC.getText().toString());
         databaseReference.child(loaiSP).push().setValue(sanPhamRaoVat);
         Toast.makeText(this, "Rao bán thành công", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    private ArrayList<String> getList(HashMap<String, String> lanhSP) {
+        ArrayList<String> list = new ArrayList<>();
+        for(String i : lanhSP.keySet()){
+            String tmp = lanhSP.get(i);
+            if(!tmp.equals("")) list.add(tmp);
+        }
+        return list;
     }
 
     private boolean checkListPhoto() {
@@ -272,7 +280,9 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             if (ii == vt) {
                 lskPhoto.get(ii).setVisibility(View.VISIBLE);
                 livPhoto.get(ii).setVisibility(View.INVISIBLE);
-                return;
+            }
+            else {
+                livPhoto.get(ii).setClickable(false);
             }
         }
     }
@@ -285,7 +295,9 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
                 livPhoto.get(ii).setVisibility(View.VISIBLE);
                 livPhoto.get(ii).setScaleType(ImageView.ScaleType.FIT_XY);
                 livPhoto.get(ii).setImageBitmap(bitmap);
-                return;
+            }
+            else {
+                livPhoto.get(ii).setClickable(true);
             }
         }
     }
