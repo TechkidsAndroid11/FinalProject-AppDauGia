@@ -1,15 +1,11 @@
 package com.example.haihm.shelf.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,16 +35,12 @@ import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -70,6 +62,7 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
         EventBus.getDefault().register(this);
         testFireBase();
         setUpUI();
+//        loadData();
         addController();
     }
 
@@ -160,7 +153,7 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
     private void loadImage(ArrayList<String> anhSP) {
         new MyAsyncTask().execute(anhSP);
     }
-        public class MyAsyncTask extends AsyncTask<ArrayList<String>, Void, ArrayList<Bitmap>> {
+    public class MyAsyncTask extends AsyncTask<ArrayList<String>, Void, ArrayList<Bitmap>> {
 
 
         @Override

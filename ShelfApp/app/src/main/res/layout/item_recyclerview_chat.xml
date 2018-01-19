@@ -12,7 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Đẹp thế"
+        android:textColor="#000"
+        android:padding="8dp"
         android:layout_marginRight="8dp"
         android:layout_toRightOf="@id/iv_avatar"
+        android:background="@drawable/ct_textview_mess"
         android:layout_centerVertical="true"/>
 </RelativeLayout>

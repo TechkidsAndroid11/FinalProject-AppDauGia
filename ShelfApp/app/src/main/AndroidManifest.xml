@@ -33,9 +33,8 @@
         <activity android:name=".activity.DangSpRvActivity" />
         <activity android:name=".activity.DangSpDGActivity" />
         <activity
-            android:name=".activity.LoginActivity"
-            android:theme="@style/Theme.Design.NoActionBar">
-
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:name=".activity.LoginActivity">
         </activity>
         <activity android:name=".activity.MainActivity">
             <intent-filter>
@@ -53,7 +52,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <activity android:name=".activity.AuctionDetailsActivity" />
+        <activity android:name=".activity.AuctionDetailsActivity" >
+            
+        </activity>
         <activity android:name=".activity.ProductDetailActivity">
 
         </activity>
