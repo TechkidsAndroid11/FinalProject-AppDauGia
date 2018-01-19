@@ -27,27 +27,27 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
     </RelativeLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <include
-                layout="@layout/layout_description_auction"
-                android:id="@+id/icl_des_auction"
-                />
-            <include
-                android:visibility="visible"
-                layout="@layout/layout_highest_cost_master_auction"
-                android:id="@+id/icl_highest_cost_master"
-                />
-            <include
-                android:visibility="visible"
-                layout="@layout/layout_highest_cost_guest_auction"
-                android:id="@+id/icl_highest_cost_guest"
-                />
-            <include
-                layout="@layout/layout_chat_auction"
-                android:id="@+id/icl_chat"
-                />
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <include
+            layout="@layout/layout_description_auction"
+            android:id="@+id/icl_des_auction"
+            />
+        <include
+            android:visibility="visible"
+            layout="@layout/layout_highest_cost_master_auction"
+            android:id="@+id/icl_highest_cost_master"
+            />
+        <include
+            android:visibility="visible"
+            layout="@layout/layout_highest_cost_guest_auction"
+            android:id="@+id/icl_highest_cost_guest"
+            />
+        <include
+            layout="@layout/layout_chat_auction"
+            android:id="@+id/icl_chat"
+            />
+    </LinearLayout>
 </LinearLayout>

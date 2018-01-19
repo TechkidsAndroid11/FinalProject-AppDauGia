@@ -60,9 +60,9 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
         EventBus.getDefault().register(this);
-        testFireBase();
+//        testFireBase();
         setUpUI();
-//        loadData();
+        loadData();
         addController();
     }
 

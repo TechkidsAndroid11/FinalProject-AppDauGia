@@ -44,7 +44,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity">
-
         </activity>
 
         <provider
@@ -56,10 +55,8 @@
                 android:resource="@xml/provider_paths" />
         </provider>
         <activity android:name=".activity.AuctionDetailsActivity" >
-            
         </activity>
         <activity android:name=".activity.ProductDetailActivity">
-
         </activity>
     </application>
 

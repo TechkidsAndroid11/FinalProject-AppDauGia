@@ -100,14 +100,14 @@ public class AuctionDetailsActivity extends AppCompatActivity {
         if (myAution()) {
             rlHightestCostGuest.setVisibility(View.GONE);
 
-            tvNameBuyer = rlHightestCostMaster.findViewById(R.id.tv_name_seller);
+            tvNameBuyer = rlHightestCostMaster.findViewById(R.id.tv_name_buyer);
             tvTimeRemaining = rlHightestCostMaster.findViewById(R.id.tv_time_remaining);
             tvCurentCost = rlHightestCostMaster.findViewById(R.id.tv_current_cost);
 
         } else {
             rlHightestCostMaster.setVisibility(View.GONE);
 
-            tvNameBuyer = rlHightestCostGuest.findViewById(R.id.tv_name_seller);
+            tvNameBuyer = rlHightestCostGuest.findViewById(R.id.tv_name_buyer);
             tvTimeRemaining = rlHightestCostGuest.findViewById(R.id.tv_time_remaining);
             tvCurentCost = rlHightestCostGuest.findViewById(R.id.tv_current_cost);
         }
@@ -122,12 +122,13 @@ public class AuctionDetailsActivity extends AppCompatActivity {
     }
 
     private boolean myAution() {
-        return true;
+        return false;
     }
 
     private void loadData(){
         loadImage(sanPhamDauGia.anhSP);
         tvNameAuction.setText(sanPhamDauGia.tenSP);
+        tvNameSeller.setText(sanPhamDauGia.nguoiB.hoten);
         tvDescription.setText(sanPhamDauGia.motaSP);
         tvAddress.setText(tvAddress.getText()+sanPhamDauGia.diaGD);
         Picasso.with(this).load(sanPhamDauGia.nguoiB.anhAvatar)
@@ -141,7 +142,7 @@ public class AuctionDetailsActivity extends AppCompatActivity {
         tvStartCost.setText(decimalFormat.format(sanPhamDauGia.giaSP)+"đ");
         String formatTmp = decimalFormat.format(sanPhamDauGia.giaCaoNhat);
         tvCurentCost.setText(formatTmp+"đ");
-
+        tvNameBuyer.setText(sanPhamDauGia.nguoiMua.hoten);
         long timeRemaining = sanPhamDauGia.tgianKthuc.getTime() - new Date().getTime();
         new CountDownTimer(timeRemaining, 1000) {
             @Override
@@ -265,7 +266,6 @@ public class AuctionDetailsActivity extends AppCompatActivity {
 
                 loadData();
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 

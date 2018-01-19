@@ -96,11 +96,12 @@ public class ProductTypeFragment extends Fragment {
 
     private void setupRecyclerView(View view) {
         //setup recycler view
-        ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(sanPhamRaoVatList);
+        ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(sanPhamRaoVatList,getContext());
         rvProducts.setAdapter(productTypeAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         linearLayoutManager.canScrollHorizontally();
         rvProducts.setLayoutManager(linearLayoutManager);
+        Log.d(TAG, "setupRecyclerView: ");
     }
 
 
