@@ -2,12 +2,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_chat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@id/relativeLayout"/>
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -15,7 +14,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true">
         <ImageView
-            android:id="@+id/iv_avatar"
+            android:id="@+id/iv_my_avatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"/>
@@ -24,8 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:hint="Nhập tin nhắn"
+            android:background="@drawable/custom_edittext_mess"
             android:layout_toLeftOf="@id/iv_send"
-            android:layout_toRightOf="@id/iv_avatar"/>
+            android:layout_toRightOf="@id/iv_my_avatar"/>
         <ImageView
             android:id="@+id/iv_send"
             android:layout_width="wrap_content"

@@ -5,23 +5,49 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.haihm.shelf.activity.AuctionDetailsActivity">
-    <include
-        layout="@layout/layout_description_auction"
-        android:id="@+id/icl_des_auction"
-        />
-    <include
-        android:visibility="gone"
-        layout="@layout/layout_highest_cost_master_auction"
-        android:id="@+id/icl_highest_cost_master"
-        />
-    <include
-        android:visibility="gone"
-        layout="@layout/layout_highest_cost_guest_auction"
-        android:id="@+id/icl_highest_cost_guest"
-        />
-    <include
-        layout="@layout/layout_chat_auction"
-        android:id="@+id/icl_chat"
-        />
-
+    <RelativeLayout
+        android:id="@+id/rv_main_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentTop="true">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:padding="8dp"/>
+        <TextView
+            android:id="@+id/tv_name_auction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Auction Name"
+            android:layout_centerInParent="true"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include
+                layout="@layout/layout_description_auction"
+                android:id="@+id/icl_des_auction"
+                />
+            <include
+                android:visibility="visible"
+                layout="@layout/layout_highest_cost_master_auction"
+                android:id="@+id/icl_highest_cost_master"
+                />
+            <include
+                android:visibility="visible"
+                layout="@layout/layout_highest_cost_guest_auction"
+                android:id="@+id/icl_highest_cost_guest"
+                />
+            <include
+                layout="@layout/layout_chat_auction"
+                android:id="@+id/icl_chat"
+                />
+        </LinearLayout>
 </LinearLayout>

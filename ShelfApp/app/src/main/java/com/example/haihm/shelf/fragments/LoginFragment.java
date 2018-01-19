@@ -88,7 +88,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     TextView tvSignIn, tvSignUp;
-    EditText etUsername,etPass;
+    EditText etUsername, etPass;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -141,7 +141,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         btnLoginFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 handleFacebookLogin();
             }
         });
@@ -178,7 +177,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         userModel = userSnapshot.getValue(UserModel.class);
-                        Log.d(TAG, "onDataChange: "+userModel.getSdt());
+                        Log.d(TAG, "onDataChange: " + userModel.getSdt());
                         EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
@@ -192,8 +191,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             });
         }
     }
-    public void loginWithPhone()
-    {
+
+    public void loginWithPhone() {
         String username = etUsername.getText().toString();
         final String pass = etPass.getText().toString();
         databaseReference.orderByChild("hoten").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -220,9 +219,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 // đăng nhập thành công
                 if (task.isSuccessful()) {
                     final FirebaseUser user = task.getResult().getUser();
-                    Log.d(TAG, "onComplete: "+user.getPhoneNumber());
-                    if(user.getPhoneNumber()==null)
-                    {
+                    Log.d(TAG, "onComplete: " + user.getPhoneNumber());
+                    if (user.getPhoneNumber() == null) {
                         executeMyAsync(user);
 //                        bitmap = ImageUtils.getBitmapFromURL(String.valueOf(user.getPhotoUrl()));
 //                        String tempBase64 = ImageUtils.encodeTobase64(bitmap);
@@ -232,9 +230,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 //                        name = user.getDisplayName();
 //                        userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
 //                        Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
-                    }
-                    else
-                    {
+                    } else {
                         executeMyAsync2(user);
 //                        avatar = String.valueOf(base64);
 //                        name = user.getDisplayName();
@@ -292,6 +288,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             public void onCancel() {
 
             }
+
             @Override
             public void onError(FacebookException error) {
 
@@ -334,9 +331,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             final FirebaseUser user = task.getResult().getUser();
-                            Log.d(TAG, "onComplete: "+user.getPhoneNumber());
-                            if(user.getPhoneNumber()==null)
-                            {
+                            Log.d(TAG, "onComplete: " + user.getPhoneNumber());
+                            if (user.getPhoneNumber() == null) {
 
                                 executeMyAsync(user);
 //                                avatar = String.valueOf(base64);
@@ -344,9 +340,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 //                                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
 //                                Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
 
-                            }
-                            else
-                            {
+                            } else {
 //
                                 executeMyAsync2(user);
 //                                avatar = String.valueOf(base64);
@@ -397,9 +391,9 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-    public void executeMyAsync(final FirebaseUser user)
-    {
-        MyAsync obj = new MyAsync(){
+
+    public void executeMyAsync(final FirebaseUser user) {
+        MyAsync obj = new MyAsync() {
             @Override
             protected void onPostExecute(Bitmap bmp) {
                 super.onPostExecute(bmp);
@@ -410,14 +404,14 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 avatar = String.valueOf(base64);
                 name = user.getDisplayName();
                 userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
-                Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
+                Utils.openFragment(getFragmentManager(), R.id.rl_main, new CheckPhoneFragment(userModel));
             }
         };
         obj.execute(String.valueOf(user.getPhotoUrl()));
     }
-    public void executeMyAsync2(final FirebaseUser user)
-    {
-        MyAsync obj = new MyAsync(){
+
+    public void executeMyAsync2(final FirebaseUser user) {
+        MyAsync obj = new MyAsync() {
             @Override
             protected void onPostExecute(Bitmap bmp) {
                 super.onPostExecute(bmp);
@@ -442,6 +436,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         };
         obj.execute(String.valueOf(user.getPhotoUrl()));
     }
+
     public class MyAsync extends AsyncTask<String, Void, Bitmap> {
 
         @Override
