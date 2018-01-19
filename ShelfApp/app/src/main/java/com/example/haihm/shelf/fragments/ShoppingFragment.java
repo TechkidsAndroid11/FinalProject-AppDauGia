@@ -62,15 +62,14 @@ public class ShoppingFragment extends Fragment {
         stlProductType = view.findViewById(R.id.stl_product_type);
         vpProductList = view.findViewById(R.id.vp_product_list);
 
+        productTypes = getResources().getStringArray(R.array.loai_sp);
+        productTypeList = Arrays.asList(productTypes);
+
         //is auction or not
         Bundle bundle = this.getArguments();
         if (bundle != null){
             isAuction = bundle.getBoolean(MainPagerAdapter.IS_AUCTION);
         }
-
-        productTypes = getResources().getStringArray(R.array.loai_sp);
-        productTypeList = Arrays.asList(productTypes);
-
 
         if (isAuction){
             setupProductTypeTab(view);

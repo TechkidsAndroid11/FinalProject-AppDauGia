@@ -52,17 +52,20 @@ public class ProductTypeFragment extends Fragment {
             isAuction = bundle.getBoolean(MainPagerAdapter.IS_AUCTION);
             productType = bundle.getString(ShoppingFragment.PRODUCT_TYPE);
         }
-
         setupUI(view);
         return view;
     }
 
     private void setupUI(View view) {
         rvProducts = view.findViewById(R.id.rv_list_product);
-
         //load database
-        sanPhamRaoVatList = new ArrayList<>();
+        setupDatabase();
+        loadData(view);
 
+    }
+
+    private void setupDatabase() {
+        sanPhamRaoVatList = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         if (!isAuction) {
@@ -70,11 +73,6 @@ public class ProductTypeFragment extends Fragment {
         } else {
             databaseReference = firebaseDatabase.getReference("Auction").child(productType);
         }
-
-        Log.d(TAG, "setupUI: " + productType);
-
-        loadData(view);
-
     }
 
     private void loadData(final View view) {
@@ -86,13 +84,7 @@ public class ProductTypeFragment extends Fragment {
                     SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);
                     sanPhamRaoVatList.add(sanPhamRaoVat);
                 }
-
-                //setup recycler view
-                ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(sanPhamRaoVatList);
-                rvProducts.setAdapter(productTypeAdapter);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-                linearLayoutManager.canScrollHorizontally();
-                rvProducts.setLayoutManager(linearLayoutManager);
+                setupRecyclerView(view);
             }
 
             @Override
@@ -100,6 +92,15 @@ public class ProductTypeFragment extends Fragment {
                 Log.d(TAG, "onCancelled: " + databaseError.getMessage());
             }
         });
+    }
+
+    private void setupRecyclerView(View view) {
+        //setup recycler view
+        ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(sanPhamRaoVatList);
+        rvProducts.setAdapter(productTypeAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        linearLayoutManager.canScrollHorizontally();
+        rvProducts.setLayoutManager(linearLayoutManager);
     }
 
 
