@@ -37,55 +37,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_product_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/rv_product_list"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-
-        <!--</android.support.v7.widget.RecyclerView>-->
-
-        <include
-            layout="@layout/fragment_common_item"
-            android:id="@+id/incl_equipment"
-            />
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"/>
 
 
-    <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
-        android:id="@+id/incl_it_product_type"
-        />
-
-    <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
-        android:id="@+id/incl_car_product_type"
-        />
-
-    <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
-        android:id="@+id/incl_furniture"
-        />
-
-    <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
-        android:id="@+id/incl_fashion_product_type"
-        />
-
-    <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
-        android:id="@+id/incl_cosmetic_product_type"
-        />
-
-    <include
-        android:visibility="gone"
-        layout="@layout/fragment_common_item"
-        android:id="@+id/incl_other"
-        />
 </LinearLayout>
