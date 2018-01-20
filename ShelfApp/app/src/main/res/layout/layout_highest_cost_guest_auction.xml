@@ -51,9 +51,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_current_cost"
         android:padding="8sp"
+        android:maxLength="17"
         android:hint="Tăng tối thiểu 10.000 (đ)"
         android:background="@drawable/custom_edittext_post"
-        android:layout_toLeftOf="@id/iv_gavel"/>
+        android:layout_toLeftOf="@id/iv_gavel"
+        android:inputType="number"/>
     <ImageView
         android:id="@+id/iv_gavel"
         android:layout_width="wrap_content"

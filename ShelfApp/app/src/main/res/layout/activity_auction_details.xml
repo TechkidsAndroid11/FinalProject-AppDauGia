@@ -17,6 +17,13 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_back_black_24dp"
             android:padding="8dp"/>
+        <ImageView
+            android:id="@+id/iv_my_avatar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_toRightOf="@id/iv_back"
+            android:layout_marginLeft="16dp"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_name_auction"
             android:layout_width="wrap_content"
@@ -27,27 +34,19 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
     </RelativeLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <include
-            layout="@layout/layout_description_auction"
-            android:id="@+id/icl_des_auction"
-            />
-        <include
-            android:visibility="visible"
-            layout="@layout/layout_highest_cost_master_auction"
-            android:id="@+id/icl_highest_cost_master"
-            />
-        <include
-            android:visibility="visible"
-            layout="@layout/layout_highest_cost_guest_auction"
-            android:id="@+id/icl_highest_cost_guest"
-            />
-        <include
-            layout="@layout/layout_chat_auction"
-            android:id="@+id/icl_chat"
-            />
-    </LinearLayout>
+        android:layout_height="match_parent">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_aution"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_aution"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/tab_aution"/>
+    </RelativeLayout>
+
 </LinearLayout>
