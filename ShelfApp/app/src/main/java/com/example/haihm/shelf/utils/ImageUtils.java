@@ -108,18 +108,7 @@ public class ImageUtils {
         return Base64.encodeToString(b, Base64.NO_WRAP);
 
     }
-    public static Bitmap getBitmapFromURL(String uri) {
-        Bitmap image=null;
-        try {
-            URL url = new URL(uri);
-            image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-        } catch(IOException e) {
-            System.out.println(e);
 
-
-        }
-        return image;
-    }
     public static class MyAsync extends AsyncTask<String, Void, Bitmap> {
 
         @Override

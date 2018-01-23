@@ -79,6 +79,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     FirebaseAuth mAuth;
     LoginManager mLoginManager;
     TextView btnLoginFacebook, btnLoginGoogle, btnLoginApp;
+    TextView tvNotify;
     public String cover, name, phone, address;
     String avatar;
     UserModel.Rate rate;
@@ -121,6 +122,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("UserInfo");
+        tvNotify = view.findViewById(R.id.tv_notify);
         tvSignIn = view.findViewById(R.id.tv_sign_in);
         tvSignUp = view.findViewById(R.id.tv_sign_up);
         etUsername = view.findViewById(R.id.edt_username);
@@ -149,6 +151,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         btnLoginApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 loginWithPhone();
             }
         });
@@ -178,7 +181,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         userModel = userSnapshot.getValue(UserModel.class);
-                        Log.d(TAG, "onDataChange: "+userModel.getSdt());
                         EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
@@ -194,22 +196,46 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     }
     public void loginWithPhone()
     {
+
         String username = etUsername.getText().toString();
         final String pass = etPass.getText().toString();
-        databaseReference.orderByChild("hoten").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+        if(username.equals("") || pass.equals(""))
+        {
+            tvNotify.setText("Bạn phải điền đầy đủ thông tin tài khoản và mật khẩu!!");
+        }else
+        {
+            databaseReference.orderByChild("hoten").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists())
+                    {
+                        for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                            userModel = userSnapshot.getValue(UserModel.class);
 
+                            if(userModel.getPassword().equals(pass))
+                            {
+                                Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                saveLoginSuccess(userModel.getId());
+                                EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+                                Intent intent = new Intent(getActivity(),MainActivity.class);
+                                startActivity(intent);
+                            }
+                            else
+                                tvNotify.setText("Sai mật khẩu!!!!");
+                        }
+                    }
+                    else
+                        tvNotify.setText("Tên tài khoản chưa được đăng ký!!");
 
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: "+databaseError.getMessage());
+                }
+            });
+        }
 
-            }
-        });
     }
 
     private void handleFacebookAccessToken(AccessToken accessToken) {
@@ -363,12 +389,9 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 //                                    }
 //                                });
                             }
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }
 
-                        // ...
+
                     }
                 });
     }
