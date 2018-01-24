@@ -122,8 +122,6 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         lanhSP.put("4", "");
         lanhSP.put("5", "");
         //
-        userModel = new UserModel();
-        //
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Auction");
         //format GiaSP va bướcG
@@ -226,10 +224,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
     @Subscribe(sticky = true)
     public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent) {
         userModel = onClickAddSanPhamEvent.userModel;
-    }
-    @Subscribe(sticky = true)
-    public void OnReceivedOnClickUserModelEvent(OnClickUserModelEvent onClickUserModelEvent) {
-        userModel = onClickUserModelEvent.userModel;
+        Log.d(TAG, "OnReceivedOnClickAddSanPhamEvent: "+userModel.sdt);
     }
 
     private void selectFuntion() {

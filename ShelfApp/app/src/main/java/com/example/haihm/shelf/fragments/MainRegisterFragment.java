@@ -33,8 +33,11 @@ import com.example.haihm.shelf.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -66,6 +69,7 @@ public class MainRegisterFragment extends Fragment {
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     String phone;
+    public static boolean check=true;
     @SuppressLint("ValidFragment")
     public MainRegisterFragment(FirebaseUser user,String phone) {
         // Required empty public constructor
@@ -110,10 +114,11 @@ public class MainRegisterFragment extends Fragment {
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkDuplicatedUsername(etUsername.getText().toString());
                 if(etPassword.getText().toString().equals("")|| etUsername.getText().toString().equals("")||etVerifyPassword.getText().toString().equals(""))
                 {
                     tvNotify.setText("Bạn phải điền đầy đủ các thông tin chi tiết!");
-                }else if(base64==null)
+                }else if( base64==null ||base64.equals(""))
                 {
                     tvNotify.setText("Bạn phải thêm ảnh đại diện!");
                 }else if(etPassword.getText().toString().length()<6)
@@ -122,6 +127,10 @@ public class MainRegisterFragment extends Fragment {
                 }else if(!etPassword.getText().toString().equals(etVerifyPassword.getText().toString()))
                 {
                     tvNotify.setText("Nhập lại mật khẩu chưa đúng!");
+                }else if(check==false)
+                {
+                    tvNotify.setText("Tài khoản đã tồn tại!");
+                    Log.d(TAG, "onClick: ton tai");
                 }
                 else
                 {
@@ -129,6 +138,27 @@ public class MainRegisterFragment extends Fragment {
                 }
             }
         });
+    }
+    public void checkDuplicatedUsername(String username)
+    {
+        databaseReference.orderByChild("hoten").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: "+dataSnapshot.getKey());
+                if(dataSnapshot.exists())
+                {
+                    check =true;
+                }
+                else
+                {
+                    check =false;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
     }
     public void registerAccount()
     {

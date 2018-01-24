@@ -64,6 +64,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_sp_rv);
+        EventBus.getDefault().register(this);
         setupUI();
         addController();
     }
@@ -113,8 +114,6 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
         lanhSP.put("3", "");
         lanhSP.put("4", "");
         lanhSP.put("5", "");
-        //
-        userModel = new UserModel();
         //
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Product");
@@ -204,12 +203,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
     @Subscribe(sticky = true)
     public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent) {
         userModel = onClickAddSanPhamEvent.userModel;
-        etDiaC.setText(userModel.diaC);
-    }
-
-    @Subscribe(sticky = true)
-    public void OnReceivedOnClickUserModelEvent(OnClickUserModelEvent onClickUserModelEvent) {
-        userModel = onClickUserModelEvent.userModel;
+        Log.d(TAG, "OnReceivedOnClickAddSanPhamEvent: "+userModel.sdt);
     }
 
     private void selectFuntion() {

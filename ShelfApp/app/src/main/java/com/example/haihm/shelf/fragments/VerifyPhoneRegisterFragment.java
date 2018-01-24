@@ -98,7 +98,12 @@ public class VerifyPhoneRegisterFragment extends Fragment {
         btVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                verifyCode();
+                if(etCode.getText().toString().equals(""))
+                {
+                    Toast.makeText(getActivity(), "Bạn chưa nhập mã code!!", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    verifyCode();
             }
         });
         tvResend.setOnClickListener(new View.OnClickListener() {

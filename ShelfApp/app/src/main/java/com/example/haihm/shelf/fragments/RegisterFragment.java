@@ -68,7 +68,15 @@ public class RegisterFragment extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCode();
+                if(etPhone.getText().toString().equals(""))
+                {
+                    Toast.makeText(getActivity(), "Số điện thoại chưa được nhập!!", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    sendCode();
+                }
+
 
 
             }
@@ -84,7 +92,7 @@ public class RegisterFragment extends Fragment {
                 TimeUnit.SECONDS,   // Unit of timeout
                 getActivity(),               // Activity (for callback binding)
                 verificationCallbacks);        // OnVerificationStateChangedCallbacks
-        Toast.makeText(getActivity(), "Waiting", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Hệ thống đang gửi mã để xác nhận!", Toast.LENGTH_SHORT).show();
 
     }
     private void setupVerificationCallbacks() {

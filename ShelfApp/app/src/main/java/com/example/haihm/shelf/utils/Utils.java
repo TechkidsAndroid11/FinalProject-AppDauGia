@@ -18,6 +18,11 @@ public class Utils {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
-
+    public static void openFragmentNotBack(FragmentManager fragmentManagert, int layoutId, Fragment fragment) {
+        // quản lý việc thêm, sửa, xóa or thay thế của Fragment
+        FragmentTransaction fragmentTransaction = fragmentManagert.beginTransaction();
+        fragmentTransaction.add(layoutId, fragment);
+        fragmentTransaction.commit();
+    }
 
 }

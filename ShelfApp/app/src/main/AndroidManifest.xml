@@ -62,7 +62,8 @@
             android:configChanges="keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
-        <activity android:name=".activity.ProductDetailActivity"/>
+        <activity android:name=".activity.ProductDetailActivity"></activity>
+
     </application>
 
 </manifest>

@@ -8,4 +8,8 @@ import com.example.haihm.shelf.model.UserModel;
 
 public class OnClickAddSanPhamEvent {
     public UserModel userModel;
+
+    public OnClickAddSanPhamEvent(UserModel userModel) {
+        this.userModel = userModel;
+    }
 }
