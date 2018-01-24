@@ -32,7 +32,6 @@ public class ImageUtils {
         immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-
         Log.e("base64   ", imageEncoded);
         return imageEncoded;
     }
@@ -46,7 +45,8 @@ public class ImageUtils {
 
     public static String endcodeImageToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        Bitmap tmp = Bitmap.createScaledBitmap(bitmap,500,500,false);
+        tmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
         String imageBas64 = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 //        Log.d(TAG, "endcodeImageToBase64: "+imageBas64);

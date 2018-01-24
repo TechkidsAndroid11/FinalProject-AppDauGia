@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
+import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
@@ -225,6 +226,10 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
     @Subscribe(sticky = true)
     public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent) {
         userModel = onClickAddSanPhamEvent.userModel;
+    }
+    @Subscribe(sticky = true)
+    public void OnReceivedOnClickUserModelEvent(OnClickUserModelEvent onClickUserModelEvent) {
+        userModel = onClickUserModelEvent.userModel;
     }
 
     private void selectFuntion() {
