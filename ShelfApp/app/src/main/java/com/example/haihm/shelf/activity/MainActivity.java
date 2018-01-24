@@ -54,16 +54,10 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 vpMain.setCurrentItem(tab.getPosition());
 
-                if(tab.getPosition() == 2){
-                    clAppBar.setVisibility(View.GONE);
-                }else {
+                if (tab.getPosition() == 0 || tab.getPosition() == 1) {
                     clAppBar.setVisibility(View.VISIBLE);
-                }
-
-                if (tab.getPosition() == 1){
-                    clAuction.setVisibility(View.VISIBLE);
                 } else {
-                    clAuction.setVisibility(View.GONE);
+                    clAppBar.setVisibility(View.GONE);
                 }
             }
 
@@ -79,9 +73,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
-
 
 
 }
