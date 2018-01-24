@@ -1,5 +1,7 @@
 package com.example.haihm.shelf.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,8 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.haihm.shelf.R;
+import com.example.haihm.shelf.activity.ProductDetailActivity;
+import com.example.haihm.shelf.event.OnClickProductEvent;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.utils.ImageUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -23,9 +29,11 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
     private static final String TAG = ShoppingProductAdapter.class.toString();
     List<SanPhamRaoVat> sanPhamRaoVatList;
     View view;
+    Context context;
 
-    public ShoppingProductAdapter(List<SanPhamRaoVat> sanPhamRaoVatList) {
+    public ShoppingProductAdapter(List<SanPhamRaoVat> sanPhamRaoVatList, Context context) {
         this.sanPhamRaoVatList = sanPhamRaoVatList;
+        this.context = context;
     }
 
     @Override
@@ -50,19 +58,30 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
     public class ItemTypeViewHolder extends RecyclerView.ViewHolder{
         ImageView ivProductImage;
         TextView tvProductPrice;
+        private View iview;
 
 
         public ItemTypeViewHolder(View itemView) {
             super(itemView);
+            iview = itemView;
             ivProductImage = itemView.findViewById(R.id.iv_product_image);
             tvProductPrice = itemView.findViewById(R.id.tv_product_price);
         }
 
 
-        public void setData(SanPhamRaoVat sanPhamRaoVat) {
+        public void setData(final SanPhamRaoVat sanPhamRaoVat) {
             Bitmap bitmap = ImageUtils.base64ToImage(sanPhamRaoVat.anhSP.get(0));
             ivProductImage.setImageBitmap(bitmap);
             tvProductPrice.setText(String.valueOf(sanPhamRaoVat.giaSP));
+            iview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventBus.getDefault().postSticky(new OnClickProductEvent(sanPhamRaoVat));
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    context.startActivity(intent);
+                    Log.d(TAG, "onClick: ");
+                }
+            });
             Log.d(TAG, "setData: " + sanPhamRaoVat.giaSP);
         }
     }

@@ -88,7 +88,7 @@ public class ShoppingProductFragment extends Fragment {
 
     private void setupRecyclerView(View view) {
         //setup recycler view
-        ShoppingProductAdapter shoppingProductAdapter = new ShoppingProductAdapter(sanPhamRaoVatList);
+        ShoppingProductAdapter shoppingProductAdapter = new ShoppingProductAdapter(sanPhamRaoVatList, getContext());
         rvProducts.setAdapter(shoppingProductAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         linearLayoutManager.canScrollHorizontally();
