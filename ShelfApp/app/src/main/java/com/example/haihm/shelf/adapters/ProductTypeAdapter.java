@@ -52,7 +52,7 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
 
     @Override
     public void onBindViewHolder(ItemTypeViewHolder holder, int position) {
-        holder.setData(sanPhamRaoVatList.get(position));
+        holder.setData(sanPhamRaoVatList.get(position), position);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
         }
 
 
-        public void setData(final SanPhamRaoVat sanPhamRaoVat) {
+        public void setData(final SanPhamRaoVat sanPhamRaoVat, int pos) {
             Bitmap bitmap = ImageUtils.base64ToImage(sanPhamRaoVat.anhSP.get(0));
             ivProductImage.setImageBitmap(bitmap);
             tvProductPrice.setText(String.valueOf(sanPhamRaoVat.giaSP));

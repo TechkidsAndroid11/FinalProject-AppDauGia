@@ -62,8 +62,7 @@ public class AuctionDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auction_details);
         EventBus.getDefault().register(this);
         setUpUI();
-        testFireBase();
-//        loadData();
+        loadData();
         addController();
     }
 
@@ -128,29 +127,29 @@ public class AuctionDetailsActivity extends AppCompatActivity {
             moveTaskToBack(true);
         }
     }
-    private void testFireBase() {
-
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child("Đồ gia dụng");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot spSnapSort : dataSnapshot.getChildren()) {
-                    sanPhamDauGia = spSnapSort.getValue(SanPhamDauGia.class);
-                    Log.d(TAG, "onDataChange: " + sanPhamDauGia.toString());
-                }
-                Date tmp = new Date();
-                tmp.setTime(System.currentTimeMillis() + 3 * 3600 * 1000);
-                sanPhamDauGia.tgianKthuc = tmp;
-
-                loadData();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
+//    private void testFireBase() {
+//
+//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//        DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child("Đồ gia dụng");
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot spSnapSort : dataSnapshot.getChildren()) {
+//                    sanPhamDauGia = spSnapSort.getValue(SanPhamDauGia.class);
+//                    Log.d(TAG, "onDataChange: " + sanPhamDauGia.toString());
+//                }
+//                Date tmp = new Date();
+//                tmp.setTime(System.currentTimeMillis() + 3 * 3600 * 1000);
+//                sanPhamDauGia.tgianKthuc = tmp;
+//
+//                loadData();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//    }
 }

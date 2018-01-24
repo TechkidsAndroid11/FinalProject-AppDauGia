@@ -199,7 +199,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
                 getList(lanhSP), giaSP,
                 etMoTaSP.getText().toString(), loaiSP,
                 etDiaC.getText().toString(),
-                buocG, giaSP,tgKetThuc, new UserModel());
+                buocG, giaSP,tgKetThuc, new UserModel(),new SanPhamDauGia.Chat());
 
         databaseReference.child(loaiSP).push().setValue(sanPhamDauGia);
         Toast.makeText(this, "Tạo phiên đấu giá thành công", Toast.LENGTH_SHORT).show();

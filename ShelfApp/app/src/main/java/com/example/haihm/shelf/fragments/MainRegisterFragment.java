@@ -172,7 +172,7 @@ public class MainRegisterFragment extends Fragment {
         String verifyPass = etVerifyPassword.getText().toString();
         String avatar = base64;
 
-        UserModel userModel = new UserModel(id,avatar,null,userName,password,verifyPass,phone,address,null);
+        UserModel userModel = new UserModel(id,avatar,null,userName,password,verifyPass,phone,address, new UserModel.Rate());
         databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
