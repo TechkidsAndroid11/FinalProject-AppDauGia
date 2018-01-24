@@ -1,7 +1,6 @@
 package com.example.haihm.shelf.adapters;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,33 +12,26 @@ import android.widget.TextView;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.utils.ImageUtils;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Son Hoang on 1/9/2018.
  */
 
-public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.ItemTypeViewHolder> {
-    private static final String TAG = ProductTypeAdapter.class.toString();
+public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProductAdapter.ItemTypeViewHolder> {
+    private static final String TAG = ShoppingProductAdapter.class.toString();
     List<SanPhamRaoVat> sanPhamRaoVatList;
     View view;
 
-    public ProductTypeAdapter(List<SanPhamRaoVat> sanPhamRaoVatList) {
+    public ShoppingProductAdapter(List<SanPhamRaoVat> sanPhamRaoVatList) {
         this.sanPhamRaoVatList = sanPhamRaoVatList;
     }
 
     @Override
     public ItemTypeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        view = layoutInflater.inflate(R.layout.list_item_type, parent, false);
+        view = layoutInflater.inflate(R.layout.list_shopping_product, parent, false);
 
         return new ItemTypeViewHolder(view);
     }

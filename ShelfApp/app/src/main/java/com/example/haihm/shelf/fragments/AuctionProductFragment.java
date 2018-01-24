@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.adapters.MainPagerAdapter;
-import com.example.haihm.shelf.adapters.ProductTypeAdapter;
-import com.example.haihm.shelf.model.SanPhamRaoVat;
+import com.example.haihm.shelf.adapters.AuctionProductAdapter;
+import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,22 +20,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductTypeFragment extends Fragment {
-    private static final String TAG = ProductTypeFragment.class.toString();
+public class AuctionProductFragment extends Fragment {
+    private static final String TAG = AuctionProductFragment.class.toString();
     RecyclerView rvProducts;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    List<SanPhamRaoVat> sanPhamRaoVatList;
-    boolean isAuction;
+    List<SanPhamDauGia> sanPhamDauGiaList;
     String productType;
 
-    public ProductTypeFragment() {
+    public AuctionProductFragment() {
         // Required empty public constructor
     }
 
@@ -45,19 +43,18 @@ public class ProductTypeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_product_type, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_auction_product, container, false);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            isAuction = bundle.getBoolean(MainPagerAdapter.IS_AUCTION);
             productType = bundle.getString(ShoppingFragment.PRODUCT_TYPE);
         }
+        Log.d(TAG, "onCreateView: " + productType);
         setupUI(view);
         return view;
     }
 
     private void setupUI(View view) {
-        rvProducts = view.findViewById(R.id.rv_list_product);
+        rvProducts = view.findViewById(R.id.rv_list_auction_product);
         //load database
         setupDatabase();
         loadData(view);
@@ -65,14 +62,9 @@ public class ProductTypeFragment extends Fragment {
     }
 
     private void setupDatabase() {
-        sanPhamRaoVatList = new ArrayList<>();
+        sanPhamDauGiaList = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
-
-        if (!isAuction) {
-            databaseReference = firebaseDatabase.getReference("Product").child(productType);
-        } else {
-            databaseReference = firebaseDatabase.getReference("Auction").child(productType);
-        }
+        databaseReference = firebaseDatabase.getReference("Auction").child(productType);
     }
 
     private void loadData(final View view) {
@@ -80,9 +72,9 @@ public class ProductTypeFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //load data from firebase
-                for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()){
-                    SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);
-                    sanPhamRaoVatList.add(sanPhamRaoVat);
+                for (DataSnapshot spDauGiaSnapShot : dataSnapshot.getChildren()){
+                    SanPhamDauGia sanPhamDauGia = spDauGiaSnapShot.getValue(SanPhamDauGia.class);
+                    sanPhamDauGiaList.add(sanPhamDauGia);
                 }
                 setupRecyclerView(view);
             }
@@ -96,12 +88,11 @@ public class ProductTypeFragment extends Fragment {
 
     private void setupRecyclerView(View view) {
         //setup recycler view
-        ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(sanPhamRaoVatList);
-        rvProducts.setAdapter(productTypeAdapter);
+        AuctionProductAdapter auctionProductAdapter = new AuctionProductAdapter(sanPhamDauGiaList);
+        rvProducts.setAdapter(auctionProductAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         linearLayoutManager.canScrollHorizontally();
         rvProducts.setLayoutManager(linearLayoutManager);
     }
-
 
 }
