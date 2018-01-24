@@ -6,9 +6,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +35,7 @@ import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -124,20 +125,20 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
                             new String[]{Manifest.permission.CALL_PHONE},
                             1);
                     return;
-                }
-                else startActivity(callIntent);
+                } else startActivity(callIntent);
             }
         });
     }
-    private void testFireBase(){
+
+    private void testFireBase() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child("Đồ gia dụng");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot spSnapSort : dataSnapshot.getChildren()){
+                for (DataSnapshot spSnapSort : dataSnapshot.getChildren()) {
                     SanPhamDauGia sanPhamDauGia = spSnapSort.getValue(SanPhamDauGia.class);
-                    Log.d(TAG, "onDataChange: "+sanPhamDauGia.toString());
+                    Log.d(TAG, "onDataChange: " + sanPhamDauGia.toString());
                     sanPhamRaoVat = sanPhamDauGia;
                 }
                 loadData();
@@ -150,9 +151,11 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
         });
 
     }
+
     private void loadImage(ArrayList<String> anhSP) {
         new MyAsyncTask().execute(anhSP);
     }
+
     public class MyAsyncTask extends AsyncTask<ArrayList<String>, Void, ArrayList<Bitmap>> {
 
 
@@ -166,7 +169,7 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
         protected ArrayList<Bitmap> doInBackground(ArrayList<String>[] arrayLists) {
             ArrayList<String> listI = arrayLists[0];
             ArrayList<Bitmap> listBitmaps = new ArrayList<>();
-            for(int i = 0; i < listI.size(); i++){
+            for (int i = 0; i < listI.size(); i++) {
                 listBitmaps.add(ImageUtils.base64ToImage(listI.get(i)));
             }
             return listBitmaps;
@@ -186,18 +189,19 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
     }
 
 
-    public void showImage(ArrayList<Bitmap> bitmaps)  {
-        for(Bitmap bitmap : bitmaps){
+    public void showImage(ArrayList<Bitmap> bitmaps) {
+        for (Bitmap bitmap : bitmaps) {
             TextSliderView sliderView = new TextSliderView(this);
             try {
-                File f = File.createTempFile("tmp","png", getCacheDir());
+                File f = File.createTempFile("tmp", "png", getCacheDir());
                 FileOutputStream fos = new FileOutputStream(f);
-                bitmap.compress(Bitmap.CompressFormat.PNG,100,fos);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                 fos.close();
                 sliderView.image(f)
                         .setScaleType(BaseSliderView.ScaleType.CenterCrop);
                 slImageProduct.addSlider(sliderView);
-            }catch (IOException io){}
+            } catch (IOException io) {
+            }
         }
         skLoadImage.setVisibility(View.GONE);
         slImageProduct.setVisibility(View.VISIBLE);

@@ -6,8 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -35,8 +34,13 @@
         <activity android:name=".activity.DangSpDGActivity" />
         <activity
             android:name=".activity.LoginActivity"
+<<<<<<< HEAD
             android:configChanges="keyboardHidden"
             android:theme="@style/Theme.Design.NoActionBar"
+=======
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:configChanges="keyboardHidden"
+>>>>>>> refactor_main_activity
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity android:name=".activity.MainActivity">
@@ -55,7 +59,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+        <activity android:name=".activity.AuctionDetailsActivity" >
+            
+        </activity>
+        <activity android:name=".activity.ProductDetailActivity">
 
+<<<<<<< HEAD
         <activity
             android:name=".activity.AuctionDetailsActivity"
             android:configChanges="keyboardHidden"
@@ -63,6 +72,9 @@
         </activity>
         <activity android:name=".activity.ProductDetailActivity"></activity>
 
+=======
+        </activity>
+>>>>>>> refactor_main_activity
     </application>
 
 </manifest>
