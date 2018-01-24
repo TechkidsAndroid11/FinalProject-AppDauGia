@@ -58,8 +58,7 @@
         <activity
             android:name=".activity.AuctionDetailsActivity"
             android:configChanges="keyboardHidden"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity android:name=".activity.ProductDetailActivity"></activity>
     </application>
 
