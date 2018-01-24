@@ -14,9 +14,8 @@ import com.example.haihm.shelf.fragments.ShoppingFragment;
  */
 
 public class MainPagerAdapter extends FragmentStatePagerAdapter {
-
     private static final int TAB_COUNT = 3;
-    public static final String IS_AUCTION = "IS_AUCTION";
+
 
     public MainPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -26,10 +25,10 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return setupFragment(false);
+                return new ShoppingFragment();
 
             case 1:
-                return setupFragment(true);
+                return new AuctionFragment();
 
             case 2: return new ProfileFragment();
         }
@@ -41,11 +40,4 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
         return TAB_COUNT;
     }
 
-    private ShoppingFragment setupFragment(boolean isAuction){
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(IS_AUCTION, isAuction);
-        ShoppingFragment shoppingFragment = new ShoppingFragment();
-        shoppingFragment.setArguments(bundle);
-        return shoppingFragment;
-    }
 }

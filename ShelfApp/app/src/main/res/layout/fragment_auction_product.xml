@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.haihm.shelf.fragments.ProductTypeFragment">
+    tools:context="com.example.haihm.shelf.fragments.AuctionProductFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_list_product"
+        android:id="@+id/rv_list_auction_product"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
