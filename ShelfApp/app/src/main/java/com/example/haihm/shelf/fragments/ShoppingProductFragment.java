@@ -65,7 +65,6 @@ public class ShoppingProductFragment extends Fragment {
         sanPhamRaoVatList = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Product").child(productType);
-
     }
 
     private void loadData(final View view) {
