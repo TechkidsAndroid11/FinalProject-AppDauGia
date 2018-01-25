@@ -39,6 +39,7 @@ public class ChatingFragment extends Fragment {
         rvChat = view.findViewById(R.id.rv_chat);
         ivSend = view.findViewById(R.id.iv_send);
         etChat = view.findViewById(R.id.et_chat);
+
     }
 
 }
