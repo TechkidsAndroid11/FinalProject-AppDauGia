@@ -1,17 +1,15 @@
 package com.example.haihm.shelf.activity;
 
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.adapters.MainPagerAdapter;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 public class MainActivity extends AppCompatActivity {
     SearchView searchView;

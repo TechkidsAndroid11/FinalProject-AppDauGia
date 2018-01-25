@@ -3,33 +3,49 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:padding="8dp"
+    android:background="#cceaeaea">
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Giá cao nhất: "/>
-    <ImageView
-        android:id="@+id/iv_avatar_guest"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/text"/>
+        android:text="Giá cao nhất: "
+        android:textColor="#000"/>
     <TextView
-        android:id="@+id/tv_curren_cost"
+        android:id="@+id/tv_name_buyer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nguyễn Văn Anh"
+        android:layout_toRightOf="@id/text"
+        android:textColor="#767676"/>
+    <TextView
+        android:id="@+id/tv_current_cost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1.000.000đ"
         android:layout_below="@id/text"
-        android:layout_centerHorizontal="true"
-        android:textSize="36sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:textColor="#000000"/>
-    <ImageView
-        android:id="@+id/iv_accept_cost"
+        android:textColor="@color/colorPrimary"/>
+    <TextView
+        android:id="@+id/tv_time_remaining"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_check_black_24dp"
-        android:padding="8dp"
+        android:text="2:30:45"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:layout_alignParentRight="true" />
+    <TextView
+        android:id="@+id/tv_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"/>
+        android:text="Liên hệ"
+        android:textColor="#fff"
+        android:layout_below="@id/tv_name_buyer"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:background="@drawable/custom_textview"/>
 </RelativeLayout>
