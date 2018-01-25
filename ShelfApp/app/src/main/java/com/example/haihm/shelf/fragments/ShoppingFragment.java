@@ -2,10 +2,8 @@ package com.example.haihm.shelf.fragments;
 
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +11,8 @@ import android.view.ViewGroup;
 import com.example.haihm.shelf.R;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentStatePagerItemAdapter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,9 +62,9 @@ public class ShoppingFragment extends Fragment {
             fragmentPagerItems.add(FragmentPagerItem.of(productType, ShoppingProductFragment.class, bundle));
         }
 
-        final FragmentPagerItemAdapter fragmentPagerItemAdapter = new FragmentPagerItemAdapter(getChildFragmentManager(), fragmentPagerItems);
+        final FragmentStatePagerItemAdapter fragmentStatePagerItemAdapter = new FragmentStatePagerItemAdapter(getChildFragmentManager(), fragmentPagerItems);
 
-        vpProductList.setAdapter(fragmentPagerItemAdapter);
+        vpProductList.setAdapter(fragmentStatePagerItemAdapter);
         stlProductType.setViewPager(vpProductList);
 
         stlProductType.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

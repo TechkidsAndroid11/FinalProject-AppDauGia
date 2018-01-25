@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.DangSpDGActivity;
 import com.example.haihm.shelf.activity.DangSpRvActivity;
-
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
@@ -43,7 +42,7 @@ public class ProfileFragment extends Fragment {
     TextView tvName;
     UserModel userModel;
     String base64;
-     TabLayout tabLayout;
+    TabLayout tabLayout;
     ViewPager viewPager;
 
     public ProfileFragment() {
@@ -103,7 +102,7 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tv_name);
 
         viewPager = view.findViewById(R.id.vp_history);
-         tabLayout = view.findViewById(R.id.tl_history);
+//        tabLayout = view.findViewById(R.id.tl_history);
     }
 
     public void loadDataForTabLayout() {
@@ -131,13 +130,13 @@ public class ProfileFragment extends Fragment {
     }
 
     private void intentPostClassified() {
-        EventBus.getDefault().postSticky(new OnClickAddSanPhamEvent(userModel) );
+        EventBus.getDefault().postSticky(new OnClickAddSanPhamEvent(userModel));
         Intent intent = new Intent(getActivity(), DangSpRvActivity.class);
         startActivity(intent);
     }
 
     private void intentPostAution() {
-        EventBus.getDefault().postSticky(new OnClickAddSanPhamEvent(userModel) );
+        EventBus.getDefault().postSticky(new OnClickAddSanPhamEvent(userModel));
         Intent intent = new Intent(getActivity(), DangSpDGActivity.class);
         startActivity(intent);
     }

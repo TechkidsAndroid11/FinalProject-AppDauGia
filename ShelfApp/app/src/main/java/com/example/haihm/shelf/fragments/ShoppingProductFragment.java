@@ -48,6 +48,7 @@ public class ShoppingProductFragment extends Fragment {
         if (bundle != null) {
             productType = bundle.getString(ShoppingFragment.PRODUCT_TYPE);
         }
+
         Log.d(TAG, "onCreateView: " + productType);
         setupUI(view);
         return view;
