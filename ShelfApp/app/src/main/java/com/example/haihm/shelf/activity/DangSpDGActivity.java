@@ -51,7 +51,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
     ArrayList<ImageView> livPhoto = new ArrayList<>();
     SpinKitView skPhoto1, skPhoto2, skPhoto3, skPhoto4, skPhoto5;
     TextView tvHomeAppliance, ivDone, tvCar, tvFashion, tvTechnology, tvBeauty, tvFuniture, tvOther, tv3h, tv6h, tv12h, tv24h;
-    UserModel userModel;
+    UserModel userModel = new UserModel();
     MyAsyncTask myAsyncTask;
     //
     String checkPhoto = "";
@@ -195,11 +195,15 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         double buocG = Double.parseDouble(etBuocG.getText().toString().replaceAll(",", ""));
         Date tgKetThuc = new Date();
         tgKetThuc.setTime(System.currentTimeMillis()+tgianDG*60*60*1000);
+        ArrayList<SanPhamDauGia.Chat> chats = new ArrayList<>();
+        SanPhamDauGia.Chat chat = new SanPhamDauGia.Chat();
+        chat.nameMess = "test";
+        chats.add(chat);
         SanPhamDauGia sanPhamDauGia = new SanPhamDauGia(userModel, etTenSP.getText().toString(),
                 getList(lanhSP), giaSP,
                 etMoTaSP.getText().toString(), loaiSP,
                 etDiaC.getText().toString(),
-                buocG, giaSP,tgKetThuc, new UserModel(),new SanPhamDauGia.Chat());
+                buocG, giaSP,tgKetThuc, new UserModel(),chats);
 
         databaseReference.child(loaiSP).push().setValue(sanPhamDauGia);
         Toast.makeText(this, "Tạo phiên đấu giá thành công", Toast.LENGTH_SHORT).show();

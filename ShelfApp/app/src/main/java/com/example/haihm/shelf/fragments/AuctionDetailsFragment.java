@@ -75,8 +75,8 @@ public class AuctionDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_auction_details, container, false);
         setUpUI(view);
-        testFireBase();
-//        loadData();
+//        testFireBase();
+        loadData();
         addController();
         return view;
     }
@@ -120,7 +120,7 @@ public class AuctionDetailsFragment extends Fragment {
         return false;
     }
     private void loadData() {
-//        sanPhamDauGia = AuctionDetailsActivity.sanPhamDauGia;
+        sanPhamDauGia = AuctionDetailsActivity.sanPhamDauGia;
         loadImage(sanPhamDauGia.anhSP);
 
         tvNameSeller.setText(sanPhamDauGia.nguoiB.hoten);
@@ -139,26 +139,28 @@ public class AuctionDetailsFragment extends Fragment {
         tvCurentCost.setText(formatTmp + "đ");
         tvNameBuyer.setText(sanPhamDauGia.nguoiMua.hoten);
         long timeRemaining = sanPhamDauGia.tgianKthuc.getTime() - new Date().getTime();
-        new CountDownTimer(timeRemaining, 1000) {
-            @Override
-            public void onTick(long l) {
-                long second = l / 1000;
-                long house = second / 3600;
-                second -= house * 3600;
-                long minute = second / 60;
-                second -= minute * 60;
-                String h = house + "";
-                String m = minute < 10 ? (minute == 0 ? "00" : ("0" + minute)) : (minute + "");
-                String s = second < 10 ? (second == 0 ? "00" : ("0" + second)) : (second + "");
-                ;
-                tvTimeRemaining.setText(h + ":" + m + ":" + s);
-            }
+        if(timeRemaining >= 0 ){
+            new CountDownTimer(timeRemaining, 1000) {
+                @Override
+                public void onTick(long l) {
+                    long second = l / 1000;
+                    long house = second / 3600;
+                    second -= house * 3600;
+                    long minute = second / 60;
+                    second -= minute * 60;
+                    String h = house + "";
+                    String m = minute < 10 ? (minute == 0 ? "00" : ("0" + minute)) : (minute + "");
+                    String s = second < 10 ? (second == 0 ? "00" : ("0" + second)) : (second + "");
+                    ;
+                    tvTimeRemaining.setText(h + ":" + m + ":" + s);
+                }
 
-            @Override
-            public void onFinish() {
+                @Override
+                public void onFinish() {
 
-            }
-        }.start();
+                }
+            }.start();
+        } else tvTimeRemaining.setText("Hết giờ");
     }
     private void addController() {
 

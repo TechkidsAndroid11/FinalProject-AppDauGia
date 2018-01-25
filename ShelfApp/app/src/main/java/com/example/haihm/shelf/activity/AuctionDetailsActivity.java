@@ -62,6 +62,7 @@ public class AuctionDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auction_details);
         EventBus.getDefault().register(this);
         setUpUI();
+//        testFireBase();
         loadData();
         addController();
     }
@@ -69,6 +70,7 @@ public class AuctionDetailsActivity extends AppCompatActivity {
     @Subscribe(sticky = true)
     public void OnReceivedClickAuctionEvent(OnClickAuctionEvent onClickAuctionEvent) {
         sanPhamDauGia = onClickAuctionEvent.sanPhamDauGia;
+        Log.d(TAG, "OnReceivedClickAuctionEvent: ");
     }
 
     private void setUpUI() {
@@ -98,13 +100,13 @@ public class AuctionDetailsActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.getPosition() == 0){
-                    ivMyAvata.setVisibility(View.GONE);
-                    tvNameAuction.setText(sanPhamDauGia.tenSP);
-                }else {
-                    ivMyAvata.setVisibility(View.VISIBLE);
-                    tvNameAuction.setText("User Name");
-                }
+//                if(tab.getPosition() == 0){
+//                    ivMyAvata.setVisibility(View.GONE);
+//                    tvNameAuction.setText(sanPhamDauGia.tenSP);
+//                }else {
+//                    ivMyAvata.setVisibility(View.VISIBLE);
+//                    tvNameAuction.setText("User Name");
+//                }
                 viewPager.setCurrentItem(tab.getPosition());
             }
 
@@ -127,29 +129,29 @@ public class AuctionDetailsActivity extends AppCompatActivity {
             moveTaskToBack(true);
         }
     }
-//    private void testFireBase() {
-//
-//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child("Đồ gia dụng");
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot spSnapSort : dataSnapshot.getChildren()) {
-//                    sanPhamDauGia = spSnapSort.getValue(SanPhamDauGia.class);
-//                    Log.d(TAG, "onDataChange: " + sanPhamDauGia.toString());
-//                }
-//                Date tmp = new Date();
-//                tmp.setTime(System.currentTimeMillis() + 3 * 3600 * 1000);
-//                sanPhamDauGia.tgianKthuc = tmp;
-//
-//                loadData();
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//    }
+    private void testFireBase() {
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child("Đồ gia dụng");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot spSnapSort : dataSnapshot.getChildren()) {
+                    sanPhamDauGia = spSnapSort.getValue(SanPhamDauGia.class);
+                    Log.d(TAG, " : " + sanPhamDauGia.toString());
+                }
+                Date tmp = new Date();
+                tmp.setTime(System.currentTimeMillis() + 3 * 3600 * 1000);
+                sanPhamDauGia.tgianKthuc = tmp;
+
+                loadData();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 }

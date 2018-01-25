@@ -11,8 +11,7 @@ public class OnClickAuctionEvent {
     public SanPhamDauGia sanPhamDauGia;
     public UserModel userModel;
 
-    public OnClickAuctionEvent(SanPhamDauGia sanPhamDauGia, UserModel userModel) {
+    public OnClickAuctionEvent(SanPhamDauGia sanPhamDauGia) {
         this.sanPhamDauGia = sanPhamDauGia;
-        this.userModel = userModel;
     }
 }

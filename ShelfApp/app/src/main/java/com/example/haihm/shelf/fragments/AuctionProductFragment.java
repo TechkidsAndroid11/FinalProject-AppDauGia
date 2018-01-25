@@ -74,6 +74,7 @@ public class AuctionProductFragment extends Fragment {
                 //load data from firebase
                 for (DataSnapshot spDauGiaSnapShot : dataSnapshot.getChildren()){
                     SanPhamDauGia sanPhamDauGia = spDauGiaSnapShot.getValue(SanPhamDauGia.class);
+                    sanPhamDauGia.idSP = spDauGiaSnapShot.getKey();
                     sanPhamDauGiaList.add(sanPhamDauGia);
                 }
                 setupRecyclerView(view);
@@ -88,7 +89,7 @@ public class AuctionProductFragment extends Fragment {
 
     private void setupRecyclerView(View view) {
         //setup recycler view
-        AuctionProductAdapter auctionProductAdapter = new AuctionProductAdapter(sanPhamDauGiaList);
+        AuctionProductAdapter auctionProductAdapter = new AuctionProductAdapter(sanPhamDauGiaList,getContext());
         rvProducts.setAdapter(auctionProductAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         linearLayoutManager.canScrollHorizontally();

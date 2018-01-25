@@ -2,6 +2,9 @@ package com.example.haihm.shelf.fragments;
 
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.haihm.shelf.R;
+import com.example.haihm.shelf.activity.LoginActivity;
 import com.example.haihm.shelf.activity.MainActivity;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
@@ -25,8 +29,11 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -46,6 +53,7 @@ public class CheckPhoneFragment extends Fragment {
     public PhoneAuthProvider.OnVerificationStateChangedCallbacks verificationCallbacks;
     public PhoneAuthProvider.ForceResendingToken resendToken;
     public FirebaseAuth fbAuth;
+    public boolean check=true;
     public CheckPhoneFragment() {
         // Required empty public constructor
     }
@@ -61,6 +69,7 @@ public class CheckPhoneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_check_phone, container, false);
         setupUI(view);
+
         addListener();
         return view;
 
@@ -81,6 +90,27 @@ public class CheckPhoneFragment extends Fragment {
             }
         });
     }
+    public void showDialog()
+    {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Thông báo");
+        builder.setMessage("Số điện thoại này đã được đăng ký. Bạn có muốn đăng nhập không?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+    }
+
     public void sendCode()
     {
         String phoneNumber = etPhone.getText().toString();

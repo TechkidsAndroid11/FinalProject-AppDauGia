@@ -44,12 +44,12 @@ public class ChatingAdapter extends RecyclerView.Adapter<ChatingAdapter.ChatingV
 
     @Override
     public void onBindViewHolder(ChatingViewHolder holder, int position) {
-        holder.setData(listChat.get(position));
+        holder.setData(listChat.get(position+1));
     }
 
     @Override
     public int getItemCount() {
-        return listChat.size();
+        return listChat.size()-1;
     }
 
     public class ChatingViewHolder extends RecyclerView.ViewHolder{

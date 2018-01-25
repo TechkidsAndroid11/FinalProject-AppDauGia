@@ -1,6 +1,9 @@
 package com.example.haihm.shelf.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.haihm.shelf.activity.LoginActivity;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +30,11 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 import com.example.haihm.shelf.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -36,6 +45,8 @@ public class RegisterFragment extends Fragment {
     public EditText etPhone;
     public Button btnSignIn;
     public String phoneVerificationId;
+    DatabaseReference databaseReference;
+    FirebaseDatabase firebaseDatabase;
     public PhoneAuthProvider.OnVerificationStateChangedCallbacks verificationCallbacks;
     public PhoneAuthProvider.ForceResendingToken resendToken;
     public FirebaseAuth fbAuth;
@@ -54,27 +65,26 @@ public class RegisterFragment extends Fragment {
         addListener();
         return view;
     }
-    public void setupUI(View view)
-    {
+
+    public void setupUI(View view) {
         etPhone = view.findViewById(R.id.edt_phone_number);
-//        etUser= view.findViewById(R.id.edt_user_name);
-//        etPass = view.findViewById(R.id.edt_password);
-//        etConfirmPass = view.findViewById(R.id.edt_confirm_password);
         btnSignIn = view.findViewById(R.id.bt_sign_in);
         fbAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference().child("UserInfo");
     }
-    public void addListener()
-    {
+
+    public void addListener() {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
-                if(etPhone.getText().toString().equals(""))
-                {
-                    Toast.makeText(getActivity(), "Số điện thoại chưa được nhập!!", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    sendCode();
+                Log.d(TAG, "onClick: ok");
+                if (etPhone.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "Bạn chưa nhập số điện thoại!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    checkDuplicatedPhone(etPhone.getText().toString());
+
                 }
 
 
@@ -82,8 +92,48 @@ public class RegisterFragment extends Fragment {
             }
         });
     }
-    public void sendCode()
-    {
+
+    public void showDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Thông báo");
+        builder.setMessage("Số điện thoại này đã được đăng ký. Bạn có muốn đăng nhập không?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    public void checkDuplicatedPhone(String phone) {
+        databaseReference.orderByChild("sdt").equalTo(phone).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    showDialog();
+                } else {
+                    sendCode();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public void sendCode() {
         String phoneNumber = etPhone.getText().toString();
         setupVerificationCallbacks();
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -95,6 +145,7 @@ public class RegisterFragment extends Fragment {
         Toast.makeText(getActivity(), "Hệ thống đang gửi mã để xác nhận!", Toast.LENGTH_SHORT).show();
 
     }
+
     private void setupVerificationCallbacks() {
         verificationCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
@@ -108,15 +159,16 @@ public class RegisterFragment extends Fragment {
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                Log.d(TAG, "onVerificationFailed: "+e.getMessage());
+                Log.d(TAG, "onVerificationFailed: " + e.getMessage());
             }
+
             @Override
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
                 Log.d(TAG, "onCodeSent: ");
                 phoneVerificationId = verificationId;
                 resendToken = token;
-                Utils.openFragment(getFragmentManager(),R.id.rl_main,new VerifyPhoneRegisterFragment(phoneVerificationId,etPhone.getText().toString()));
+                Utils.openFragment(getFragmentManager(), R.id.rl_main, new VerifyPhoneRegisterFragment(phoneVerificationId, etPhone.getText().toString()));
             }
         };
     }

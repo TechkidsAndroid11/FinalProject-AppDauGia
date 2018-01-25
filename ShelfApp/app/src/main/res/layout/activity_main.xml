@@ -9,36 +9,52 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="0dp"
-        android:layout_height="56dp">
+        android:layout_height="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/cl_app_bar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/mainColor"
-            android:orientation="horizontal">
+            android:layout_height="56dp"
+            android:background="@color/mainColor">
 
-            <TextView
-                android:textStyle="bold"
-                android:layout_centerInParent="true"
-                android:id="@+id/tv_tab_layout_name"
+            <ImageView
+                android:id="@+id/iv_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/pad_def"
+                android:src="@drawable/ic_add_shopping_cart_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+
+                android:id="@+id/tv_tab_layout_name"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="@dimen/pad_def"
                 android:text="Products"
                 android:textColor="@color/textColor"
-                android:textSize="15sp" />
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/sv_search_view"
+                app:layout_constraintStart_toEndOf="@+id/iv_menu"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_shopping_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:padding="@dimen/pad_def"
-                android:src="@drawable/ic_filter_list_black_24dp" />
+                android:src="@drawable/ic_filter_list_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.v7.widget.SearchView
-                android:layout_alignParentLeft="true"
                 android:id="@+id/sv_search_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,7 +63,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/iv_shopping_cart"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
 
 
     </android.support.design.widget.AppBarLayout>
@@ -119,6 +135,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </android.support.constraint.ConstraintLayout>

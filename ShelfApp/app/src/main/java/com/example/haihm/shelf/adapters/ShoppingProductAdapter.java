@@ -30,7 +30,8 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
     List<SanPhamRaoVat> sanPhamRaoVatList;
     View view;
     Context context;
-    public ShoppingProductAdapter(List<SanPhamRaoVat> sanPhamRaoVatList,Context context) {
+
+    public ShoppingProductAdapter(List<SanPhamRaoVat> sanPhamRaoVatList, Context context) {
         this.sanPhamRaoVatList = sanPhamRaoVatList;
         this.context = context;
     }
@@ -54,13 +55,15 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
         return sanPhamRaoVatList.size();
     }
 
-    public class ItemTypeViewHolder extends RecyclerView.ViewHolder{
+    public class ItemTypeViewHolder extends RecyclerView.ViewHolder {
         ImageView ivProductImage;
         TextView tvProductPrice;
+        private View iview;
 
 
         public ItemTypeViewHolder(View itemView) {
             super(itemView);
+            iview = itemView;
             ivProductImage = itemView.findViewById(R.id.iv_product_image);
             tvProductPrice = itemView.findViewById(R.id.tv_product_price);
         }
@@ -70,11 +73,13 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
             Bitmap bitmap = ImageUtils.base64ToImage(sanPhamRaoVat.anhSP.get(0));
             ivProductImage.setImageBitmap(bitmap);
             tvProductPrice.setText(String.valueOf(sanPhamRaoVat.giaSP));
-            view.setOnClickListener(new View.OnClickListener() {
+            iview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    EventBus.getDefault().postSticky(new  OnClickProductEvent(sanPhamRaoVat));
-                    Intent intent = new Intent(context,ProductDetailActivity.class);
+                    EventBus.getDefault().postSticky(new OnClickProductEvent(sanPhamRaoVat));
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    context.startActivity(intent);
+                    Log.d(TAG, "onClick: ");
                 }
             });
             Log.d(TAG, "setData: " + sanPhamRaoVat.giaSP);
