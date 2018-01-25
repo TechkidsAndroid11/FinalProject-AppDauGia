@@ -59,8 +59,9 @@ public class VerifyPhoneFragment extends Fragment {
     {
 
     }
+
     @SuppressLint("ValidFragment")
-    public VerifyPhoneFragment(String phoneVerificationId, UserModel userModel,String phone) {
+    public VerifyPhoneFragment(String phoneVerificationId, UserModel userModel, String phone) {
         this.phoneVerificationId =phoneVerificationId;
         this.userModel=userModel;
         this.phone=phone;

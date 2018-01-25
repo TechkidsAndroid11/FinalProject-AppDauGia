@@ -26,6 +26,7 @@ public class UserModel {
         hoten = "";
         sdt = "";
         diaC = "";
+        rate = new Rate();
     }
 
     public UserModel(String id, String anhAvatar, String anhCover, String hoten, String sdt, String diaC, Rate rate) {

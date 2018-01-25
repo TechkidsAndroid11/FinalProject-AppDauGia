@@ -27,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.haihm.shelf.activity.LoginActivity;
+import com.example.haihm.shelf.activity.MainActivity;
+import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
 import com.example.haihm.shelf.utils.Utils;
@@ -47,6 +49,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 import com.example.haihm.shelf.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
@@ -172,13 +176,16 @@ public class MainRegisterFragment extends Fragment {
         String verifyPass = etVerifyPassword.getText().toString();
         String avatar = base64;
 
-        UserModel userModel = new UserModel(id,avatar,null,userName,password,verifyPass,phone,address,null);
+        final UserModel userModel = new UserModel(id,avatar,null,userName,password,verifyPass,phone,address,new UserModel.Rate());
         databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(getActivity(), "Đăng ký thành công!!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                btRegister.setEnabled(false);
+                EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+                Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+
             }
         });
     }

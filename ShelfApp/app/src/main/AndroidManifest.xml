@@ -34,16 +34,19 @@
         <activity android:name=".activity.DangSpRvActivity" />
         <activity android:name=".activity.DangSpDGActivity" />
         <activity
+
             android:name=".activity.LoginActivity"
             android:configChanges="keyboardHidden"
             android:theme="@style/Theme.Design.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
-        <activity android:name=".activity.MainActivity">
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.MainActivity">
+
         </activity>
 
         <provider

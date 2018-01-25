@@ -95,13 +95,13 @@
             android:textColor="@color/colorPrimary" />
     </RelativeLayout>
 
-    <TableLayout
+    <TabLayout
         android:id="@+id/tl_history"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/rl_button">
 
-    </TableLayout>
+    </TabLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_history"

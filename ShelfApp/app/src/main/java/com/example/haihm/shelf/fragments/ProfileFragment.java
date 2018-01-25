@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Base64;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.DangSpDGActivity;
 import com.example.haihm.shelf.activity.DangSpRvActivity;
+import com.example.haihm.shelf.adapters.ViewPagerProfileAdapter;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
 import com.squareup.picasso.Picasso;
@@ -40,7 +42,7 @@ public class ProfileFragment extends Fragment {
     TextView tvName;
     UserModel userModel;
     String base64;
-    // TabLayout tabLayout;
+     TabLayout tabLayout;
     ViewPager viewPager;
 
     public ProfileFragment() {
@@ -74,6 +76,7 @@ public class ProfileFragment extends Fragment {
 
     @Subscribe(sticky = true)
     public void loadData(OnClickUserModelEvent onClickUserModelEvent) {
+
         userModel = onClickUserModelEvent.userModel;
         Log.d(TAG, "loadData: " + userModel.getHoten() + " " + userModel.getAnhAvatar());
 
@@ -88,7 +91,6 @@ public class ProfileFragment extends Fragment {
 
         );
 
-        // Picasso.with(getActivity()).load(sBase64[0]).into((ivAvatar));
         ivAvatar.setImageBitmap(cropCircleTransformation.transform(bitmap));
         tvName.setText(userModel.getHoten());
     }
@@ -100,7 +102,7 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tv_name);
 
         viewPager = view.findViewById(R.id.vp_history);
-        // tabLayout = view.findViewById(R.id.tl_history);
+         tabLayout = view.findViewById(R.id.tl_history);
     }
 
     public void loadDataForTabLayout() {

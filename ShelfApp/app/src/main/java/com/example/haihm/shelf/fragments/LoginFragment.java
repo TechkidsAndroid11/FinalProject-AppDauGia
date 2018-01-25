@@ -127,6 +127,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         tvSignUp = view.findViewById(R.id.tv_sign_up);
         etUsername = view.findViewById(R.id.edt_username);
         etPass = view.findViewById(R.id.et_password);
+        rate = new UserModel.Rate();
         // xin các quyền cơ bản của user
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -146,7 +147,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 handleFacebookLogin();
             }
         });
-
         btnLoginApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
