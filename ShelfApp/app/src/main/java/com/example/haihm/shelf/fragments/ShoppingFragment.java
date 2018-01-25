@@ -6,24 +6,16 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.adapters.MainPagerAdapter;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,11 +25,8 @@ import java.util.List;
 public class ShoppingFragment extends Fragment {
     private static final String TAG = ShoppingFragment.class.toString();
     public static final String PRODUCT_TYPE = "Product_Type";
-    RecyclerView rvItemTypeList;
-    ConstraintLayout clAuction;
     SmartTabLayout stlProductType;
     ViewPager vpProductList;
-    boolean isAuction;
     private String[] productTypes;
     private List<String> productTypeList;
 
@@ -57,26 +46,13 @@ public class ShoppingFragment extends Fragment {
     }
 
     private void setupUI(final View view) {
-        rvItemTypeList = view.findViewById(R.id.rv_list_product);
-        clAuction = view.findViewById(R.id.cl_auction);
         stlProductType = view.findViewById(R.id.stl_product_type);
         vpProductList = view.findViewById(R.id.vp_product_list);
 
         productTypes = getResources().getStringArray(R.array.loai_sp);
         productTypeList = Arrays.asList(productTypes);
 
-        //is auction or not
-        Bundle bundle = this.getArguments();
-        if (bundle != null){
-            isAuction = bundle.getBoolean(MainPagerAdapter.IS_AUCTION);
-        }
-
-        if (isAuction){
-            setupProductTypeTab(view);
-        } else {
-            setupProductTypeTab(view);
-        }
-
+        setupProductTypeTab(view);
     }
 
 
@@ -84,9 +60,8 @@ public class ShoppingFragment extends Fragment {
         FragmentPagerItems fragmentPagerItems = new FragmentPagerItems(view.getContext());
         for (String productType : productTypeList) {
             Bundle bundle = new Bundle();
-            bundle.putBoolean(MainPagerAdapter.IS_AUCTION, isAuction);
             bundle.putString(PRODUCT_TYPE, productType);
-            fragmentPagerItems.add(FragmentPagerItem.of(productType, ProductTypeFragment.class, bundle));
+            fragmentPagerItems.add(FragmentPagerItem.of(productType, ShoppingProductFragment.class, bundle));
         }
 
         final FragmentPagerItemAdapter fragmentPagerItemAdapter = new FragmentPagerItemAdapter(getChildFragmentManager(), fragmentPagerItems);

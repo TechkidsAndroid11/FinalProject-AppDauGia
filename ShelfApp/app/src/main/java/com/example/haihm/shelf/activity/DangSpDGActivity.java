@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
+import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
@@ -120,8 +121,6 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         lanhSP.put("3", "");
         lanhSP.put("4", "");
         lanhSP.put("5", "");
-        //
-        userModel = new UserModel();
         //
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Auction");
@@ -225,6 +224,7 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
     @Subscribe(sticky = true)
     public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent) {
         userModel = onClickAddSanPhamEvent.userModel;
+        Log.d(TAG, "OnReceivedOnClickAddSanPhamEvent: "+userModel.sdt);
     }
 
     private void selectFuntion() {

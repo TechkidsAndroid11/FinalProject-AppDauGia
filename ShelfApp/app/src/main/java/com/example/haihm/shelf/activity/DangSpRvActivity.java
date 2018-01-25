@@ -20,16 +20,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
+import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -60,6 +64,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_sp_rv);
+        EventBus.getDefault().register(this);
         setupUI();
         addController();
     }
@@ -109,8 +114,6 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
         lanhSP.put("3", "");
         lanhSP.put("4", "");
         lanhSP.put("5", "");
-        //
-        userModel = new UserModel();
         //
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Product");
@@ -182,9 +185,9 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
 
     private ArrayList<String> getList(HashMap<String, String> lanhSP) {
         ArrayList<String> list = new ArrayList<>();
-        for(String i : lanhSP.keySet()){
+        for (String i : lanhSP.keySet()) {
             String tmp = lanhSP.get(i);
-            if(!tmp.equals("")) list.add(tmp);
+            if (!tmp.equals("")) list.add(tmp);
         }
         return list;
     }
@@ -200,7 +203,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
     @Subscribe(sticky = true)
     public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent) {
         userModel = onClickAddSanPhamEvent.userModel;
-        etDiaC.setText(userModel.diaC);
+        Log.d(TAG, "OnReceivedOnClickAddSanPhamEvent: "+userModel.sdt);
     }
 
     private void selectFuntion() {
@@ -280,8 +283,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             if (ii == vt) {
                 lskPhoto.get(ii).setVisibility(View.VISIBLE);
                 livPhoto.get(ii).setVisibility(View.INVISIBLE);
-            }
-            else {
+            } else {
                 livPhoto.get(ii).setClickable(false);
             }
         }
@@ -295,8 +297,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
                 livPhoto.get(ii).setVisibility(View.VISIBLE);
                 livPhoto.get(ii).setScaleType(ImageView.ScaleType.FIT_XY);
                 livPhoto.get(ii).setImageBitmap(bitmap);
-            }
-            else {
+            } else {
                 livPhoto.get(ii).setClickable(true);
             }
         }
