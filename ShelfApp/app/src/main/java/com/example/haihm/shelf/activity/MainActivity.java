@@ -1,8 +1,9 @@
 package com.example.haihm.shelf.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
     SearchView searchView;
     TabLayout tlBottomBar;
     ViewPager vpMain;
-    ConstraintLayout clAppBar, clAuction;
+    ConstraintLayout clAuction;
+    AppBarLayout clAppBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +28,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("WrongViewCast")
     private void setupUI() {
         tlBottomBar = findViewById(R.id.tl_bottom_bar);
-        clAppBar = findViewById(R.id.cl_app_bar);
+        clAppBar = findViewById(R.id.app_bar_layout);
         vpMain = findViewById(R.id.vp_main_activity);
         clAuction = findViewById(R.id.cl_auction);
 
@@ -54,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 vpMain.setCurrentItem(tab.getPosition());
+
+                if(tab.getPosition() == 1){
+                    clAuction.setVisibility(View.VISIBLE);
+                }else {
+                    clAuction.setVisibility(View.GONE);
+                }
 
                 if (tab.getPosition() == 0 || tab.getPosition() == 1) {
                     clAppBar.setVisibility(View.VISIBLE);
