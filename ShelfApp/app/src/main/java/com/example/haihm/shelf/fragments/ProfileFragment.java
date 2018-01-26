@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.DangSpDGActivity;
 import com.example.haihm.shelf.activity.DangSpRvActivity;
-
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
@@ -42,7 +41,6 @@ public class ProfileFragment extends Fragment {
     TextView tvName;
     UserModel userModel;
     String base64;
-
     ViewPager viewPager;
 
     public ProfileFragment() {
@@ -106,7 +104,7 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tv_name);
 
         viewPager = view.findViewById(R.id.vp_history);
-        // tabLayout = view.findViewById(R.id.tl_history);
+
     }
 
     public void loadDataForTabLayout() {
