@@ -59,7 +59,8 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
         }
 
         public void setData(SanPhamDauGia sanPhamDauGia) {
-            Bitmap bitmap = ImageUtils.base64ToImage(sanPhamDauGia.anhSP.get(0));
+
+                Bitmap bitmap = ImageUtils.base64ToImage(sanPhamDauGia.anhSP.get(0));
             ivAuctionImage.setImageBitmap(bitmap);
 //            tvAuctionPrice.setText(String.valueOf(sanPhamDauGia.giaSP));
             Log.d(TAG, "setData: " + sanPhamDauGia.giaSP);
