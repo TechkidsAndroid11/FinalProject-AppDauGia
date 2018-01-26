@@ -29,7 +29,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,6 +115,7 @@ public class ChatingFragment extends Fragment {
                         sanPhamDauGia.lchat.clear();
                         sanPhamDauGia.lchat.addAll(chats);
                         chatingAdapter.notifyDataSetChanged();
+                        rvChat.smoothScrollToPosition(sanPhamDauGia.lchat.size() - 1);
                     }
 
                     @Override

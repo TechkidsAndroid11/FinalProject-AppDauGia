@@ -202,7 +202,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         String username = etUsername.getText().toString();
         final String pass = etPass.getText().toString();
         if (username.equals("") || pass.equals("")) {
-            tvNotify.setText("Bạn phải điền đầy đủ thông tin tài khoản và mật khẩu!!");
+            tvNotify.setText("Hãy điền đầy đủ thông tin tài khoản và mật khẩu!!");
         } else {
             databaseReference.orderByChild("hoten").equalTo(username).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -402,7 +402,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
     private void updateFacebookButtonUI() {
         if (AccessToken.getCurrentAccessToken() != null) {
-            // FacebookLogin.setText("Logout");
+            loadData();
 
         } else {
 //            FacebookLogin.setText("Facebook Connect");
