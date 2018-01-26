@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Base64;
@@ -37,13 +36,13 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
     CropCircleTransformation cropCircleTransformation = new CropCircleTransformation();
-    View view;
+
     Button btnAuction, btnClassified;
     ImageView ivCover, ivAvatar;
     TextView tvName;
     UserModel userModel;
     String base64;
-     TabLayout tabLayout;
+
     ViewPager viewPager;
 
     public ProfileFragment() {
@@ -55,9 +54,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_profile, container, false);
-        setupUI();
-        loadDataForTabLayout();
+
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        setupUI(view);
+        //loadDataForTabLayout();
         EventBus.getDefault().register(this);
         btnAuction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,31 +79,34 @@ public class ProfileFragment extends Fragment {
     public void loadData(OnClickUserModelEvent onClickUserModelEvent) {
 
         userModel = onClickUserModelEvent.userModel;
-        Log.d(TAG, "loadData: " + userModel.getHoten() + " " + userModel.getAnhAvatar());
+        // ảnh là uri khi đăng nhập = fb,gg
+        if (userModel.getAnhAvatar().contains("https://")) {
+            Log.d(TAG, "loadData: Anh dep");
+            Picasso.with(getActivity()).load(userModel.getAnhAvatar()).transform(new CropCircleTransformation()).into(ivAvatar);
+        } else //ảnh là bitmap khi đăng ký = login sdt
+        {
+            Log.d(TAG, "loadData: Anh xau");
+            base64 = userModel.getAnhAvatar();
+            String[] sBase64 = base64.split(",");
+            Bitmap bitmap = BitmapFactory.decodeByteArray(
+                    Base64.decode(sBase64[0], Base64.DEFAULT),
+                    0,// offset: vị trí bđ
+                    (Base64.decode(sBase64[0], Base64.DEFAULT)).length
+            );
+            ivAvatar.setImageBitmap(cropCircleTransformation.transform(bitmap));
+        }
 
-        Picasso.with(getActivity()).load(userModel.getAnhAvatar()).transform(new CropCircleTransformation()).into(ivAvatar);
-
-        base64 = userModel.getAnhAvatar();
-        String[] sBase64 = base64.split(",");
-        Bitmap bitmap = BitmapFactory.decodeByteArray(
-                Base64.decode(sBase64[0], Base64.DEFAULT),
-                0,// offset: vị trí bđ
-                (Base64.decode(sBase64[0], Base64.DEFAULT)).length
-
-        );
-
-        ivAvatar.setImageBitmap(cropCircleTransformation.transform(bitmap));
         tvName.setText(userModel.getHoten());
     }
 
-    private void setupUI() {
+    private void setupUI(View view) {
         btnAuction = view.findViewById(R.id.btBuy);
         btnClassified = view.findViewById(R.id.btDauGia);
         ivAvatar = view.findViewById(R.id.iv_avatar);
         tvName = view.findViewById(R.id.tv_name);
 
         viewPager = view.findViewById(R.id.vp_history);
-         tabLayout = view.findViewById(R.id.tl_history);
+        // tabLayout = view.findViewById(R.id.tl_history);
     }
 
     public void loadDataForTabLayout() {
@@ -131,13 +134,13 @@ public class ProfileFragment extends Fragment {
     }
 
     private void intentPostClassified() {
-        EventBus.getDefault().postSticky(new OnClickAddSanPhamEvent(userModel) );
+        EventBus.getDefault().postSticky(new OnClickAddSanPhamEvent(userModel));
         Intent intent = new Intent(getActivity(), DangSpRvActivity.class);
         startActivity(intent);
     }
 
     private void intentPostAution() {
-        EventBus.getDefault().postSticky(new OnClickAddSanPhamEvent(userModel) );
+        EventBus.getDefault().postSticky(new OnClickAddSanPhamEvent(userModel));
         Intent intent = new Intent(getActivity(), DangSpDGActivity.class);
         startActivity(intent);
     }
