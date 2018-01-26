@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupUI();
-
     }
 
     @SuppressLint("WrongViewCast")
@@ -52,15 +51,14 @@ public class MainActivity extends AppCompatActivity {
         tlBottomBar.getTabAt(0).setText("Rao vặt");
         tlBottomBar.getTabAt(1).setText("Đấu giá");
         tlBottomBar.getTabAt(2).setText("Tôi");
-
         tlBottomBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 vpMain.setCurrentItem(tab.getPosition());
 
-                if(tab.getPosition() == 1){
+                if (tab.getPosition() == 1) {
                     clAuction.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     clAuction.setVisibility(View.GONE);
                 }
 

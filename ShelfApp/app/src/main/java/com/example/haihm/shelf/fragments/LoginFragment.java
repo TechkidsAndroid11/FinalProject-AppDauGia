@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -22,7 +20,6 @@ import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.MainActivity;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
-import com.example.haihm.shelf.utils.ImageUtils;
 import com.example.haihm.shelf.utils.Utils;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -30,6 +27,11 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphRequestAsyncTask;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.LoggingBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
@@ -54,11 +56,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Arrays;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -82,6 +82,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     TextView tvNotify;
     public String cover, name, phone, address;
     String avatar;
+    String fbId, fbName, fbAvatar;
     UserModel.Rate rate;
     UserModel userModel;
     String base64;
@@ -275,6 +276,33 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             }
         });
     }
+
+    private void loadData() {
+        Log.e("checkloginfb", "login1");
+        Bundle params = new Bundle();
+        params.putString("fields", "id,name,picture.role(large),cover");
+        GraphRequestAsyncTask graphRequestAsyncTask = new GraphRequest(AccessToken.getCurrentAccessToken(), "me",
+                params, HttpMethod.GET, new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+                if (response != null) {
+                    String userDetail = response.getRawResponse();
+                    Log.e("checkloginfb", "login2 " + userDetail);
+                    FacebookSdk.addLoggingBehavior(LoggingBehavior.REQUESTS);
+                    try {
+                        JSONObject jsonObject = new JSONObject(userDetail);
+                        fbId = jsonObject.getString("id");
+                        fbName = jsonObject.getString("name");
+                        fbAvatar = "https://graph.facebook.com/" + fbId + "/picture?width=960&height=960";
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }).executeAsync();
+    }
+
     public void checkDuplicatedIdDatabase(final FirebaseUser user)
     {
 
@@ -285,9 +313,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 //                {}
                 if(dataSnapshot.exists()) // đã được đăng ký 1 lần thì k cần veryfi phone nữa
                 {
-                    avatar = String.valueOf(user.getPhotoUrl());
-                    name = user.getDisplayName();
-                    userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+                    userModel = new UserModel(user.getUid(), fbAvatar, cover, fbName, phone, address, rate);
                     EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
@@ -304,14 +330,13 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     if (user.getPhoneNumber() == null) {
                         avatar = String.valueOf(user.getPhotoUrl());
                         name = user.getDisplayName();
-                        userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+                        userModel = new UserModel(user.getUid(), fbAvatar, cover, fbName, phone, address, rate);
                         Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
 
                     } else {
-
                         avatar = String.valueOf(user.getPhotoUrl());
                         name = user.getDisplayName();
-                        userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
+                        userModel = new UserModel(user.getUid(), fbAvatar, cover, fbName, phone, address, rate);
                         EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
@@ -359,7 +384,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                updateFacebookButtonUI();
+                loadData();
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 

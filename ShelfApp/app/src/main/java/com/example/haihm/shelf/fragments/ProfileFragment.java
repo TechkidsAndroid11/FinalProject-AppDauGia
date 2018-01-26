@@ -79,11 +79,11 @@ public class ProfileFragment extends Fragment {
         userModel = onClickUserModelEvent.userModel;
         // ảnh là uri khi đăng nhập = fb,gg
         if (userModel.getAnhAvatar().contains("https://")) {
-            Log.d(TAG, "loadData: Anh dep");
+            Log.d(TAG, userModel.getAnhAvatar());
             Picasso.with(getActivity()).load(userModel.getAnhAvatar()).transform(new CropCircleTransformation()).into(ivAvatar);
         } else //ảnh là bitmap khi đăng ký = login sdt
         {
-            Log.d(TAG, "loadData: Anh xau");
+            Log.e(TAG, "loadData: Anh xau");
             base64 = userModel.getAnhAvatar();
             String[] sBase64 = base64.split(",");
             Bitmap bitmap = BitmapFactory.decodeByteArray(

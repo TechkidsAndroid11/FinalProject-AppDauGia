@@ -1,6 +1,5 @@
 package com.example.haihm.shelf.adapters;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -23,14 +22,13 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 return new ShoppingFragment();
-
             case 1:
                 return new AuctionFragment();
-
-            case 2: return new ProfileFragment();
+            case 2:
+                return new ProfileFragment();
         }
         return null;
     }
