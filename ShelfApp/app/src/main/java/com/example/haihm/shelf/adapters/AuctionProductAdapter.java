@@ -33,7 +33,8 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
     List<SanPhamDauGia> sanPhamDauGiaList;
     View view;
     Context context;
-    public AuctionProductAdapter(List<SanPhamDauGia> sanPhamDauGiaList,Context context) {
+
+    public AuctionProductAdapter(List<SanPhamDauGia> sanPhamDauGiaList, Context context) {
         this.sanPhamDauGiaList = sanPhamDauGiaList;
         this.context = context;
     }
@@ -57,10 +58,11 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
         return sanPhamDauGiaList.size();
     }
 
-    public class AuctionProductViewHolder extends RecyclerView.ViewHolder{
+    public class AuctionProductViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivAuctionImage;
         private TextView tvAuctionPrice;
         View iview;
+
         public AuctionProductViewHolder(View itemView) {
             super(itemView);
             iview = itemView;
@@ -69,7 +71,9 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
         }
 
         public void setData(final SanPhamDauGia sanPhamDauGia) {
+
             Bitmap bitmap = ImageUtils.base64ToImage(sanPhamDauGia.anhSP.get(0));
+
             ivAuctionImage.setImageBitmap(bitmap);
 //            tvAuctionPrice.setText(String.valueOf(sanPhamDauGia.giaSP));
             iview.setOnClickListener(new View.OnClickListener() {
