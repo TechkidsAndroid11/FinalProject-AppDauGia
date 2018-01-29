@@ -4,7 +4,6 @@ package com.example.haihm.shelf.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -92,7 +91,7 @@ public class ShoppingProductFragment extends Fragment {
         //setup recycler view
         ShoppingProductAdapter shoppingProductAdapter = new ShoppingProductAdapter(sanPhamRaoVatList, getContext());
         rvProducts.setAdapter(shoppingProductAdapter);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
 
         rvProducts.setLayoutManager(gridLayoutManager);
     }
