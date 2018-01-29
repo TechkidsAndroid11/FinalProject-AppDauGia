@@ -309,8 +309,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         databaseReference.orderByChild("id").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot data : dataSnapshot.getChildren())
-//                {}
                 if(dataSnapshot.exists()) // đã được đăng ký 1 lần thì k cần veryfi phone nữa
                 {
                     userModel = new UserModel(user.getUid(), fbAvatar, cover, fbName, phone, address, rate);
