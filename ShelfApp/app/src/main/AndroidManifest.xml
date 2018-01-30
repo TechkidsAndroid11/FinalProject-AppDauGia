@@ -48,9 +48,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".activity.MainActivity">
-
-        </activity>
+        <activity android:name=".activity.MainActivity"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

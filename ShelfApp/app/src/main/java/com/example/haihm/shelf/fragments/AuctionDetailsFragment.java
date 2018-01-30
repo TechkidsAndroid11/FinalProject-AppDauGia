@@ -1,13 +1,20 @@
 package com.example.haihm.shelf.fragments;
 
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,7 +33,10 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.AuctionDetailsActivity;
+import com.example.haihm.shelf.activity.ProductDetailActivity;
+import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
+import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +45,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -63,6 +76,7 @@ public class AuctionDetailsFragment extends Fragment {
     EditText etInputCost;
     ImageView ivGavel, ivAvatarSeller;
     SanPhamDauGia sanPhamDauGia;
+    private UserModel userModel = new UserModel();
 
     public AuctionDetailsFragment() {
         // Required empty public constructor
@@ -74,14 +88,20 @@ public class AuctionDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_auction_details, container, false);
+        EventBus.getDefault().register(this);
         setUpUI(view);
 //        testFireBase();
         loadData();
         addController();
         return view;
     }
-
+    @Subscribe(sticky = true)
+    public void ReceivedUserModel(OnClickUserModelEvent onClickUserModelEvent) {
+        userModel = onClickUserModelEvent.userModel;
+        Log.d(TAG, "ReceivedUserModel: " + userModel.sdt);
+    }
     private void setUpUI(View view) {
+        sanPhamDauGia = AuctionDetailsActivity.sanPhamDauGia;
         rlHightestCostMaster = view.findViewById(R.id.icl_highest_cost_master);
         rlHightestCostGuest = view.findViewById(R.id.icl_highest_cost_guest);
 
@@ -117,10 +137,16 @@ public class AuctionDetailsFragment extends Fragment {
     }
 
     private boolean myAution() {
+        try {
+            return sanPhamDauGia.nguoiB.id.equals(userModel.id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return false;
     }
+
     private void loadData() {
-        sanPhamDauGia = AuctionDetailsActivity.sanPhamDauGia;
+
         loadImage(sanPhamDauGia.anhSP);
 
         tvNameSeller.setText(sanPhamDauGia.nguoiB.hoten);
@@ -139,7 +165,7 @@ public class AuctionDetailsFragment extends Fragment {
         tvCurentCost.setText(formatTmp + "đ");
         tvNameBuyer.setText(sanPhamDauGia.nguoiMua.hoten);
         long timeRemaining = sanPhamDauGia.tgianKthuc.getTime() - new Date().getTime();
-        if(timeRemaining >= 0 ){
+        if (timeRemaining >= 0) {
             new CountDownTimer(timeRemaining, 1000) {
                 @Override
                 public void onTick(long l) {
@@ -162,6 +188,7 @@ public class AuctionDetailsFragment extends Fragment {
             }.start();
         } else tvTimeRemaining.setText("Hết giờ");
     }
+
     private void addController() {
 
         ivGavel.setOnClickListener(new View.OnClickListener() {
@@ -173,14 +200,120 @@ public class AuctionDetailsFragment extends Fragment {
         tvCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sanPhamDauGia.nguoiMua.sdt.equals("")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setCancelable(true);
 
+                    builder.setMessage("Chưa ai trả giá!!");
+
+                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    builder.show();
+                    return;
+                }
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + sanPhamDauGia.nguoiMua.sdt));
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.CALL_PHONE},
+                            1);
+                    return;
+                } else startActivity(callIntent);
             }
         });
+        //change
+        loadCurentCost();
     }
 
     private void upDateHighestCost() {
+        String newCost = etInputCost.getText().toString().replaceAll(",","");
+        try {
+            double newC = Double.parseDouble(newCost);
+            if (newC - sanPhamDauGia.giaCaoNhat < sanPhamDauGia.buocGia) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setCancelable(true);
 
+                builder.setMessage("Giá mới phải lớn hơn giá hiện tại + bước giá!!");
+
+                builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                builder.show();
+            }
+            else {
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
+                        .child(sanPhamDauGia.idSP).child("giaCaoNhat");
+
+                databaseReference.setValue(newC);
+                //
+                databaseReference = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
+                        .child(sanPhamDauGia.idSP).child("nguoiMua");
+                databaseReference.setValue(userModel);
+                //
+                DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                decimalFormat.applyPattern("#,###,###");
+                etInputCost.setText("");
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
+
+    private void loadCurentCost() {
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
+                .child(sanPhamDauGia.idSP);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //giá
+                double curentCost = Double.parseDouble(dataSnapshot.child("giaCaoNhat").getValue().toString());
+                DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                decimalFormat.applyPattern("#,###,###");
+                tvCurentCost.setText(decimalFormat.format(curentCost));
+                sanPhamDauGia.giaCaoNhat = curentCost;
+                Log.d(TAG, "onDataChange: "+dataSnapshot.child("giaCaoNhat").getValue());
+
+                //người ra giá cao nhất
+                UserModel buyer = new UserModel();
+                buyer = dataSnapshot.child("nguoiMua").getValue(UserModel.class);
+                tvNameBuyer.setText(buyer.hoten);
+                sanPhamDauGia.nguoiMua = buyer;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        DatabaseReference databaseReference2 = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
+//                .child(sanPhamDauGia.idSP).child("nguoiMua");
+//        databaseReference2.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Log.d(TAG, "onDataChange: ");
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+    }
+
     private void loadImage(ArrayList<String> anhSP) {
         new MyAsyncTask().execute(anhSP);
     }
@@ -235,6 +368,7 @@ public class AuctionDetailsFragment extends Fragment {
         pagerIndicator.setVisibility(View.VISIBLE);
         slImageProduct.setCustomIndicator(pagerIndicator);
     }
+
     private TextWatcher onTextChangedListener(final EditText editText) {
         return new TextWatcher() {
             @Override
@@ -273,6 +407,7 @@ public class AuctionDetailsFragment extends Fragment {
             }
         };
     }
+
     private void testFireBase() {
         showAnimationLoadPhoto();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();

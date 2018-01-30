@@ -3,7 +3,7 @@ package com.example.haihm.shelf.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,9 +91,16 @@ public class AuctionProductFragment extends Fragment {
         //setup recycler view
         AuctionProductAdapter auctionProductAdapter = new AuctionProductAdapter(sanPhamDauGiaList,getContext());
         rvProducts.setAdapter(auctionProductAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        linearLayoutManager.canScrollHorizontally();
-        rvProducts.setLayoutManager(linearLayoutManager);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+//        linearLayoutManager.canScrollHorizontally();
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
+//        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//            @Override
+//            public int getSpanSize(int position) {
+//                return position;
+//            }
+//        });
+        rvProducts.setLayoutManager(gridLayoutManager);
     }
 
 }
