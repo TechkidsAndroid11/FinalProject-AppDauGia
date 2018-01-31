@@ -26,7 +26,7 @@ import java.util.Date;
 
 public class AuctionDetailsActivity extends AppCompatActivity {
     private static final String TAG = "AuctionDetailsActivity";
-    ImageView ivBack, ivMyAvata;
+    ImageView ivBack;
     TextView tvNameAuction;
 
     TabLayout tabLayout;
@@ -53,7 +53,6 @@ public class AuctionDetailsActivity extends AppCompatActivity {
     private void setUpUI() {
         ivBack = findViewById(R.id.iv_back);
         tvNameAuction = findViewById(R.id.tv_name_auction);
-        ivMyAvata = findViewById(R.id.iv_my_avatar);
         tabLayout = findViewById(R.id.tab_aution);
         viewPager = findViewById(R.id.vp_aution);
         tabLayout.addTab(tabLayout.newTab());

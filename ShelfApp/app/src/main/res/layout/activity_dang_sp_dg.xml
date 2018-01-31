@@ -48,8 +48,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_name_product" />
 
                 <TextView
@@ -221,8 +221,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_des"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_description" />
 
                 <TextView
@@ -257,8 +257,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_category" />
 
                 <TextView
@@ -379,8 +379,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_price" />
 
                 <TextView
@@ -459,8 +459,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_time" />
 
                 <TextView
@@ -549,8 +549,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_place"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_place" />
 
                 <TextView

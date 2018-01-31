@@ -88,23 +88,25 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
     }
 
     private void loadData() {
-        loadImage(sanPhamRaoVat.anhSP);
-        tvAddress.setText(sanPhamRaoVat.diaGD);
-        tvNameProduct.setText(sanPhamRaoVat.tenSP);
-        //
-        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-        decimalFormat.applyPattern("#,###,###");
-        String formatTmp = decimalFormat.format(sanPhamRaoVat.giaSP);
-        tvProductPrice.setText(formatTmp + "đ");
-        //
-        tvNameSeller.setText(sanPhamRaoVat.nguoiB.hoten);
-        tvDescription.setText(sanPhamRaoVat.motaSP);
-        //
-        float rate = (float) ((float) sanPhamRaoVat.nguoiB.rate.tongD / sanPhamRaoVat.nguoiB.rate.tongLuotVote);
-        ratingBar.setRating(rate);
-        //
-        Picasso.with(this).load(sanPhamRaoVat.nguoiB.anhAvatar)
-                .transform(new CropCircleTransformation()).into(ivAvatar);
+        try{
+            loadImage(sanPhamRaoVat.anhSP);
+            tvAddress.setText(sanPhamRaoVat.diaGD);
+            tvNameProduct.setText(sanPhamRaoVat.tenSP);
+            //
+            DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+            decimalFormat.applyPattern("#,###,###");
+            String formatTmp = decimalFormat.format(sanPhamRaoVat.giaSP);
+            tvProductPrice.setText(formatTmp + "đ");
+            //
+            tvNameSeller.setText(sanPhamRaoVat.nguoiB.hoten);
+            tvDescription.setText(sanPhamRaoVat.motaSP);
+            //
+            float rate = (float) ((float) sanPhamRaoVat.nguoiB.rate.tongD / sanPhamRaoVat.nguoiB.rate.tongLuotVote);
+            ratingBar.setRating(rate);
+            //
+            Picasso.with(this).load(sanPhamRaoVat.nguoiB.anhAvatar)
+                    .transform(new CropCircleTransformation()).into(ivAvatar);
+        }catch (Exception e ){e.printStackTrace();}
     }
 
     private void addController() {

@@ -278,7 +278,7 @@ public class AuctionDetailsFragment extends Fragment {
                 double curentCost = Double.parseDouble(dataSnapshot.child("giaCaoNhat").getValue().toString());
                 DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
                 decimalFormat.applyPattern("#,###,###");
-                tvCurentCost.setText(decimalFormat.format(curentCost));
+                tvCurentCost.setText(decimalFormat.format(curentCost)+"đ");
                 sanPhamDauGia.giaCaoNhat = curentCost;
                 Log.d(TAG, "onDataChange: "+dataSnapshot.child("giaCaoNhat").getValue());
 

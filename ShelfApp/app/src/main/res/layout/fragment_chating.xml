@@ -25,7 +25,6 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/iv_send"
-            android:layout_toRightOf="@id/iv_my_avatar"
             android:background="@drawable/custom_edittext_mess"
             android:hint="Nhập tin nhắn"
             android:padding="5dp" />

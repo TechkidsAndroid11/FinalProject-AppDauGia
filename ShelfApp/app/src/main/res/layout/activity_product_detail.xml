@@ -72,8 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rl_tmp1"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:padding="5dp"
                 android:paddingTop="2dp">
 
                 <TextView

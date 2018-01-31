@@ -199,6 +199,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
+                        getActivity().finish();
                     }
                 }
 

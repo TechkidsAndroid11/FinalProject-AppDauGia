@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff"
     android:orientation="vertical"
     tools:context="com.example.haihm.shelf.activity.DangSpDGActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -31,9 +32,11 @@
             android:textStyle="bold" />
 
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -48,8 +51,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_name_product" />
 
                 <TextView
@@ -116,16 +119,18 @@
                         android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
                         android:src="@drawable/ic_add_black_24dp" />
+
                     <com.github.ybq.android.spinkit.SpinKitView
                         android:id="@+id/sk_photo1"
+                        style="@style/SpinKitView.DoubleBounce"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:padding="50dp"
                         android:background="@drawable/custom_add_picture"
-                        style="@style/SpinKitView.DoubleBounce"
+                        android:padding="50dp"
                         android:visibility="gone"
-                        app:SpinKit_Color="@color/colorPrimary"/>
+                        app:SpinKit_Color="@color/colorPrimary" />
+
                     <ImageView
                         android:id="@+id/iv_photo2"
                         android:layout_width="70dp"
@@ -135,17 +140,19 @@
                         android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
                         android:src="@drawable/ic_add_black_24dp" />
+
                     <com.github.ybq.android.spinkit.SpinKitView
                         android:id="@+id/sk_photo2"
+                        style="@style/SpinKitView.Small.DoubleBounce"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:padding="27dp"
                         android:layout_toRightOf="@id/iv_photo1"
                         android:background="@drawable/custom_add_picture"
-                        style="@style/SpinKitView.Small.DoubleBounce"
-                        app:SpinKit_Color="@color/colorPrimary"
-                        android:visibility="gone"/>
+                        android:padding="27dp"
+                        android:visibility="gone"
+                        app:SpinKit_Color="@color/colorPrimary" />
+
                     <ImageView
                         android:id="@+id/iv_photo3"
                         android:layout_width="70dp"
@@ -156,18 +163,20 @@
                         android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
                         android:src="@drawable/ic_add_black_24dp" />
+
                     <com.github.ybq.android.spinkit.SpinKitView
                         android:id="@+id/sk_photo3"
+                        style="@style/SpinKitView.Small.DoubleBounce"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:padding="27dp"
-                        android:layout_toRightOf="@id/iv_photo1"
                         android:layout_below="@id/iv_photo2"
+                        android:layout_margin="5dp"
+                        android:layout_toRightOf="@id/iv_photo1"
                         android:background="@drawable/custom_add_picture"
-                        style="@style/SpinKitView.Small.DoubleBounce"
-                        app:SpinKit_Color="@color/colorPrimary"
-                        android:visibility="gone"/>
+                        android:padding="27dp"
+                        android:visibility="gone"
+                        app:SpinKit_Color="@color/colorPrimary" />
+
                     <ImageView
                         android:id="@+id/iv_photo4"
                         android:layout_width="70dp"
@@ -177,17 +186,19 @@
                         android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
                         android:src="@drawable/ic_add_black_24dp" />
+
                     <com.github.ybq.android.spinkit.SpinKitView
                         android:id="@+id/sk_photo4"
+                        style="@style/SpinKitView.Small.DoubleBounce"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:padding="27dp"
                         android:layout_toRightOf="@id/iv_photo2"
                         android:background="@drawable/custom_add_picture"
-                        style="@style/SpinKitView.Small.DoubleBounce"
-                        app:SpinKit_Color="@color/colorPrimary"
-                        android:visibility="gone"/>
+                        android:padding="27dp"
+                        android:visibility="gone"
+                        app:SpinKit_Color="@color/colorPrimary" />
+
                     <ImageView
                         android:id="@+id/iv_photo5"
                         android:layout_width="70dp"
@@ -198,18 +209,19 @@
                         android:background="@drawable/custom_add_picture"
                         android:scaleType="center"
                         android:src="@drawable/ic_add_black_24dp" />
+
                     <com.github.ybq.android.spinkit.SpinKitView
                         android:id="@+id/sk_photo5"
+                        style="@style/SpinKitView.Small.DoubleBounce"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:padding="27dp"
-                        android:layout_toRightOf="@id/iv_photo2"
                         android:layout_below="@id/iv_photo4"
+                        android:layout_margin="5dp"
+                        android:layout_toRightOf="@id/iv_photo2"
                         android:background="@drawable/custom_add_picture"
-                        style="@style/SpinKitView.Small.DoubleBounce"
-                        app:SpinKit_Color="@color/colorPrimary"
-                        android:visibility="gone"/>
+                        android:padding="27dp"
+                        android:visibility="gone"
+                        app:SpinKit_Color="@color/colorPrimary" />
                 </RelativeLayout>
             </HorizontalScrollView>
 
@@ -221,8 +233,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_des"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_description" />
 
                 <TextView
@@ -238,12 +250,12 @@
             </RelativeLayout>
 
             <EditText
-                android:gravity="top"
-                android:inputType="textMultiLine"
                 android:id="@+id/et_mo_ta"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/custom_edittext_post"
+                android:gravity="top"
+                android:inputType="textMultiLine"
                 android:paddingBottom="3dp"
                 android:paddingLeft="5dp"
                 android:paddingTop="3dp"
@@ -257,8 +269,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_category" />
 
                 <TextView
@@ -295,11 +307,11 @@
                         android:id="@+id/tv_technology"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_home_appliance"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_toRightOf="@id/tv_beauty"
-                        android:layout_below="@id/tv_home_appliance"
                         android:background="@drawable/ct_textview_post_uncheck"
                         android:padding="8dp"
                         android:text="Đồ công nghệ"
@@ -323,10 +335,10 @@
                         android:layout_marginRight="5dp"
                         android:layout_toRightOf="@id/tv_fashion"
                         android:background="@drawable/ct_textview_post_uncheck"
-                        android:paddingTop="8dp"
                         android:paddingBottom="8dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
+                        android:paddingTop="8dp"
                         android:text="Xe"
                         android:textColor="#000" />
 
@@ -380,8 +392,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_price" />
 
                 <TextView
@@ -395,6 +407,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
                 <EditText
                     android:id="@+id/et_gia"
                     android:layout_width="match_parent"
@@ -404,14 +417,15 @@
                     android:layout_toRightOf="@id/tv_start_at"
                     android:background="@drawable/custom_edittext_post"
                     android:hint="đ"
-                    android:maxLength="17"
                     android:inputType="number"
+                    android:maxLength="17"
                     android:paddingBottom="3dp"
                     android:paddingLeft="10dp"
                     android:paddingTop="3dp"
                     android:textColor="#000"
                     android:textColorHint="#b1b1b1" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -420,8 +434,8 @@
 
                 <ImageView
                     android:id="@+id/iv_icon_place"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:src="@drawable/icon_place" />
 
                 <TextView
@@ -445,21 +459,22 @@
                 android:paddingLeft="5dp"
                 android:paddingTop="3dp"
                 android:textColor="#000000" />
+
             <TextView
                 android:id="@+id/iv_done"
-                android:layout_marginBottom="10dp"
-                android:textStyle="bold"
-                android:textColor="#fff"
-                android:layout_gravity="center"
-                android:paddingRight="25dp"
-                android:paddingLeft="25dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/custom_textview"
-                android:text="Rao bán" />
+                android:paddingBottom="8dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="8dp"
+                android:text="Rao bán"
+                android:textColor="#fff"
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
