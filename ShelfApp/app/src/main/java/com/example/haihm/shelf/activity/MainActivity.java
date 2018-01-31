@@ -82,7 +82,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //TODO: load đồ công nghệ
     //TODO: tab layout đồ đấu giá / đang tham gia
-
+    //TODO: lịch sử
+    //TODO: rating bar
+    //TODO: tìm kiếm
+    //TODO: ko lưu sđt verify
+    //TODO: join đấu giá - sửa lại UserModel
 }
