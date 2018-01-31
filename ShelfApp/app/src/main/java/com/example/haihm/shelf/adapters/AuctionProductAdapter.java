@@ -13,12 +13,9 @@ import android.widget.TextView;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.AuctionDetailsActivity;
-import com.example.haihm.shelf.activity.ProductDetailActivity;
 import com.example.haihm.shelf.event.OnClickAuctionEvent;
-import com.example.haihm.shelf.event.OnClickProductEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.utils.ImageUtils;
-
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -71,11 +68,9 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
         }
 
         public void setData(final SanPhamDauGia sanPhamDauGia) {
-
             Bitmap bitmap = ImageUtils.base64ToImage(sanPhamDauGia.anhSP.get(0));
-
             ivAuctionImage.setImageBitmap(bitmap);
-//            tvAuctionPrice.setText(String.valueOf(sanPhamDauGia.giaSP));
+            tvAuctionPrice.setText(String.valueOf(sanPhamDauGia.giaSP));
             iview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

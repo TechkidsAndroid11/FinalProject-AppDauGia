@@ -2,11 +2,8 @@ package com.example.haihm.shelf.fragments;
 
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +40,6 @@ public class AuctionFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_auction, container, false);
         setupUI(view);
-
         return view;
     }
 
@@ -62,34 +58,14 @@ public class AuctionFragment extends Fragment {
     private void setupProductTypeTab(View view) {
         FragmentPagerItems fragmentPagerItems = new FragmentPagerItems(view.getContext());
         for (String productType : productTypeList) {
-            Log.d(TAG, "setupProductTypeTab: " + productType);
             Bundle bundle = new Bundle();
             bundle.putString(PRODUCT_TYPE, productType);
             fragmentPagerItems.add(FragmentPagerItem.of(productType, AuctionProductFragment.class, bundle));
         }
-
         FragmentPagerItemAdapter fragmentPagerItemAdapter = new FragmentPagerItemAdapter(getChildFragmentManager(), fragmentPagerItems);
 
         vpAuctionProduct.setAdapter(fragmentPagerItemAdapter);
         stlAuctionProduct.setViewPager(vpAuctionProduct);
-
-        stlAuctionProduct.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
     }
 
 }

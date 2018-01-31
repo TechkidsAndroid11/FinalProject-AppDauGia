@@ -32,7 +32,6 @@ public class AuctionProductFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     List<SanPhamDauGia> sanPhamDauGiaList;
-    String productType;
 
     public AuctionProductFragment() {
         // Required empty public constructor
@@ -44,11 +43,6 @@ public class AuctionProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_auction_product, container, false);
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            productType = bundle.getString(ShoppingFragment.PRODUCT_TYPE);
-        }
-        Log.d(TAG, "onCreateView: " + productType);
         setupUI(view);
         return view;
     }
@@ -62,9 +56,14 @@ public class AuctionProductFragment extends Fragment {
     }
 
     private void setupDatabase() {
-        sanPhamDauGiaList = new ArrayList<>();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Auction").child(productType);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String productType = bundle.getString(ShoppingFragment.PRODUCT_TYPE);
+            Log.d(TAG, "onCreateView: " + productType);
+            sanPhamDauGiaList = new ArrayList<>();
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReference = firebaseDatabase.getReference("Auction").child(productType);
+        }
     }
 
     private void loadData(final View view) {
@@ -91,15 +90,8 @@ public class AuctionProductFragment extends Fragment {
         //setup recycler view
         AuctionProductAdapter auctionProductAdapter = new AuctionProductAdapter(sanPhamDauGiaList,getContext());
         rvProducts.setAdapter(auctionProductAdapter);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-//        linearLayoutManager.canScrollHorizontally();
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
-//        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-//            @Override
-//            public int getSpanSize(int position) {
-//                return position;
-//            }
-//        });
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         rvProducts.setLayoutManager(gridLayoutManager);
     }
 
