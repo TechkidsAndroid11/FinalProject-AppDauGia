@@ -49,6 +49,7 @@ public class AuctionProductFragment extends Fragment {
 
     private void setupUI(View view) {
         rvProducts = view.findViewById(R.id.rv_list_auction_product);
+
         //load database
         setupDatabase();
         loadData(view);

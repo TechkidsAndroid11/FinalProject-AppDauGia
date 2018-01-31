@@ -90,7 +90,7 @@ public class ShoppingProductFragment extends Fragment {
         //setup recycler view
         ShoppingProductAdapter shoppingProductAdapter = new ShoppingProductAdapter(sanPhamRaoVatList, getContext());
         rvProducts.setAdapter(shoppingProductAdapter);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
 
         rvProducts.setLayoutManager(gridLayoutManager);
     }

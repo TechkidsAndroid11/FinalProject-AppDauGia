@@ -77,7 +77,7 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
             ivAuctionImage.setImageBitmap(bitmap);
             tvAuctionPrice.setText("Bắt đầu từ: " + String.valueOf(sanPhamDauGia.giaCaoNhat));
             tvAuctionProductName.setText(sanPhamDauGia.tenSP);
-            tvAuctionSellerName.setText(sanPhamDauGia.nguoiB.hoten);
+//            tvAuctionSellerName.setText(sanPhamDauGia.nguoiB.hoten);
 
             DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
             String auctionTime = dateFormat.format(sanPhamDauGia.tgianKthuc);
