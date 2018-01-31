@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +56,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -91,8 +94,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     FirebaseDatabase firebaseDatabase;
     TextView tvSignIn, tvSignUp;
     EditText etUsername, etPass;
-    public boolean checkId;
-
+    LinearLayout linearLayout;
+    AVLoadingIndicatorView avLoad;
     public LoginFragment() {
         // Required empty public constructor
 
@@ -105,6 +108,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         setupUI(view);
+        avLoad.hide();
+
         checkLogined();
         addListener();
 
@@ -112,7 +117,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     }
 
     public void setupUI(View view) {
-
+        linearLayout = view.findViewById(R.id.linearLayout);
+        avLoad = view.findViewById(R.id.avLoad);
         userModel = new UserModel();
         btnLoginApp = view.findViewById(R.id.bt_login);
         btnLoginFacebook = view.findViewById(R.id.bt_register_with_facebook);
@@ -154,6 +160,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             public void onClick(View view) {
 
                 loginWithPhone();
+
             }
         });
 
@@ -177,9 +184,15 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyPre", Context.MODE_PRIVATE);
         String Uid = sharedPreferences.getString("UserId", "NotFound");
         if (!Uid.equals("NotFound")) {
+
+            linearLayout.setVisibility(View.GONE);
+            avLoad.show();
+
             databaseReference.orderByChild("id").equalTo(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+
+
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         userModel = userSnapshot.getValue(UserModel.class);
                         Log.d(TAG, "onDataChange: " + userModel.getSdt());
@@ -305,7 +318,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
     public void checkDuplicatedIdDatabase(final FirebaseUser user)
     {
-
+        linearLayout.setVisibility(View.GONE);
+        avLoad.show();
         databaseReference.orderByChild("id").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -332,6 +346,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
 
                     } else {
+
                         avatar = String.valueOf(user.getPhotoUrl());
                         name = user.getDisplayName();
                         userModel = new UserModel(user.getUid(), fbAvatar, cover, fbName, phone, address, rate);

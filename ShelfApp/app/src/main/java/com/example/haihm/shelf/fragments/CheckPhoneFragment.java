@@ -121,7 +121,7 @@ public class CheckPhoneFragment extends Fragment {
                 TimeUnit.SECONDS,   // Unit of timeout
                 getActivity(),               // Activity (for callback binding)
                 verificationCallbacks);        // OnVerificationStateChangedCallbacks
-        Toast.makeText(getActivity(), "Waiting", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Hệ thông đang gửi mã xác nhận!!!", Toast.LENGTH_SHORT).show();
 
     }
     private void setupVerificationCallbacks() {

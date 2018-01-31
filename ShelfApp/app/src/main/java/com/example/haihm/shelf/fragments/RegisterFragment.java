@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 
 /**
@@ -69,6 +70,7 @@ public class RegisterFragment extends Fragment {
     public void setupUI(View view) {
         etPhone = view.findViewById(R.id.edt_phone_number);
         btnSignIn = view.findViewById(R.id.bt_sign_in);
+
         fbAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("UserInfo");

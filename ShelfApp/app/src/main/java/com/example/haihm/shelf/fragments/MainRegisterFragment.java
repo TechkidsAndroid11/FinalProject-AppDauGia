@@ -54,6 +54,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 import com.example.haihm.shelf.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -78,11 +79,11 @@ public class MainRegisterFragment extends Fragment {
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     String phone, avatar;
-
+    RelativeLayout rlMain;
     FirebaseStorage storage;
     StorageReference storageRef;
     public static boolean check = true;
-
+    AVLoadingIndicatorView avLoad;
     @SuppressLint("ValidFragment")
     public MainRegisterFragment(FirebaseUser user, String phone) {
         // Required empty public constructor
@@ -97,12 +98,15 @@ public class MainRegisterFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_register, container, false);
         setupUI(view);
+        avLoad.hide();
         addListener();
         return view;
 
     }
 
     private void setupUI(View view) {
+        rlMain = view.findViewById(R.id.rl_main);
+        avLoad = view.findViewById(R.id.avLoad);
         etUsername = view.findViewById(R.id.et_username);
         etVerifyPassword = view.findViewById(R.id.et_verifyPassword);
         etPassword = view.findViewById(R.id.et_password);
@@ -132,7 +136,8 @@ public class MainRegisterFragment extends Fragment {
                 checkDuplicatedUsername(etUsername.getText().toString());
                 if (etPassword.getText().toString().equals("") || etUsername.getText().toString().equals("") || etVerifyPassword.getText().toString().equals("")) {
                     tvNotify.setText("Bạn phải điền đầy đủ các thông tin chi tiết!");
-                } else if (avatar == null || avatar.equals("")) {
+                } else if (avatar==null) {
+                    Log.d(TAG, "onClick: "+avatar);
                     tvNotify.setText("Bạn phải thêm ảnh đại diện!");
                 } else if (etPassword.getText().toString().length() < 6) {
                     tvNotify.setText("Mật khẩu phải có ít nhất 6 ký tự!");
@@ -154,10 +159,11 @@ public class MainRegisterFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange: " + dataSnapshot.getKey());
                 if (dataSnapshot.exists()) {
-                    check = true;
-                } else {
                     check = false;
+                } else {
+                    check = true;
                 }
+                Log.d(TAG, "onDataChange: check: "+check);
             }
 
             @Override
@@ -169,6 +175,8 @@ public class MainRegisterFragment extends Fragment {
 
     public void registerAccount() {
 
+        rlMain.setVisibility(View.GONE);
+        avLoad.show();
         String id = user.getUid();
         Log.d(TAG, "registerAccount: " + id);
         String address = "";
@@ -251,7 +259,7 @@ public class MainRegisterFragment extends Fragment {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 avatar = String.valueOf(downloadUrl);
-                Log.d(TAG, "onSuccess: " + downloadUrl);
+                Log.d(TAG, "onSuccess: avatar: "+avatar);
             }
         });
     }

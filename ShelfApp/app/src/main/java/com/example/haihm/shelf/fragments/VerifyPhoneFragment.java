@@ -33,6 +33,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -55,6 +56,7 @@ public class VerifyPhoneFragment extends Fragment {
     public PhoneAuthProvider.OnVerificationStateChangedCallbacks verificationCallbacks;
     public PhoneAuthProvider.ForceResendingToken resendToken;
     public FirebaseAuth fbAuth;
+    AVLoadingIndicatorView avLoad;
     public VerifyPhoneFragment()
     {
 
@@ -74,6 +76,7 @@ public class VerifyPhoneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_verify_phone, container, false);
         setupUI(view);
+        avLoad.hide();
         addListener();
         return view;
     }
@@ -86,6 +89,7 @@ public class VerifyPhoneFragment extends Fragment {
         fbAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("UserInfo");
+        avLoad = view.findViewById(R.id.avLoad);
         underLine();
     }
     public void underLine()
@@ -100,7 +104,12 @@ public class VerifyPhoneFragment extends Fragment {
         btVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                verifyCode();
+                if(etCode.getText().toString().equals(""))
+                {
+                    Toast.makeText(getActivity(), "Bạn chưa nhập mã code!!", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    verifyCode();
             }
         });
         tvResend.setOnClickListener(new View.OnClickListener() {
