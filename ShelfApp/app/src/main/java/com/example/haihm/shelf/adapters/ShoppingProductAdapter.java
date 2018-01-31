@@ -67,6 +67,7 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
             ivProductImage = itemView.findViewById(R.id.iv_product_image);
             tvProductPrice = itemView.findViewById(R.id.tv_product_price);
             tvProductName = itemView.findViewById(R.id.tv_product_name);
+            tvProductSellerName = itemView.findViewById(R.id.tv_product_seller_name);
         }
 
 
@@ -75,7 +76,7 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
             ivProductImage.setImageBitmap(bitmap);
             tvProductPrice.setText(String.valueOf(sanPhamRaoVat.giaSP));
             tvProductName.setText(sanPhamRaoVat.tenSP);
-            tvProductSellerName.setText(sanPhamRaoVat.nguoiB.hoten);
+//            tvProductSellerName.setText(sanPhamRaoVat.nguoiB.hoten);
             iview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

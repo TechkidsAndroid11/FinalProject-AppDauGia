@@ -19,6 +19,8 @@ import com.example.haihm.shelf.utils.ImageUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -57,20 +59,30 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
 
     public class AuctionProductViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivAuctionImage;
-        private TextView tvAuctionPrice;
+        private TextView tvAuctionPrice, tvAuctionTimeStart, tvAuctionSellerName, tvAuctionProductName;
         View iview;
 
         public AuctionProductViewHolder(View itemView) {
             super(itemView);
             iview = itemView;
             ivAuctionImage = itemView.findViewById(R.id.iv_auction_image);
-            tvAuctionPrice = itemView.findViewById(R.id.tv_product_price);
+            tvAuctionPrice = itemView.findViewById(R.id.tv_auction_price);
+            tvAuctionTimeStart = itemView.findViewById(R.id.tv_auction_time_start);
+            tvAuctionSellerName = itemView.findViewById(R.id.tv_auction_seller_name);
+            tvAuctionProductName = itemView.findViewById(R.id.tv_auction_product_name);
         }
 
         public void setData(final SanPhamDauGia sanPhamDauGia) {
             Bitmap bitmap = ImageUtils.base64ToImage(sanPhamDauGia.anhSP.get(0));
             ivAuctionImage.setImageBitmap(bitmap);
-            tvAuctionPrice.setText(String.valueOf(sanPhamDauGia.giaSP));
+            tvAuctionPrice.setText("Bắt đầu từ: " + String.valueOf(sanPhamDauGia.giaCaoNhat));
+            tvAuctionProductName.setText(sanPhamDauGia.tenSP);
+            tvAuctionSellerName.setText(sanPhamDauGia.nguoiB.hoten);
+
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+            String auctionTime = dateFormat.format(sanPhamDauGia.tgianKthuc);
+            tvAuctionTimeStart.setText(auctionTime);
+
             iview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
