@@ -1,4 +1,4 @@
-package com.example.haihm.shelf;
+package com.example.haihm.shelf.fragments;
 
 
 import android.os.Bundle;
@@ -8,8 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.haihm.shelf.fragments.AuctionFragment;
-import com.example.haihm.shelf.fragments.AuctionProductFragment;
+import com.example.haihm.shelf.R;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;

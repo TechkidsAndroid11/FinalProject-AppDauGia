@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="mainColor">#cc3333</color>
-    <color name="mainColorLighter">#b76f6f</color>
+    <color name="mainColorLighter">#64cc3333</color>
     <color name="textColor">#ffffff</color>
     <color name="textColorBlack">#000000</color>
+    <color name="textOpacityColorBlack">#64000000</color>
 </resources>
