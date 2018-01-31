@@ -2,7 +2,6 @@ package com.example.haihm.shelf.fragments;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,7 +10,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -33,7 +31,6 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.AuctionDetailsActivity;
-import com.example.haihm.shelf.activity.ProductDetailActivity;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.UserModel;

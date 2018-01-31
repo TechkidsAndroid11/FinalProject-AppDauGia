@@ -4,7 +4,6 @@ package com.example.haihm.shelf.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,31 +62,11 @@ public class ShoppingFragment extends Fragment {
             fragmentPagerItems.add(FragmentPagerItem.of(productType, ShoppingProductFragment.class, bundle));
         }
 
-        final FragmentStatePagerItemAdapter fragmentStatePagerItemAdapter = new FragmentStatePagerItemAdapter(getChildFragmentManager(), fragmentPagerItems);
+        FragmentStatePagerItemAdapter fragmentStatePagerItemAdapter = new FragmentStatePagerItemAdapter(getChildFragmentManager(), fragmentPagerItems);
 
         vpProductList.setAdapter(fragmentStatePagerItemAdapter);
         stlProductType.setViewPager(vpProductList);
 
-        stlProductType.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-//                Fragment fragment = fragmentStatePagerItemAdapter.getPage(position);
-//                Bundle bundle = new Bundle();
-//                bundle.putString(PRODUCT_TYPE, String.valueOf(fragmentStatePagerItemAdapter.getPageTitle(position)));
-//                fragment.setArguments(bundle);
-                Log.d(TAG, "onPageSelected: " + String.valueOf(fragmentStatePagerItemAdapter.getPageTitle(position)));
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
     }
 

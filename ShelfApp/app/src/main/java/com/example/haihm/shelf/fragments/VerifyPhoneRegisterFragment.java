@@ -2,7 +2,6 @@ package com.example.haihm.shelf.fragments;
 
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -18,8 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.activity.MainActivity;
-import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,8 +30,6 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.wang.avi.AVLoadingIndicatorView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.concurrent.TimeUnit;
 

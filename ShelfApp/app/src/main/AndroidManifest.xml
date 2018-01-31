@@ -41,14 +41,15 @@
             android:configChanges="keyboardHidden"
             android:theme="@style/Theme.Design.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden">
+
+        </activity>
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".activity.MainActivity"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
