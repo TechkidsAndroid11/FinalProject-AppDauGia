@@ -2,7 +2,6 @@ package com.example.haihm.shelf.fragments;
 
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -18,8 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.activity.MainActivity;
-import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,8 +29,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.greenrobot.eventbus.EventBus;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -49,6 +45,7 @@ public class VerifyPhoneRegisterFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     public UserModel userModel;
     public String phoneVerificationId;
+    AVLoadingIndicatorView avLoad;
     String phone;
     public PhoneAuthProvider.OnVerificationStateChangedCallbacks verificationCallbacks;
     public PhoneAuthProvider.ForceResendingToken resendToken;
@@ -62,7 +59,7 @@ public class VerifyPhoneRegisterFragment extends Fragment {
     }
     public VerifyPhoneRegisterFragment()
     {
-        
+
     }
 
     @Override
@@ -72,11 +69,13 @@ public class VerifyPhoneRegisterFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_verify_phone, container, false);
 
         setupUI(view);
+        avLoad.hide();
         addListener();
         return view;
 
     }
     private void setupUI(View view) {
+        avLoad = view.findViewById(R.id.avLoad);
         tvResend= view.findViewById(R.id.tv_resend);
         tvDes = view.findViewById(R.id.tv_des);
         etCode = view.findViewById(R.id.et_verifyCode);
@@ -126,7 +125,7 @@ public class VerifyPhoneRegisterFragment extends Fragment {
                 if(task.isSuccessful())
                 {
                     FirebaseUser firebaseUser = task.getResult().getUser();
-
+                    avLoad.show();
                     Utils.openFragment(getFragmentManager(),R.id.rl_main,new MainRegisterFragment(firebaseUser,phone));
                 }
             }

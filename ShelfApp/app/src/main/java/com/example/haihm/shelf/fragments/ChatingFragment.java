@@ -41,6 +41,7 @@ public class ChatingFragment extends Fragment {
     SanPhamDauGia sanPhamDauGia;
     UserModel userModel;
     ChatingAdapter chatingAdapter;
+
     public ChatingFragment() {
         // Required empty public constructor
     }
@@ -57,17 +58,19 @@ public class ChatingFragment extends Fragment {
         addController();
         return view;
     }
+
     @Subscribe(sticky = true)
-    public void ReceivedUserModel(OnClickUserModelEvent onClickUserModelEvent){
+    public void ReceivedUserModel(OnClickUserModelEvent onClickUserModelEvent) {
         userModel = onClickUserModelEvent.userModel;
-        Log.d(TAG, "ReceivedUserModel: "+userModel.sdt);
+        Log.d(TAG, "ReceivedUserModel: " + userModel.sdt);
     }
+
     private void setUpUI(View view) {
         sanPhamDauGia = AuctionDetailsActivity.sanPhamDauGia;
         rvChat = view.findViewById(R.id.rv_chat);
         ivSend = view.findViewById(R.id.iv_send);
         etChat = view.findViewById(R.id.et_chat);
-        Log.d(TAG, "setUpUI: "+sanPhamDauGia.idSP);
+        Log.d(TAG, "setUpUI: " + sanPhamDauGia.idSP);
     }
 
     private void addController() {
@@ -99,31 +102,33 @@ public class ChatingFragment extends Fragment {
         });
         changeChating();
     }
-    public void changeChating(){
+
+    public void changeChating() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
                 .child(sanPhamDauGia.idSP).child("lchat");
         databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(TAG, "onDataChange: ");
-                        ArrayList<SanPhamDauGia.Chat> chats = new ArrayList<>();
-                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            SanPhamDauGia.Chat chat = snapshot.getValue(SanPhamDauGia.Chat.class);
-                            chats.add(chat);
-                        }
-                        sanPhamDauGia.lchat.clear();
-                        sanPhamDauGia.lchat.addAll(chats);
-                        chatingAdapter.notifyDataSetChanged();
-                        rvChat.smoothScrollToPosition(sanPhamDauGia.lchat.size() - 1);
-                    }
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: ");
+                ArrayList<SanPhamDauGia.Chat> chats = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    SanPhamDauGia.Chat chat = snapshot.getValue(SanPhamDauGia.Chat.class);
+                    chats.add(chat);
+                }
+                sanPhamDauGia.lchat.clear();
+                sanPhamDauGia.lchat.addAll(chats);
+                chatingAdapter.notifyDataSetChanged();
+                rvChat.smoothScrollToPosition(sanPhamDauGia.lchat.size() - 1);
+            }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+            }
+        });
     }
+
     private void testFireBase() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child("Đồ gia dụng");

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
@@ -17,8 +18,18 @@
         android:layout_weight="8">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/rl_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/avLoad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                app:indicatorName="BallGridPulseIndicator" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -32,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -55,6 +67,7 @@
 
                 <EditText
                     android:id="@+id/et_phone"
+                    android:textColor="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_marginTop="10dp"
@@ -95,13 +108,13 @@
                     android:layout_below="@id/et_verifyPassword">
 
                     <ImageView
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/default_avatar"
                         android:id="@+id/iv_avatar"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_centerVertical="true"
-                        android:background="#fff" />
+                        android:background="#fff"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/default_avatar" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -123,13 +136,14 @@
                     android:gravity="center"
                     android:text="Đăng ký"
                     android:textColor="#fff" />
+
                 <TextView
 
                     android:id="@+id/tv_notify"
-                    android:layout_marginTop="20dp"
-                    android:textColor="#ff0000"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#ff0000" />
 
 
             </LinearLayout>

@@ -3,12 +3,14 @@ package com.example.haihm.shelf.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 /**
  * Created by ThangPham on 1/16/2018.
  */
 
 public class ViewPagerProfileAdapter extends FragmentPagerAdapter {
+    private static final String TAG = "ViewPagerProfileAdapter";
     public ViewPagerProfileAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -19,10 +21,12 @@ public class ViewPagerProfileAdapter extends FragmentPagerAdapter {
         {
             case 0:
             {
+                Log.d(TAG, "getItem: ");
                 break;
             }
             case 1:
             {
+                Log.d(TAG, "getItem: ");
                 break;
             }
         }

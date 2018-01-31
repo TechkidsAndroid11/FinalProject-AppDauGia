@@ -4,86 +4,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.haihm.shelf.activity.ProductDetailActivity">
+
     <RelativeLayout
         android:id="@+id/rv_main_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary">
+
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_back_black_24dp"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+
         <TextView
             android:id="@+id/tv_name_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Product Name"
             android:layout_centerInParent="true"
+            android:text="Product Name"
             android:textColor="#ffffff"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rv_main_bar">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:id="@+id/rl_tmp1"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:background="#64dcdcdc">
+
                 <com.daimajia.slider.library.SliderLayout
                     android:id="@+id/sl_image_product"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
                 <com.daimajia.slider.library.Indicators.PagerIndicator
                     android:id="@+id/pi_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:padding="8dp" />
+
                 <com.github.ybq.android.spinkit.SpinKitView
                     android:id="@+id/sk_load_image"
+                    style="@style/SpinKitView.DoubleBounce"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    style="@style/SpinKitView.DoubleBounce"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rl_tmp2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rl_tmp1"
                 android:paddingLeft="8dp"
-                android:paddingTop="2dp"
-                android:paddingRight="8dp">
+                android:paddingRight="8dp"
+                android:paddingTop="2dp">
+
                 <TextView
                     android:id="@+id/tv_address"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="Địa chỉ"
-                    android:singleLine="true"
                     android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="Địa chỉ"
+                    android:textColor="#000"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#000"/>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tv_product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/iv_avatar_seller"
                     android:text="1,0000,000đ"
-                    android:textSize="18sp"
                     android:textColor="@color/colorPrimary"
-                    android:textStyle="bold"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/iv_avatar_seller"
@@ -93,56 +105,60 @@
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/tv_name_seller"
                     android:layout_toStartOf="@+id/tv_name_seller" />
+
                 <TextView
                     android:id="@+id/tv_name_seller"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:maxLength="20"
                     android:text="Tên người bán"
-                    android:layout_alignParentRight="true"
+                    android:textColor="#6b6b6b"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#6b6b6b"/>
+                    android:textStyle="bold" />
 
                 <RatingBar
                     android:id="@+id/rb_rating"
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/iv_avatar_seller"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_below="@id/iv_avatar_seller"
                     android:numStars="5"
-                    android:theme="@style/RatingBar"
-                    android:rating="3.5" />
+                    android:rating="3.5"
+                    android:theme="@style/RatingBar" />
             </RelativeLayout>
+
             <TextView
                 android:id="@+id/tv_description_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:layout_below="@id/rl_tmp2"
+                android:paddingBottom="50dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:layout_below="@id/rl_tmp2"
+                android:paddingTop="5dp"
                 android:text="Mô tả sản phẩm"
-                android:paddingBottom="50dp"
                 android:textColor="#000" />
         </RelativeLayout>
     </ScrollView>
+
     <TextView
         android:id="@+id/tv_call_buy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/custom_textview"
-        android:textColor="#ffffff"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
-        android:layout_margin="8dp"
+        android:paddingTop="10dp"
         android:text="Liên hệ"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </RelativeLayout>

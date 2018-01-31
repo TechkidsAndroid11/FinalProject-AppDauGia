@@ -4,7 +4,6 @@ package com.example.haihm.shelf.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +31,6 @@ public class ShoppingProductFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     List<SanPhamRaoVat> sanPhamRaoVatList;
-    String productType;
 
     public ShoppingProductFragment() {
         // Required empty public constructor
@@ -44,29 +42,29 @@ public class ShoppingProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shopping_product, container, false);
-
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            productType = bundle.getString(ShoppingFragment.PRODUCT_TYPE);
-        }
-
-        Log.d(TAG, "onCreateView: " + productType);
         setupUI(view);
         return view;
     }
 
     private void setupUI(View view) {
         rvProducts = view.findViewById(R.id.rv_list_shopping_product);
+
         //load database
         setupDatabase();
         loadData(view);
-
     }
 
     private void setupDatabase() {
-        sanPhamRaoVatList = new ArrayList<>();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Product").child(productType);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String productType = bundle.getString(ShoppingFragment.PRODUCT_TYPE);
+            Log.d(TAG, "onCreateView: " + productType);
+            sanPhamRaoVatList = new ArrayList<>();
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReference = firebaseDatabase.getReference("Product").child(productType);
+        }
+
+
     }
 
     private void loadData(final View view) {

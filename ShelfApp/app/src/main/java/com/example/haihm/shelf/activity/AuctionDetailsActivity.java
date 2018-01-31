@@ -1,55 +1,32 @@
 package com.example.haihm.shelf.activity;
 
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
-import android.os.CountDownTimer;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.daimajia.slider.library.Indicators.PagerIndicator;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.adapters.ViewPagerAutionDetailsAdapter;
 import com.example.haihm.shelf.event.OnClickAuctionEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
-import com.example.haihm.shelf.utils.ImageUtils;
-import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
-
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class AuctionDetailsActivity extends AppCompatActivity {
     private static final String TAG = "AuctionDetailsActivity";
-    ImageView ivBack,ivMyAvata;
+    ImageView ivBack, ivMyAvata;
     TextView tvNameAuction;
 
     TabLayout tabLayout;
@@ -86,6 +63,7 @@ public class AuctionDetailsActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAutionDetailsAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
+
     private void loadData() {
         tvNameAuction.setText(sanPhamDauGia.tenSP);
     }
@@ -94,7 +72,7 @@ public class AuctionDetailsActivity extends AppCompatActivity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -121,16 +99,13 @@ public class AuctionDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onBackPressed() {
-        if(getSupportFragmentManager().getBackStackEntryCount()!=0){
-            super.onBackPressed();
-        }else {
-            moveTaskToBack(true);
-        }
+        finish();
     }
-    private void testFireBase() {
 
+    private void testFireBase() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child("Đồ gia dụng");
         databaseReference.addValueEventListener(new ValueEventListener() {
