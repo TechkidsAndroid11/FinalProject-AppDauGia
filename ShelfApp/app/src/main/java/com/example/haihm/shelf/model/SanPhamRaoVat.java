@@ -15,8 +15,8 @@ public class SanPhamRaoVat {
     public String motaSP;
     public String loaiSP;
     public String diaGD;
-    public UserModel nguoiB;
-    public SanPhamRaoVat(UserModel nguoiB, String tenSP, ArrayList<String> anhSP, double giaSP,
+    public String nguoiB;
+    public SanPhamRaoVat(String nguoiB, String tenSP, ArrayList<String> anhSP, double giaSP,
                          String motaSP, String loaiSP, String diaGD) {
         this.nguoiB = nguoiB;
         this.tenSP = tenSP;

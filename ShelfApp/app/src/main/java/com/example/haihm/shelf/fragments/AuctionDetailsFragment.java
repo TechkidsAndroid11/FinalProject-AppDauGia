@@ -74,6 +74,7 @@ public class AuctionDetailsFragment extends Fragment {
     ImageView ivGavel, ivAvatarSeller;
     SanPhamDauGia sanPhamDauGia;
     private UserModel userModel = new UserModel();
+    private UserModel seller = new UserModel(), buyer =new UserModel();
 
     public AuctionDetailsFragment() {
         // Required empty public constructor
@@ -92,11 +93,13 @@ public class AuctionDetailsFragment extends Fragment {
         addController();
         return view;
     }
+
     @Subscribe(sticky = true)
     public void ReceivedUserModel(OnClickUserModelEvent onClickUserModelEvent) {
         userModel = onClickUserModelEvent.userModel;
         Log.d(TAG, "ReceivedUserModel: " + userModel.sdt);
     }
+
     private void setUpUI(View view) {
         sanPhamDauGia = AuctionDetailsActivity.sanPhamDauGia;
         rlHightestCostMaster = view.findViewById(R.id.icl_highest_cost_master);
@@ -135,24 +138,68 @@ public class AuctionDetailsFragment extends Fragment {
 
     private boolean myAution() {
         try {
-            return sanPhamDauGia.nguoiB.id.equals(userModel.id);
-        }catch (Exception e){
+            return sanPhamDauGia.nguoiB.equals(userModel.id);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
+    public void loadBuyerFireBase() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("UserInfo");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange_loadBuyerFireBase: ");
+                buyer = dataSnapshot.child(sanPhamDauGia.nguoiMua).getValue(UserModel.class);
+                if (buyer == null) {
+                    buyer = new UserModel();
+                }
+                tvNameBuyer.setText(buyer.hoten);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void loadSellerFireBase() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("UserInfo");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange_loadSellerFireBase: ");
+                seller = dataSnapshot.child(sanPhamDauGia.nguoiB).getValue(UserModel.class);
+                if (seller == null) {
+                    seller = new UserModel();
+                }
+                tvNameSeller.setText(seller.hoten);
+                Picasso.with(getContext()).load(seller.anhAvatar)
+                        .transform(new CropCircleTransformation()).into(ivAvatarSeller);
+                float rate = (float) seller.rate.tongD / (float) seller.rate.tongLuotVote;
+                ratingBar.setRating(rate);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void loadData() {
 
         loadImage(sanPhamDauGia.anhSP);
+        loadSellerFireBase();
+        loadBuyerFireBase();
 
-        tvNameSeller.setText(sanPhamDauGia.nguoiB.hoten);
         tvDescription.setText(sanPhamDauGia.motaSP);
         tvAddress.setText(sanPhamDauGia.diaGD);
-        Picasso.with(getContext()).load(sanPhamDauGia.nguoiB.anhAvatar)
-                .transform(new CropCircleTransformation()).into(ivAvatarSeller);
-        float rate = (float) sanPhamDauGia.nguoiB.rate.tongD / (float) sanPhamDauGia.nguoiB.rate.tongLuotVote;
-        ratingBar.setRating(rate);
+
 
         DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###");
@@ -160,7 +207,7 @@ public class AuctionDetailsFragment extends Fragment {
         tvStartCost.setText(decimalFormat.format(sanPhamDauGia.giaSP) + "đ");
         String formatTmp = decimalFormat.format(sanPhamDauGia.giaCaoNhat);
         tvCurentCost.setText(formatTmp + "đ");
-        tvNameBuyer.setText(sanPhamDauGia.nguoiMua.hoten);
+
         long timeRemaining = sanPhamDauGia.tgianKthuc.getTime() - new Date().getTime();
         if (timeRemaining >= 0) {
             new CountDownTimer(timeRemaining, 1000) {
@@ -197,7 +244,7 @@ public class AuctionDetailsFragment extends Fragment {
         tvCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(sanPhamDauGia.nguoiMua.sdt.equals("")) {
+                if (buyer.sdt.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setCancelable(true);
 
@@ -213,7 +260,7 @@ public class AuctionDetailsFragment extends Fragment {
                     return;
                 }
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:" + sanPhamDauGia.nguoiMua.sdt));
+                callIntent.setData(Uri.parse("tel:" + buyer.sdt));
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)
                         != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(),
@@ -228,7 +275,7 @@ public class AuctionDetailsFragment extends Fragment {
     }
 
     private void upDateHighestCost() {
-        String newCost = etInputCost.getText().toString().replaceAll(",","");
+        String newCost = etInputCost.getText().toString().replaceAll(",", "");
         try {
             double newC = Double.parseDouble(newCost);
             if (newC - sanPhamDauGia.giaCaoNhat < sanPhamDauGia.buocGia) {
@@ -245,8 +292,7 @@ public class AuctionDetailsFragment extends Fragment {
                 });
 
                 builder.show();
-            }
-            else {
+            } else {
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
                         .child(sanPhamDauGia.idSP).child("giaCaoNhat");
@@ -255,7 +301,7 @@ public class AuctionDetailsFragment extends Fragment {
                 //
                 databaseReference = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
                         .child(sanPhamDauGia.idSP).child("nguoiMua");
-                databaseReference.setValue(userModel);
+                databaseReference.setValue(userModel.id);
                 //
                 DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
                 decimalFormat.applyPattern("#,###,###");
@@ -278,15 +324,15 @@ public class AuctionDetailsFragment extends Fragment {
                 double curentCost = Double.parseDouble(dataSnapshot.child("giaCaoNhat").getValue().toString());
                 DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
                 decimalFormat.applyPattern("#,###,###");
-                tvCurentCost.setText(decimalFormat.format(curentCost)+"đ");
+                tvCurentCost.setText(decimalFormat.format(curentCost) + "đ");
                 sanPhamDauGia.giaCaoNhat = curentCost;
-                Log.d(TAG, "onDataChange: "+dataSnapshot.child("giaCaoNhat").getValue());
+                Log.d(TAG, "onDataChange: " + dataSnapshot.child("giaCaoNhat").getValue());
 
                 //người ra giá cao nhất
-                UserModel buyer = new UserModel();
-                buyer = dataSnapshot.child("nguoiMua").getValue(UserModel.class);
-                tvNameBuyer.setText(buyer.hoten);
-                sanPhamDauGia.nguoiMua = buyer;
+
+                String idNguoiMua = dataSnapshot.child("nguoiMua").getValue().toString();
+                sanPhamDauGia.nguoiMua = idNguoiMua;
+                loadBuyerFireBase();
             }
 
             @Override
@@ -294,21 +340,6 @@ public class AuctionDetailsFragment extends Fragment {
 
             }
         });
-
-//        DatabaseReference databaseReference2 = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
-//                .child(sanPhamDauGia.idSP).child("nguoiMua");
-//        databaseReference2.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Log.d(TAG, "onDataChange: ");
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 
     private void loadImage(ArrayList<String> anhSP) {

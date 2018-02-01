@@ -1,8 +1,6 @@
 package com.example.haihm.shelf.model;
 
-import android.net.Uri;
-
-import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Trần_Tân on 10/01/2018.
@@ -18,6 +16,9 @@ public class UserModel {
     public String sdt;
     public String diaC;
     public Rate rate;
+    public ArrayList<String> listProduct;
+    public ArrayList<String> listAuction;
+    public ArrayList<String> listJoinAution;
     public UserModel()
     {
         id = "";
@@ -26,6 +27,9 @@ public class UserModel {
         hoten = "";
         sdt = "";
         diaC = "";
+        listProduct = new ArrayList<>();
+        listAuction = new ArrayList<>();
+        listJoinAution = new ArrayList<>();
         rate = new Rate();
     }
 
@@ -37,6 +41,9 @@ public class UserModel {
         this.sdt = sdt;
         this.diaC = diaC;
         this.rate = rate;
+        listProduct = new ArrayList<>();
+        listAuction = new ArrayList<>();
+        listJoinAution = new ArrayList<>();
     }
 
     public UserModel(String id, String anhAvatar, String anhCover, String hoten, String password, String confirmPassword, String sdt, String diaC, Rate rate) {
@@ -49,6 +56,9 @@ public class UserModel {
         this.sdt = sdt;
         this.diaC = diaC;
         this.rate = rate;
+        listProduct = new ArrayList<>();
+        listAuction = new ArrayList<>();
+        listJoinAution = new ArrayList<>();
     }
 
     public String getPassword() {

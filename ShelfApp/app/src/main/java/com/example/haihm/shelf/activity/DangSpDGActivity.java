@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -28,6 +29,9 @@ import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -199,15 +203,28 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         SanPhamDauGia.Chat chat = new SanPhamDauGia.Chat();
         chat.nameMess = "test";
         chats.add(chat);
-        SanPhamDauGia sanPhamDauGia = new SanPhamDauGia(userModel, etTenSP.getText().toString(),
+        SanPhamDauGia sanPhamDauGia = new SanPhamDauGia(userModel.id, etTenSP.getText().toString(),
                 getList(lanhSP), giaSP,
                 etMoTaSP.getText().toString(), loaiSP,
                 etDiaC.getText().toString(),
-                buocG, giaSP,tgKetThuc, new UserModel(),chats);
+                buocG, giaSP,tgKetThuc, "",chats);
 
-        databaseReference.child(loaiSP).push().setValue(sanPhamDauGia);
-        Toast.makeText(this, "Tạo phiên đấu giá thành công", Toast.LENGTH_SHORT).show();
-        finish();
+        databaseReference.child(loaiSP).push().setValue(sanPhamDauGia, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseRefe) {
+                        Toast.makeText(DangSpDGActivity.this, "Tạo phiên đấu giá thành công", Toast.LENGTH_SHORT).show();
+                        String keyProduct = databaseRefe.getKey();
+                        ArrayList<String> listAuction = userModel.listAuction;
+                        if(listAuction==null){
+                            listAuction = new ArrayList<>();
+                        }
+                        listAuction.add(keyProduct);
+                        Log.d(TAG, "onComplete: "+keyProduct);
+                        firebaseDatabase.getReference("UserInfo").child(userModel.id)
+                                .child("listAuction").setValue(listAuction);
+                    }
+                });
+                finish();
     }
     private ArrayList<String> getList(HashMap<String, String> lanhSP) {
         ArrayList<String> list = new ArrayList<>();

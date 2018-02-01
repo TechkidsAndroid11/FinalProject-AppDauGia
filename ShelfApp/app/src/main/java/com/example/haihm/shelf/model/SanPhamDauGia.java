@@ -12,15 +12,15 @@ public class SanPhamDauGia extends SanPhamRaoVat {
     public double buocGia;
     public double giaCaoNhat;
     public Date tgianKthuc;
-    public UserModel nguoiMua;
+    public String nguoiMua;
     public ArrayList<Chat> lchat;
 
     public SanPhamDauGia() {
     }
 
-    public SanPhamDauGia(UserModel nguoiB, String tenSP, ArrayList<String> anhSP, double giaSP,
+    public SanPhamDauGia(String nguoiB, String tenSP, ArrayList<String> anhSP, double giaSP,
                          String motaSP, String loaiSP, String diaGD, double buocGia, double giaCaoNhat,
-                         Date date, UserModel nguoiMua, ArrayList<Chat> lchat) {
+                         Date date, String nguoiMua, ArrayList<Chat> lchat) {
         super(nguoiB, tenSP, anhSP, giaSP, motaSP, loaiSP, diaGD);
         this.buocGia = buocGia;
         this.giaCaoNhat = giaCaoNhat;

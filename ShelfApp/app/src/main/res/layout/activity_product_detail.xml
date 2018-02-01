@@ -152,11 +152,12 @@
         android:layout_margin="8dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/custom_textview"
-        android:paddingBottom="10dp"
+        android:paddingBottom="8dp"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
         android:paddingTop="10dp"
         android:text="Liên hệ"
+        android:elevation="5dp"
         android:textColor="#ffffff"
         android:textSize="18sp"
         android:textStyle="bold" />

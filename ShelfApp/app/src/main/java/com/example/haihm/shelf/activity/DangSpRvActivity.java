@@ -28,6 +28,7 @@ import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -174,12 +175,25 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",", ""));
-        SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(userModel, etTenSP.getText().toString(), getList(lanhSP),
+        SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(userModel.id, etTenSP.getText().toString(), getList(lanhSP),
                 giaSP,
                 etMoTaSP.getText().toString(), loaiSP,
                 etDiaC.getText().toString());
-        databaseReference.child(loaiSP).push().setValue(sanPhamRaoVat);
-        Toast.makeText(this, "Rao bán thành công", Toast.LENGTH_SHORT).show();
+        databaseReference.child(loaiSP).push().setValue(sanPhamRaoVat,new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseRefe) {
+                Toast.makeText(DangSpRvActivity.this, "Rao bán thành công", Toast.LENGTH_SHORT).show();
+                String keyProduct = databaseRefe.getKey();
+                ArrayList<String> listProduct = userModel.listProduct;
+                if(listProduct==null){
+                    listProduct = new ArrayList<>();
+                }
+                listProduct.add(keyProduct);
+                Log.d(TAG, "onComplete: "+keyProduct);
+                firebaseDatabase.getReference("UserInfo").child(userModel.id)
+                        .child("listProduct").setValue(listProduct);
+            }
+        });
         finish();
     }
 

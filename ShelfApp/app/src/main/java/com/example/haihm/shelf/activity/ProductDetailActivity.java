@@ -24,6 +24,7 @@ import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.event.OnClickProductEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
+import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.firebase.database.DataSnapshot;
@@ -55,7 +56,7 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
     PagerIndicator pagerIndicator;
     SpinKitView skLoadImage;
     SanPhamRaoVat sanPhamRaoVat;
-
+    private UserModel seller = new UserModel();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,10 +87,37 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
         pagerIndicator = findViewById(R.id.pi_indicator);
         skLoadImage = findViewById(R.id.sk_load_image);
     }
+    public void loadSellerFireBase() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("UserInfo");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange_loadSellerFireBase: ");
+                seller = dataSnapshot.child(sanPhamRaoVat.nguoiB).getValue(UserModel.class);
+                if (seller == null) {
+                    seller = new UserModel();
+                }
+                //
+                try{
+                    tvNameSeller.setText(seller.hoten);
+                    Picasso.with(ProductDetailActivity.this).load(seller.anhAvatar)
+                            .transform(new CropCircleTransformation()).into(ivAvatar);
+                    float rate = (float) seller.rate.tongD / (float) seller.rate.tongLuotVote;
+                    ratingBar.setRating(rate);
+                }catch (Exception e){e.printStackTrace();}
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     private void loadData() {
         try{
             loadImage(sanPhamRaoVat.anhSP);
+            loadSellerFireBase();
             tvAddress.setText(sanPhamRaoVat.diaGD);
             tvNameProduct.setText(sanPhamRaoVat.tenSP);
             //
@@ -98,14 +126,8 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
             String formatTmp = decimalFormat.format(sanPhamRaoVat.giaSP);
             tvProductPrice.setText(formatTmp + "đ");
             //
-            tvNameSeller.setText(sanPhamRaoVat.nguoiB.hoten);
             tvDescription.setText(sanPhamRaoVat.motaSP);
             //
-            float rate = (float) ((float) sanPhamRaoVat.nguoiB.rate.tongD / sanPhamRaoVat.nguoiB.rate.tongLuotVote);
-            ratingBar.setRating(rate);
-            //
-            Picasso.with(this).load(sanPhamRaoVat.nguoiB.anhAvatar)
-                    .transform(new CropCircleTransformation()).into(ivAvatar);
         }catch (Exception e ){e.printStackTrace();}
     }
 
@@ -120,7 +142,7 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
             @Override
             public void onClick(View view) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:" + sanPhamRaoVat.nguoiB.sdt));
+                callIntent.setData(Uri.parse("tel:" + seller.sdt));
                 if (ActivityCompat.checkSelfPermission(ProductDetailActivity.this, Manifest.permission.CALL_PHONE)
                         != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(ProductDetailActivity.this,
