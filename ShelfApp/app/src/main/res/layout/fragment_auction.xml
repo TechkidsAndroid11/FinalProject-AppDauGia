@@ -20,7 +20,7 @@
         app:stl_dividerThickness="0dp"
         app:stl_defaultTabBackground="?attr/selectableItemBackground"
         app:stl_defaultTabTextAllCaps="true"
-        app:stl_defaultTabTextColor="@color/mainColorLighter"
+        app:stl_defaultTabTextColor="@drawable/tab_product_type"
         app:stl_defaultTabTextSize="16sp"
         app:stl_defaultTabTextHorizontalPadding="16dp"
         app:stl_defaultTabTextMinWidth="0dp"
