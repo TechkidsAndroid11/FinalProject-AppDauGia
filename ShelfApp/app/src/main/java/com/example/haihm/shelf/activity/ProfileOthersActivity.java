@@ -75,9 +75,7 @@ public class ProfileOthersActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Rao Vặt"));
         tabLayout.addTab(tabLayout.newTab().setText("Đấu giá"));
 
-        ViewPagerHistoryAdapter viewPagerHistoryAdapter = new ViewPagerHistoryAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(viewPagerHistoryAdapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
     }
     public void loadDataFireBase(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -86,7 +84,12 @@ public class ProfileOthersActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userModel = dataSnapshot.child(id).getValue(UserModel.class);
+                Log.d(TAG, "onDataChange: "+userModel.hoten);
                 setData();
+
+                ViewPagerHistoryAdapter viewPagerHistoryAdapter = new ViewPagerHistoryAdapter(getSupportFragmentManager());
+                viewPager.setAdapter(viewPagerHistoryAdapter);
+                viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
             }
 
             @Override
@@ -151,13 +154,6 @@ public class ProfileOthersActivity extends AppCompatActivity {
                 showCardView();
             }
         });
-    }
-
-    private void hideCardView() {
-        ivStar.setClickable(true);
-        viewPager.setClickable(true);
-        ivCall.setClickable(true);
-        tabLayout.setEnabled(true);
     }
 
     private void showCardView() {

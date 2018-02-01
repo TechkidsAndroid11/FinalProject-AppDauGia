@@ -58,22 +58,20 @@ public class HistoryProductFragment extends Fragment {
         firebaseDatabase.getReference("Product").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<SanPhamRaoVat> tmp = new ArrayList<>();
-                Log.d(TAG, "onDataChange_history: ");
+                listProduct.clear();
                 for(int i = 0; i < arr.length; i++){
                     for (int j = 0; j < userModel.listProduct.size(); j++) {
                         SanPhamRaoVat sanPhamRaoVat = dataSnapshot.child(arr[i]).child(userModel.listProduct.get(j))
                                 .getValue(SanPhamRaoVat.class);
                         if(sanPhamRaoVat!=null){
-                            tmp.add(sanPhamRaoVat);
+                            listProduct.add(sanPhamRaoVat);
+                            Log.d(TAG, "onDataChange_history: "+i+" "+userModel.hoten);
                         }
                     }
                 }
-                listProduct.clear();
-                listProduct.addAll(tmp);
+                adapter.notifyDataSetChanged();
                 rvHistoryProduct.setVisibility(View.VISIBLE);
                 spinKitView.setVisibility(View.INVISIBLE);
-                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -90,7 +88,7 @@ public class HistoryProductFragment extends Fragment {
 
         rvHistoryProduct.setVisibility(View.INVISIBLE);
         spinKitView.setVisibility(View.VISIBLE);
-
+        listProduct.clear();
         adapter = new HistoryProductAdapter(listProduct,getContext());
         rvHistoryProduct.setAdapter(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);

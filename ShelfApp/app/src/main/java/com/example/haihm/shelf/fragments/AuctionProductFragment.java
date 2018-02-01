@@ -92,7 +92,7 @@ public class AuctionProductFragment extends Fragment {
         AuctionProductAdapter auctionProductAdapter = new AuctionProductAdapter(sanPhamDauGiaList,getContext());
         rvProducts.setAdapter(auctionProductAdapter);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 1);
         rvProducts.setLayoutManager(gridLayoutManager);
     }
 
