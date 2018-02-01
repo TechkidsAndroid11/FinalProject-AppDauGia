@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="270dp"
     android:orientation="vertical"
-    android:weightSum="7">
+    android:weightSum="7"
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/iv_product_image"
@@ -49,7 +50,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="left|center"
-            android:textColor="@color/textColorBlack"
+            android:textColor="#e70a0a"
             android:layout_marginStart="@dimen/pad_def"/>
 
     </LinearLayout>
