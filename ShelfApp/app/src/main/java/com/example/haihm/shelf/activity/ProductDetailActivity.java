@@ -104,7 +104,7 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
                     tvNameSeller.setText(seller.hoten);
                     Picasso.with(ProductDetailActivity.this).load(seller.anhAvatar)
                             .transform(new CropCircleTransformation()).into(ivAvatar);
-                    float rate = (float) seller.rate.tongD / (float) seller.rate.tongLuotVote;
+                    float rate = seller.rate.tongLuotVote==0?0: seller.rate.tongD / seller.rate.tongLuotVote;
                     ratingBar.setRating(rate);
                 }catch (Exception e){e.printStackTrace();}
             }

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/rl_header"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
         android:elevation="5dp"
-        android:padding="16dp">
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -34,9 +35,10 @@
             android:id="@+id/iv_star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:layout_toLeftOf="@id/iv_call"
+            android:padding="5dp"
             android:src="@drawable/ic_star_black_24dp" />
+
         <ImageView
             android:id="@+id/iv_call"
             android:layout_width="wrap_content"
@@ -48,8 +50,8 @@
 
         <ImageView
             android:id="@+id/iv_avatar"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_below="@id/tv_profile"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp" />
@@ -58,29 +60,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_avatar"
-            android:orientation="vertical"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2">
+
                 <TextView
                     android:id="@+id/tv_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Phạm Quang Thắng"
                     android:gravity="right"
+                    android:paddingRight="4dp"
+                    android:text="Nguyễn Văn A"
                     android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
+                    android:textStyle="bold" />
+
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="8dp">
+                    android:paddingLeft="4dp">
+
                     <RatingBar
                         android:id="@+id/rb_rate"
                         style="@style/Widget.AppCompat.RatingBar.Small"
@@ -92,29 +97,32 @@
                         android:theme="@style/RatingBar_Profile" />
                 </RelativeLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Địa chỉ"
                     android:gravity="right"
+                    android:paddingRight="4dp"
+                    android:text="Địa chỉ"
                     android:textColor="#deffffff"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tv_address"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="4dp"
                     android:text="Hà nội"
                     android:textColor="#deffffff"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
@@ -122,7 +130,8 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_history"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+        app:tabIndicatorColor="@color/colorPrimary"
         android:layout_below="@id/rl_header" />
 
     <android.support.v4.view.ViewPager

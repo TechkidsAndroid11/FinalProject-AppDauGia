@@ -78,8 +78,8 @@ public class UserModel {
     }
 
     public static class Rate{
-        public int tongD;
-        public int tongLuotVote;
+        public float tongD;
+        public float tongLuotVote;
 
         public Rate() {}
     }

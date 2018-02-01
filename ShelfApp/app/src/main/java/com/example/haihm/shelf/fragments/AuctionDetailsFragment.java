@@ -31,6 +31,8 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.AuctionDetailsActivity;
+import com.example.haihm.shelf.activity.ProfileOthersActivity;
+import com.example.haihm.shelf.event.OnClickShowProfileEvent;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.UserModel;
@@ -74,7 +76,7 @@ public class AuctionDetailsFragment extends Fragment {
     ImageView ivGavel, ivAvatarSeller;
     SanPhamDauGia sanPhamDauGia;
     private UserModel userModel = new UserModel();
-    private UserModel seller = new UserModel(), buyer =new UserModel();
+    private UserModel seller = new UserModel(), buyer = new UserModel();
 
     public AuctionDetailsFragment() {
         // Required empty public constructor
@@ -180,7 +182,7 @@ public class AuctionDetailsFragment extends Fragment {
                 tvNameSeller.setText(seller.hoten);
                 Picasso.with(getContext()).load(seller.anhAvatar)
                         .transform(new CropCircleTransformation()).into(ivAvatarSeller);
-                float rate = (float) seller.rate.tongD / (float) seller.rate.tongLuotVote;
+                float rate = seller.rate.tongLuotVote == 0 ? 0 : seller.rate.tongD / seller.rate.tongLuotVote;
                 ratingBar.setRating(rate);
             }
 
@@ -272,6 +274,25 @@ public class AuctionDetailsFragment extends Fragment {
         });
         //change
         loadCurentCost();
+        //
+        tvNameSeller.setOnClickListener(showProfile(sanPhamDauGia.nguoiB));
+        ratingBar.setOnClickListener(showProfile(sanPhamDauGia.nguoiB));
+        ivAvatarSeller.setOnClickListener(showProfile(sanPhamDauGia.nguoiB));
+
+        tvNameBuyer.setOnClickListener(showProfile(sanPhamDauGia.nguoiMua));
+    }
+
+    private View.OnClickListener showProfile(final String idUser) {
+
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().postSticky(new OnClickShowProfileEvent(idUser));
+                Intent intent = new Intent(getActivity(), ProfileOthersActivity.class);
+                startActivity(intent);
+                Log.d(TAG, "onClick: ");
+            }
+        };
     }
 
     private void upDateHighestCost() {

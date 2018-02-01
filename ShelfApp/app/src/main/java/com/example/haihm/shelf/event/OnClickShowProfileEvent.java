@@ -5,7 +5,7 @@ package com.example.haihm.shelf.event;
  */
 
 public class OnClickShowProfileEvent {
-    String id;
+    public String id;
 
     public OnClickShowProfileEvent(String id) {
         this.id = id;
