@@ -11,4 +11,8 @@
         <item name="colorControlNormal">#6b6b6b</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
+    <style name="RatingBar_Profile" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#e1e0e0</item>
+        <item name="colorControlActivated">#ffffff</item>
+    </style>
 </resources>

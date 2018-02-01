@@ -22,6 +22,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.event.OnClickProductEvent;
+import com.example.haihm.shelf.event.OnClickShowProfileEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.model.UserModel;
@@ -152,6 +153,22 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
                 } else startActivity(callIntent);
             }
         });
+        tvNameSeller.setOnClickListener(showProfile());
+        ratingBar.setOnClickListener(showProfile());
+        ivAvatar.setOnClickListener(showProfile());
+    }
+
+    private View.OnClickListener showProfile() {
+
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().postSticky(new OnClickShowProfileEvent(sanPhamRaoVat.nguoiB));
+                Intent intent = new Intent(ProductDetailActivity.this,ProfileOthersActivity.class);
+                startActivity(intent);
+                Log.d(TAG, "onClick: ");
+            }
+        };
     }
 
     private void testFireBase() {

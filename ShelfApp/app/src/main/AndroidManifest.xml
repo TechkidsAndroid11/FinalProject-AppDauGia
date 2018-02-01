@@ -32,9 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.DangSpRvActivity" />
-        <activity android:name=".activity.DangSpDGActivity">
-
-        </activity>
+        <activity android:name=".activity.DangSpDGActivity"></activity>
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="keyboardHidden"
@@ -46,9 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity">
-
-        </activity>
+        <activity android:name=".activity.MainActivity"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -62,10 +58,9 @@
         <activity
             android:name=".activity.AuctionDetailsActivity"
             android:configChanges="keyboardHidden"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
-        <activity android:name=".activity.ProductDetailActivity"></activity>
-
-
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activity.ProductDetailActivity" />
+        <activity android:name=".activity.ProfileOthersActivity"></activity>
     </application>
 
 </manifest>
