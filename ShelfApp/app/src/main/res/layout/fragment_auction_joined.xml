@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     tools:context="com.example.haihm.shelf.fragments.AuctionJoinedFragment">
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
