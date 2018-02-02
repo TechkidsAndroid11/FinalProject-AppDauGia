@@ -30,7 +30,7 @@
                 android:id="@+id/tv_sign_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign In"
+                android:text="Đăng nhập"
                 android:textColor="#fff"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -40,8 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="22dp"
-                android:text="Sign Up"
-                android:textColor="#fff"
+                android:text="Đăng ký"
+                android:textColor="#7dffffff"
                 android:textSize="22sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -82,7 +82,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="-5dp"
                 android:shadowColor="#fff"
-                android:text="Remember me"
+                android:text="Ghi nhớ mật khẩu"
                 android:textColor="@color/textColor"
                 android:textColorHighlight="@color/textColor"
                 android:textColorHint="@color/textColor"
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="Fogot password?"
+                android:text="Quên mật khẩu?"
                 android:textColor="@color/textColor" />
 
         </RelativeLayout>
@@ -105,7 +105,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/custom_textview"
             android:gravity="center"
-            android:text="Sign In"
+            android:text="Đăng nhập"
             android:textColor="#fff" />
 
         <TextView
@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:gravity="center"
-            android:text="or"
+            android:text="Hoặc"
             android:textColor="@color/textColor" />
 
         <RelativeLayout
@@ -146,7 +146,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/icon_facebook"
                 android:gravity="center"
-                android:text="Sign in with Facebook"
+                android:text="Đăng nhập bằng Facebook"
                 android:textColor="@color/textColor" />
 
         </RelativeLayout>
@@ -172,7 +172,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/icon_gmail"
                 android:gravity="center"
-                android:text="Sign in with Google"
+                android:text="Đăng nhập bằng Google"
                 android:textColor="@color/textColor" />
 
         </RelativeLayout>

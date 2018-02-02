@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.haihm.shelf.R;
@@ -37,6 +38,7 @@ public class RegisterFragment extends Fragment {
     private static final String TAG = "RegisterFragment";
     public EditText etPhone;
     public Button btnSignIn;
+    public TextView tvSignIn;
     public String phoneVerificationId;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
@@ -62,13 +64,20 @@ public class RegisterFragment extends Fragment {
     public void setupUI(View view) {
         etPhone = view.findViewById(R.id.edt_phone_number);
         btnSignIn = view.findViewById(R.id.bt_sign_in);
-
+        tvSignIn = view.findViewById(R.id.tvSignIn);
         fbAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("UserInfo");
     }
 
     public void addListener() {
+        tvSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 Intent intent = new Intent(getActivity(),LoginActivity.class);
+                 startActivity(intent);
+            }
+        });
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
 

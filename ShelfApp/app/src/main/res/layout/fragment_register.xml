@@ -34,10 +34,11 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tvSignIn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign In"
-                        android:textColor="#fff"
+                        android:text="Đăng nhập"
+                        android:textColor="#70ffffff"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -45,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="22dp"
-                        android:text="Sign Up"
+                        android:text="Đăng ký"
                         android:textColor="#fff"
                         android:textSize="22sp"
                         android:textStyle="bold" />
@@ -69,7 +70,7 @@
                     android:layout_height="35dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/custom_edit_text"
-                    android:hint="Phone number"
+                    android:hint="Nhập số điện thoại"
                     android:paddingLeft="16dp"
                     android:textColorHint="#7CFFFFFF"
                     android:textSize="15sp" />

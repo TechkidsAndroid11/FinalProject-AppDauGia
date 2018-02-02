@@ -107,6 +107,7 @@ public class VerifyPhoneFragment extends Fragment {
                 }
                 else
                     verifyCode();
+                btVerify.setEnabled(false);
             }
         });
         tvResend.setOnClickListener(new View.OnClickListener() {

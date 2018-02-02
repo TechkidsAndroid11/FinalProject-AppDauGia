@@ -232,6 +232,7 @@ public class MainRegisterFragment extends Fragment {
         // Get the data from an ImageView as bytes
         ivAvatar.setDrawingCacheEnabled(true);
         ivAvatar.buildDrawingCache();
+
         Bitmap bitmap = ivAvatar.getDrawingCache();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -267,16 +268,17 @@ public class MainRegisterFragment extends Fragment {
                 } else {
                     Log.e("MainActivity", "Data Null!!!!");
                 }
-
+                Log.d(TAG, "onActivityResult: "+bitmap);
                 ivAvatar.setPadding(0, 0, 0, 0);
                 ivAvatar.setImageBitmap(bitmap);
                 putData();
-
+            //chup anh day
             } else if (requestCode == 2) {
                 if (resultCode == RESULT_OK) {
                     bitmap = ImageUtils.getBitmap(getActivity());
 
                 }
+                Log.d(TAG, "onActivityResult: "+bitmap);
                 ivAvatar.setPadding(0, 0, 0, 0);
                 ivAvatar.setImageBitmap(bitmap);
                 putData();

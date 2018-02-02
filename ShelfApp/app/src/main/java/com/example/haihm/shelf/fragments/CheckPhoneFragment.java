@@ -75,7 +75,15 @@ public class CheckPhoneFragment extends Fragment {
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCode();
+                String phone = etPhone.getText().toString();
+                if(phone==null || phone.equals(""))
+                {
+                    Toast.makeText(getActivity(), "Bạn chưa nhập số diện thoại", Toast.LENGTH_SHORT).show();
+
+                }
+                else{
+                    sendCode();
+                }
             }
         });
     }

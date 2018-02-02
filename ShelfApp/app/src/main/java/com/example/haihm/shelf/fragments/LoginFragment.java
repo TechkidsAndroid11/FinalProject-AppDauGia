@@ -173,7 +173,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Utils.openFragment(getFragmentManager(),R.id.rl_main,new RegisterFragment());
             }
         });
     }
@@ -258,30 +258,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     final FirebaseUser user = task.getResult().getUser();
                     checkDuplicatedIdDatabase(user);
 
-//                    if (user.getPhoneNumber() == null) {
-//                        avatar = String.valueOf(user.getPhotoUrl());
-//                        name = user.getDisplayName();
-//                        userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
-//                        Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
-//
-//                    } else {
-//
-//                        avatar = String.valueOf(user.getPhotoUrl());
-//                        name = user.getDisplayName();
-//                        userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
-//                        EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
-//                        Intent intent = new Intent(getActivity(), MainActivity.class);
-//                        startActivity(intent);
-//                        saveLoginSuccess(user.getUid());
-//                        databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-
-
                 } else {
                     Log.d(TAG, "onComplete: " + task.getException().getMessage());
                 }
@@ -336,6 +312,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                             Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                         }
                     });
+
                 }
                 else
                 {
@@ -343,6 +320,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         avatar = String.valueOf(user.getPhotoUrl());
                         name = user.getDisplayName();
                         userModel = new UserModel(user.getUid(), fbAvatar, cover, fbName, phone, address, rate);
+                        Log.d(TAG, "onDataChange: Usermodel: "+userModel.getHoten());
                         Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
 
                     } else {
@@ -448,31 +426,9 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             final FirebaseUser user = task.getResult().getUser();
+                            System.out.println("USer: "+user.getUid());
                             checkDuplicatedIdDatabase(user);
-//                            Log.d(TAG, "onComplete: " + user.getPhoneNumber());
-//                            if (user.getPhoneNumber() == null) {
-//
-//                                avatar = String.valueOf(user.getPhotoUrl());
-//                                name = user.getDisplayName();
-//                                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
-//                                Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
-//
-//                            } else {
-//
-//                                avatar = String.valueOf(user.getPhotoUrl());
-//                                name = user.getDisplayName();
-//                                userModel = new UserModel(user.getUid(), avatar, cover, name, phone, address, rate);
-//                                EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
-//                                Intent intent = new Intent(getActivity(), MainActivity.class);
-//                                startActivity(intent);
-//                                saveLoginSuccess(user.getUid());
-//                                databaseReference.child(user.getUid()).setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<Void> task) {
-//                                        Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
-//                            }
+
                         }
 
 
