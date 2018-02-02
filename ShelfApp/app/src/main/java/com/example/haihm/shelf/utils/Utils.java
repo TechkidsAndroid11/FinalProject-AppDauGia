@@ -4,6 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 ;
 
 /**
@@ -23,6 +26,10 @@ public class Utils {
         FragmentTransaction fragmentTransaction = fragmentManagert.beginTransaction();
         fragmentTransaction.add(layoutId, fragment);
         fragmentTransaction.commit();
+    }
+
+    public static String formatPrice(double price){
+        return NumberFormat.getNumberInstance(Locale.US).format(price) + "đ";
     }
 
 }

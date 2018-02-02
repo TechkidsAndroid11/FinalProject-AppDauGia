@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@id/iv_shopping_cart"
-            android:text="Profile"
+            android:text="Cá nhân"
             android:textColor="#fff"
             android:textSize="18sp" />
 

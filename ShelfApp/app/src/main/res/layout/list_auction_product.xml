@@ -81,7 +81,7 @@
                 android:layout_below="@id/tv_auction_time_start"
                 android:layout_marginRight="@dimen/pad_def"
                 android:background="@drawable/bt_auction_join"
-                android:text="Join"
+                android:text="Tham gia"
                 android:textColor="@color/mainColor" />
 
         </RelativeLayout>

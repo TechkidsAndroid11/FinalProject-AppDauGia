@@ -16,6 +16,7 @@ import com.example.haihm.shelf.activity.ProductDetailActivity;
 import com.example.haihm.shelf.event.OnClickProductEvent;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.utils.ImageUtils;
+import com.example.haihm.shelf.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -74,7 +75,7 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
         public void setData(final SanPhamRaoVat sanPhamRaoVat) {
             Bitmap bitmap = ImageUtils.base64ToImage(sanPhamRaoVat.anhSP.get(0));
             ivProductImage.setImageBitmap(bitmap);
-            tvProductPrice.setText(String.valueOf(sanPhamRaoVat.giaSP));
+            tvProductPrice.setText(Utils.formatPrice(sanPhamRaoVat.giaSP));
             tvProductName.setText(sanPhamRaoVat.tenSP);
 //            tvProductSellerName.setText(sanPhamRaoVat.nguoiB.hoten);
             iview.setOnClickListener(new View.OnClickListener() {
