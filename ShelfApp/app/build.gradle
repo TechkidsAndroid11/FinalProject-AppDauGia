@@ -57,5 +57,8 @@ dependencies {
     //Smart tab layout
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
+    //Recycler view animation
+    compile 'jp.wasabeef:recyclerview-animators:2.2.7'
+
 }
 apply plugin: 'com.google.gms.google-services'

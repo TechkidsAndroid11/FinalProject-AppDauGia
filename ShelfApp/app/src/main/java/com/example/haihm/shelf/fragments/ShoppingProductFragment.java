@@ -18,9 +18,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +34,8 @@ public class ShoppingProductFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     List<SanPhamRaoVat> sanPhamRaoVatList;
+    AVLoadingIndicatorView avShoppingProduct;
+    private ShoppingProductAdapter shoppingProductAdapter;
 
     public ShoppingProductFragment() {
         // Required empty public constructor
@@ -48,10 +53,14 @@ public class ShoppingProductFragment extends Fragment {
 
     private void setupUI(View view) {
         rvProducts = view.findViewById(R.id.rv_list_shopping_product);
+        avShoppingProduct = view.findViewById(R.id.av_product_loading);
 
         //load database
+        avShoppingProduct.show();
         setupDatabase();
-        loadData(view);
+        setupRecyclerView(view);
+        loadData();
+
     }
 
     private void setupDatabase() {
@@ -64,10 +73,9 @@ public class ShoppingProductFragment extends Fragment {
             databaseReference = firebaseDatabase.getReference("Product").child(productType);
         }
 
-
     }
 
-    private void loadData(final View view) {
+    private void loadData() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -75,8 +83,10 @@ public class ShoppingProductFragment extends Fragment {
                 for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()){
                     SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);
                     sanPhamRaoVatList.add(sanPhamRaoVat);
+                    shoppingProductAdapter.notifyItemChanged(sanPhamRaoVatList.indexOf(sanPhamRaoVat));
+                    Log.d(TAG, "onDataChange: " + sanPhamRaoVatList.lastIndexOf(sanPhamRaoVat));
                 }
-                setupRecyclerView(view);
+                avShoppingProduct.hide();
             }
 
             @Override
@@ -88,11 +98,13 @@ public class ShoppingProductFragment extends Fragment {
 
     private void setupRecyclerView(View view) {
         //setup recycler view
-        ShoppingProductAdapter shoppingProductAdapter = new ShoppingProductAdapter(sanPhamRaoVatList, getContext());
+        shoppingProductAdapter = new ShoppingProductAdapter(sanPhamRaoVatList, getContext());
         rvProducts.setAdapter(shoppingProductAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
 
         rvProducts.setLayoutManager(gridLayoutManager);
+        rvProducts.setItemAnimator(new SlideInLeftAnimator());
+        rvProducts.getItemAnimator().setAddDuration(300);
     }
 
 

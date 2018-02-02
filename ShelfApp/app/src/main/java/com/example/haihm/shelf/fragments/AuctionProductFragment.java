@@ -18,9 +18,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 
 /**
@@ -32,6 +35,8 @@ public class AuctionProductFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     List<SanPhamDauGia> sanPhamDauGiaList;
+    AVLoadingIndicatorView avAuctionLoading;
+    private AuctionProductAdapter auctionProductAdapter;
 
     public AuctionProductFragment() {
         // Required empty public constructor
@@ -49,11 +54,13 @@ public class AuctionProductFragment extends Fragment {
 
     private void setupUI(View view) {
         rvProducts = view.findViewById(R.id.rv_list_auction_product);
+        avAuctionLoading = view.findViewById(R.id.av_auction_loading);
 
         //load database
+        avAuctionLoading.show();
         setupDatabase();
-        loadData(view);
-
+        setupRecyclerView(view);
+        loadData();
     }
 
     private void setupDatabase() {
@@ -67,7 +74,7 @@ public class AuctionProductFragment extends Fragment {
         }
     }
 
-    private void loadData(final View view) {
+    private void loadData() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -76,8 +83,9 @@ public class AuctionProductFragment extends Fragment {
                     SanPhamDauGia sanPhamDauGia = spDauGiaSnapShot.getValue(SanPhamDauGia.class);
                     sanPhamDauGia.idSP = spDauGiaSnapShot.getKey();
                     sanPhamDauGiaList.add(sanPhamDauGia);
+                    auctionProductAdapter.notifyItemChanged(sanPhamDauGiaList.indexOf(sanPhamDauGia));
                 }
-                setupRecyclerView(view);
+                avAuctionLoading.hide();
             }
 
             @Override
@@ -89,11 +97,13 @@ public class AuctionProductFragment extends Fragment {
 
     private void setupRecyclerView(View view) {
         //setup recycler view
-        AuctionProductAdapter auctionProductAdapter = new AuctionProductAdapter(sanPhamDauGiaList,getContext());
+        auctionProductAdapter = new AuctionProductAdapter(sanPhamDauGiaList,getContext());
         rvProducts.setAdapter(auctionProductAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         rvProducts.setLayoutManager(linearLayoutManager);
+        rvProducts.setItemAnimator(new SlideInLeftAnimator());
+        rvProducts.getItemAnimator().setAddDuration(300);
 
     }
 

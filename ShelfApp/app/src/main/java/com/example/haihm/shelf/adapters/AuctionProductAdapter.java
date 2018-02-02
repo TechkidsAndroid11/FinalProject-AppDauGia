@@ -76,7 +76,6 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
         public void setData(final SanPhamDauGia sanPhamDauGia) {
             Bitmap bitmap = ImageUtils.base64ToImage(sanPhamDauGia.anhSP.get(0));
             ivAuctionImage.setImageBitmap(bitmap);
-//            tvAuctionPrice.setText("Bắt đầu từ: " + String.valueOf(sanPhamDauGia.giaCaoNhat));
             tvAuctionPrice.setText("Bắt đầu từ: " + Utils.formatPrice(sanPhamDauGia.giaCaoNhat));
             tvAuctionProductName.setText(sanPhamDauGia.tenSP);
 //            tvAuctionSellerName.setText(sanPhamDauGia.nguoiB.hoten);

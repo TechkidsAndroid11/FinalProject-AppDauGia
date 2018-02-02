@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -49,7 +48,7 @@
 
 
     <android.support.v4.view.ViewPager
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="56dp"
         android:id="@+id/vp_main_activity"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -58,11 +57,8 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tl_bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        android:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:elevation="8dp" />
 
 </RelativeLayout>

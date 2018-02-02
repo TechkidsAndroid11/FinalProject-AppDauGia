@@ -2,7 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.haihm.shelf.fragments.AuctionProductFragment">
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:indicatorColor="@color/mainColor"
+        app:indicatorName="BallPulseIndicator"
+        android:id="@+id/av_auction_loading"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list_auction_product"
