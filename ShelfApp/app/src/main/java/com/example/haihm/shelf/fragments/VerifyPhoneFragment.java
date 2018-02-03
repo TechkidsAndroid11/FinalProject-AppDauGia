@@ -78,6 +78,12 @@ public class VerifyPhoneFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        avLoad.hide();
+    }
+
     private void setupUI(View view) {
         tvResend= view.findViewById(R.id.tv_resend);
         tvDes = view.findViewById(R.id.tv_des);

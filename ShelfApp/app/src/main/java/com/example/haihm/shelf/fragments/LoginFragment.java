@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -115,6 +116,20 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+        avLoad.hide();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        avLoad.hide();
+        Log.d(TAG, "onResume: ");
+    }
+
     public void setupUI(View view) {
         linearLayout = view.findViewById(R.id.linearLayout);
         avLoad = view.findViewById(R.id.avLoad);
@@ -174,9 +189,9 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             @Override
             public void onClick(View view) {
                 Utils.openFragment(getFragmentManager(),R.id.rl_main,new RegisterFragment());
-            }
+        }
         });
-    }
+                }
 
     public void checkLogined() {
 
@@ -195,7 +210,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         userModel = userSnapshot.getValue(UserModel.class);
                         Log.d(TAG, "onDataChange: " + userModel.getSdt());
-
                         EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);

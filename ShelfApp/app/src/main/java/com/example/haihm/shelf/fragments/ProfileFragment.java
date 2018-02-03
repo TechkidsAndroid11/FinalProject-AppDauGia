@@ -1,26 +1,38 @@
 package com.example.haihm.shelf.fragments;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.DangSpDGActivity;
 import com.example.haihm.shelf.activity.DangSpRvActivity;
-import com.example.haihm.shelf.adapters.ViewPagerProfileAdapter;
+
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
+import com.example.haihm.shelf.event.OnClickShowProfileEvent;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,9 +50,8 @@ public class ProfileFragment extends Fragment {
     ImageView ivCover, ivAvatar;
     TextView tvName;
     UserModel userModel;
-    String base64;
-    ViewPager viewPager;
-    TabLayout tabLayout;
+    ViewPager vpHistory;
+    TabLayout tabHistory;
     public ProfileFragment() {
         // Required empty public constructor
 
@@ -53,15 +64,14 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         setupUI(view);
-       //loadDataForTabLayout();
         EventBus.getDefault().register(this);
+        loadHistory();
         btnAuction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 intentPostAution();
             }
         });
-
         btnClassified.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +79,30 @@ public class ProfileFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void loadHistory() {
+        tabHistory.addTab(tabHistory.newTab().setText("Sản phẩm"));
+        tabHistory.addTab(tabHistory.newTab().setText("Đấu giá"));
+
+        tabHistory.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                vpHistory.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
     }
 
     @Subscribe(sticky = true)
@@ -86,37 +120,12 @@ public class ProfileFragment extends Fragment {
         btnClassified = view.findViewById(R.id.btDauGia);
         ivAvatar = view.findViewById(R.id.iv_avatar);
         tvName = view.findViewById(R.id.tv_name);
-        tabLayout=view.findViewById(R.id.tab_history);
-        viewPager = view.findViewById(R.id.vp_history);
+        vpHistory = view.findViewById(R.id.vp_history);
+        tabHistory = view.findViewById(R.id.tab_history);
 
     }
 
-    public void loadDataForTabLayout() {
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.addTab(tabLayout.newTab());
-        tabLayout.getTabAt(0).setText("Sản Phẩm");
-        tabLayout.getTabAt(1).setText("Đấu Giá");
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        ViewPagerProfileAdapter viewPagerProfileAdapter = new ViewPagerProfileAdapter(getFragmentManager());
-        viewPager.setAdapter(viewPagerProfileAdapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-    }
 
     private void intentPostClassified() {
         EventBus.getDefault().postSticky(new OnClickAddSanPhamEvent(userModel));
@@ -129,4 +138,6 @@ public class ProfileFragment extends Fragment {
         Intent intent = new Intent(getActivity(), DangSpDGActivity.class);
         startActivity(intent);
     }
+
+
 }

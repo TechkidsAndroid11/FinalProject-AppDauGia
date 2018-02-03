@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.haihm.shelf.fragments.HistoryAutionFragment;
 import com.example.haihm.shelf.fragments.HistoryProductFragment;
+import com.example.haihm.shelf.model.UserModel;
 
 /**
  * Created by Trần_Tân on 01/02/2018.
@@ -15,6 +16,7 @@ public class ViewPagerHistoryAdapter extends FragmentStatePagerAdapter {
 
     public ViewPagerHistoryAdapter(FragmentManager fm) {
         super(fm);
+
     }
 
     @Override

@@ -93,6 +93,12 @@ public class MainRegisterFragment extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        avLoad.hide();
+    }
+
     private void setupUI(View view) {
         rlMain = view.findViewById(R.id.rl_main);
         avLoad = view.findViewById(R.id.avLoad);
