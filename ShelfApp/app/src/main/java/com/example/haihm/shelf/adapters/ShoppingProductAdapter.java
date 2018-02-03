@@ -15,8 +15,14 @@ import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.ProductDetailActivity;
 import com.example.haihm.shelf.event.OnClickProductEvent;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
+import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
 import com.example.haihm.shelf.utils.Utils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -31,6 +37,7 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
     List<SanPhamRaoVat> sanPhamRaoVatList;
     View view;
     Context context;
+    UserModel userModel = new UserModel();
 
     public ShoppingProductAdapter(List<SanPhamRaoVat> sanPhamRaoVatList, Context context) {
         this.sanPhamRaoVatList = sanPhamRaoVatList;
@@ -77,7 +84,23 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
             ivProductImage.setImageBitmap(bitmap);
             tvProductPrice.setText(Utils.formatPrice(sanPhamRaoVat.giaSP));
             tvProductName.setText(sanPhamRaoVat.tenSP);
-//            tvProductSellerName.setText(sanPhamRaoVat.nguoiB.hoten);
+
+            //set seller name
+            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("UserInfo");
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    userModel = dataSnapshot.child(sanPhamRaoVat.nguoiB).getValue(UserModel.class);
+                    tvProductSellerName.setText(userModel.hoten);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            //on click item view
             iview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
