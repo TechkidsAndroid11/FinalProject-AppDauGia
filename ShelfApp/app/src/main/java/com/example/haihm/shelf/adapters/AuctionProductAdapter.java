@@ -15,8 +15,14 @@ import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.AuctionDetailsActivity;
 import com.example.haihm.shelf.event.OnClickAuctionEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
+import com.example.haihm.shelf.model.UserModel;
 import com.example.haihm.shelf.utils.ImageUtils;
 import com.example.haihm.shelf.utils.Utils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,6 +39,7 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
     List<SanPhamDauGia> sanPhamDauGiaList;
     View view;
     Context context;
+    UserModel userModel = new UserModel();
 
     public AuctionProductAdapter(List<SanPhamDauGia> sanPhamDauGiaList, Context context) {
         this.sanPhamDauGiaList = sanPhamDauGiaList;
@@ -78,12 +85,28 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
             ivAuctionImage.setImageBitmap(bitmap);
             tvAuctionPrice.setText("Bắt đầu từ: " + Utils.formatPrice(sanPhamDauGia.giaCaoNhat));
             tvAuctionProductName.setText(sanPhamDauGia.tenSP);
-//            tvAuctionSellerName.setText(sanPhamDauGia.nguoiB.hoten);
 
+            //set seller name
+            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("UserInfo");
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    userModel = dataSnapshot.child(sanPhamDauGia.nguoiB).getValue(UserModel.class);
+                    tvAuctionSellerName.setText(userModel.hoten);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            //set auction time
             DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM/yyyy");
             String auctionTime = dateFormat.format(sanPhamDauGia.tgianKthuc);
             tvAuctionTimeStart.setText(auctionTime);
 
+            //on click item view
             iview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
