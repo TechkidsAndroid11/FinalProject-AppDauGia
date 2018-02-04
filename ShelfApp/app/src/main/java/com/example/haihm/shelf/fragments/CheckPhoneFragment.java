@@ -49,6 +49,7 @@ public class CheckPhoneFragment extends Fragment {
     @SuppressLint("ValidFragment")
     public CheckPhoneFragment(UserModel userModel) {
         // Required empty public constructor
+
         this.userModel=userModel;
     }
 
@@ -58,7 +59,7 @@ public class CheckPhoneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_check_phone, container, false);
         setupUI(view);
-
+        Log.d(TAG, "CheckPhoneFragment: ");
         addListener();
         return view;
 

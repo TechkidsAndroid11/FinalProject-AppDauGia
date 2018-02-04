@@ -1,7 +1,6 @@
 package com.example.haihm.shelf.activity;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,21 +10,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.adapters.ViewPagerAutionDetailsAdapter;
 import com.example.haihm.shelf.adapters.ViewPagerHistoryAdapter;
 import com.example.haihm.shelf.event.OnClickShowProfileEvent;
-import com.example.haihm.shelf.event.OnClickUserModelEvent;
-import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.UserModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

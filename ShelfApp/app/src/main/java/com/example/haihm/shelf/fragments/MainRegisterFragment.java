@@ -188,6 +188,7 @@ public class MainRegisterFragment extends Fragment {
                 EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
 
             }
         });

@@ -1,38 +1,31 @@
 package com.example.haihm.shelf.fragments;
 
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.DangSpDGActivity;
 import com.example.haihm.shelf.activity.DangSpRvActivity;
 
+import com.example.haihm.shelf.adapters.ViewPagerHistoryProfileAdapter;
 import com.example.haihm.shelf.event.OnClickAddSanPhamEvent;
-import com.example.haihm.shelf.event.OnClickShowProfileEvent;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.UserModel;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,6 +45,10 @@ public class ProfileFragment extends Fragment {
     UserModel userModel;
     ViewPager vpHistory;
     TabLayout tabHistory;
+    AppBarLayout appBar;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    Toolbar toolbar;
+    ScrollView scrollView;
     public ProfileFragment() {
         // Required empty public constructor
 
@@ -101,7 +98,9 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
+        ViewPagerHistoryProfileAdapter adapter = new ViewPagerHistoryProfileAdapter(getFragmentManager());
+        vpHistory.setAdapter(adapter);
+        vpHistory.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabHistory));
 
     }
 
@@ -122,7 +121,10 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tv_name);
         vpHistory = view.findViewById(R.id.vp_history);
         tabHistory = view.findViewById(R.id.tab_history);
-
+        appBar = view.findViewById(R.id.app_bar);
+        collapsingToolbarLayout= view.findViewById(R.id.toolbar_layout);
+        toolbar = view.findViewById(R.id.toolbar);
+//        scrollView = view.findViewById(R.id.scrollView);
     }
 
 

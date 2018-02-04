@@ -1,6 +1,8 @@
 package com.example.haihm.shelf.activity;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -48,10 +50,11 @@ public class MainActivity extends AppCompatActivity {
         tlBottomBar.addTab(tlBottomBar.newTab().setIcon(R.drawable.ic_attach_money_black_24dp));
         tlBottomBar.addTab(tlBottomBar.newTab().setIcon(R.drawable.ic_person_black_24dp));
         tlBottomBar.setBackgroundColor(getResources().getColor(R.color.mainColor));
+
         tlBottomBar.getTabAt(0).setText("Rao vặt");
         tlBottomBar.getTabAt(1).setText("Đấu giá");
         tlBottomBar.getTabAt(2).setText("Tôi");
-
+        tlBottomBar.setTabTextColors(Color.WHITE,Color.WHITE);
         tlBottomBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

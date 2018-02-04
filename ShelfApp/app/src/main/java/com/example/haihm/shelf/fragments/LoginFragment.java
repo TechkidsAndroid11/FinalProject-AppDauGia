@@ -96,7 +96,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
     public LoginFragment() {
         // Required empty public constructor
-
+        Log.d(TAG, "LoginFragment: ");
+        //avLoad.hide();
     }
 
 
@@ -104,10 +105,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         setupUI(view);
         avLoad.hide();
-
         checkLogined();
         addListener();
 
@@ -127,6 +128,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         avLoad.hide();
         Log.d(TAG, "onResume: ");
     }
+
 
     public void setupUI(View view) {
         linearLayout = view.findViewById(R.id.linearLayout);
