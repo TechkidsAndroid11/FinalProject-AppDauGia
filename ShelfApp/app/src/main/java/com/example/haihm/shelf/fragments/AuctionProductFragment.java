@@ -75,13 +75,16 @@ public class AuctionProductFragment extends Fragment {
     }
 
     private void loadData() {
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                sanPhamDauGiaList.clear();
                 //load data from firebase
                 for (DataSnapshot spDauGiaSnapShot : dataSnapshot.getChildren()){
                     SanPhamDauGia sanPhamDauGia = spDauGiaSnapShot.getValue(SanPhamDauGia.class);
                     sanPhamDauGia.idSP = spDauGiaSnapShot.getKey();
+
                     sanPhamDauGiaList.add(sanPhamDauGia);
                     auctionProductAdapter.notifyItemChanged(sanPhamDauGiaList.indexOf(sanPhamDauGia));
                 }

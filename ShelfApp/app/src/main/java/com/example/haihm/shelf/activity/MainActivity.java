@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         clAppBar = findViewById(R.id.app_bar_layout);
         vpMain = findViewById(R.id.vp_main_activity);
         tvTabName = findViewById(R.id.tv_tab_layout_name);
-
+        tvTabName.setText("Rao vặt");
         setupBottomTabLayout();
 
         MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         tlBottomBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
                 vpMain.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0 || tab.getPosition() == 1) {
                     clAppBar.setVisibility(View.VISIBLE);

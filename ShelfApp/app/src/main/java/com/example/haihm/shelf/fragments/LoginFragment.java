@@ -4,7 +4,6 @@ package com.example.haihm.shelf.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -88,14 +87,13 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     String fbId, fbName, fbAvatar;
     UserModel.Rate rate;
     UserModel userModel;
-    String base64;
-    public static Bitmap bitmap;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     TextView tvSignIn, tvSignUp;
     EditText etUsername, etPass;
     LinearLayout linearLayout;
     AVLoadingIndicatorView avLoad;
+
     public LoginFragment() {
         // Required empty public constructor
 
@@ -188,10 +186,12 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.openFragment(getFragmentManager(),R.id.rl_main,new RegisterFragment());
-        }
+
+                Utils.openFragment(getFragmentManager(), R.id.rl_main, new RegisterFragment());
+            }
+
         });
-                }
+    }
 
     public void checkLogined() {
 
@@ -281,7 +281,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     }
 
     private void loadData() {
-        Log.e("checkloginfb", "login1");
         Bundle params = new Bundle();
         params.putString("fields", "id,name,picture.role(large),cover");
         GraphRequestAsyncTask graphRequestAsyncTask = new GraphRequest(AccessToken.getCurrentAccessToken(), "me",
@@ -306,14 +305,13 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         }).executeAsync();
     }
 
-    public void checkDuplicatedIdDatabase(final FirebaseUser user)
-    {
+    public void checkDuplicatedIdDatabase(final FirebaseUser user) {
         linearLayout.setVisibility(View.GONE);
         avLoad.show();
         databaseReference.orderByChild("id").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()) // đã được đăng ký 1 lần thì k cần veryfi phone nữa
+                if (dataSnapshot.exists()) // đã được đăng ký 1 lần thì k cần veryfi phone nữa
                 {
                     userModel = new UserModel(user.getUid(), fbAvatar, cover, fbName, phone, address, rate);
                     EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
@@ -327,15 +325,13 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         }
                     });
 
-                }
-                else
-                {
+                } else {
                     if (user.getPhoneNumber() == null) {
                         avatar = String.valueOf(user.getPhotoUrl());
                         name = user.getDisplayName();
                         userModel = new UserModel(user.getUid(), fbAvatar, cover, fbName, phone, address, rate);
-                        Log.d(TAG, "onDataChange: Usermodel: "+userModel.getHoten());
-                        Utils.openFragment(getFragmentManager(),R.id.rl_main,new CheckPhoneFragment(userModel));
+                        Log.d(TAG, "onDataChange: Usermodel: " + userModel.getHoten());
+                        Utils.openFragment(getFragmentManager(), R.id.rl_main, new CheckPhoneFragment(userModel));
 
                     } else {
 
@@ -364,6 +360,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
 
     }
+
     public static void saveLoginSuccess(String userId) {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyPre", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -440,7 +437,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             final FirebaseUser user = task.getResult().getUser();
-                            System.out.println("USer: "+user.getUid());
+                            System.out.println("USer: " + user.getUid());
                             checkDuplicatedIdDatabase(user);
 
                         }
@@ -474,7 +471,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
 
 
 }
