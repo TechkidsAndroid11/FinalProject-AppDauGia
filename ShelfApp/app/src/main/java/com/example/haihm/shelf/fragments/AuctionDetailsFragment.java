@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -201,7 +202,7 @@ public class AuctionDetailsFragment extends Fragment {
 
         tvDescription.setText(sanPhamDauGia.motaSP);
         tvAddress.setText(sanPhamDauGia.diaGD);
-
+        etInputCost.setHint("Tăng tối thiểu "+sanPhamDauGia.buocGia+" đ");
 
         DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         decimalFormat.applyPattern("#,###,###");
@@ -229,10 +230,19 @@ public class AuctionDetailsFragment extends Fragment {
 
                 @Override
                 public void onFinish() {
-
+                    etInputCost.setFocusable(false);
+                    etInputCost.setEnabled(false);
+                    etInputCost.setInputType(InputType.TYPE_NULL);
+                    ivGavel.setClickable(false);
                 }
             }.start();
-        } else tvTimeRemaining.setText("Hết giờ");
+        } else {
+            tvTimeRemaining.setText("Hết giờ");
+            etInputCost.setFocusable(false);
+            etInputCost.setEnabled(false);
+            etInputCost.setInputType(InputType.TYPE_NULL);
+            ivGavel.setClickable(false);
+        }
     }
 
     private void addController() {
@@ -314,7 +324,7 @@ public class AuctionDetailsFragment extends Fragment {
 
                 builder.show();
             } else {
-                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
                         .child(sanPhamDauGia.idSP).child("giaCaoNhat");
 
@@ -327,10 +337,44 @@ public class AuctionDetailsFragment extends Fragment {
                 DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
                 decimalFormat.applyPattern("#,###,###");
                 etInputCost.setText("");
+                //cap nhat phien đang tham gia
+                final ArrayList<String> listJoinAuction = new ArrayList<>();
+                DatabaseReference databaseReference1 = firebaseDatabase.getReference("UserInfo").child(userModel.id)
+                        .child("listJoinAuction");
+                databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "onDataChange_check: "+dataSnapshot);
+                        for(DataSnapshot idAuction : dataSnapshot.getChildren()){
+                            String id = idAuction.getValue(String.class);
+                            Log.d(TAG, "onDataChange_join: "+id);
+                            listJoinAuction.add(id);
+                        }
+                        if(!checkExist(listJoinAuction,sanPhamDauGia.idSP)){
+                            listJoinAuction.add(sanPhamDauGia.idSP);
+                            firebaseDatabase.getReference("UserInfo").child(userModel.id)
+                                    .child("listJoinAuction").setValue(listJoinAuction);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean checkExist(ArrayList<String> listJoinAuction, String id) {
+        for(int i = 0; i < listJoinAuction.size(); i++){
+            if(listJoinAuction.get(i).equals(id)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void loadCurentCost() {

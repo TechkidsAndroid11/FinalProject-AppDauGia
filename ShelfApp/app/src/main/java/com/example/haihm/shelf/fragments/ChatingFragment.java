@@ -87,7 +87,7 @@ public class ChatingFragment extends Fragment {
 //                userModel = new UserModel();
 //                userModel.hoten = "Nguyễn văn A";
 //                userModel.anhAvatar = "https://tophinhanhdep.net/wp-content/uploads/2017/10/avatar-cap-doi-7.jpg";
-                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
                         .child(sanPhamDauGia.idSP).child("lchat");
                 final SanPhamDauGia.Chat chat = new SanPhamDauGia.Chat();
@@ -97,12 +97,42 @@ public class ChatingFragment extends Fragment {
                 etChat.setText("");
                 sanPhamDauGia.lchat.add(chat);
                 databaseReference.setValue(sanPhamDauGia.lchat);
-//                chatingAdapter.notifyDataSetChanged();
+                //cap nhat phien đang tham gia
+                final ArrayList<String> listJoinAuction = new ArrayList<>();
+                DatabaseReference databaseReference1 = firebaseDatabase.getReference("UserInfo").child(userModel.id)
+                        .child("listJoinAuction");
+                databaseReference1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot idAuction : dataSnapshot.getChildren()){
+                            String id = idAuction.getValue(String.class);
+                            Log.d(TAG, "onDataChange_join: "+id);
+                            listJoinAuction.add(id);
+                        }
+                        if(!checkExist(listJoinAuction,sanPhamDauGia.idSP)){
+                            listJoinAuction.add(sanPhamDauGia.idSP);
+                            firebaseDatabase.getReference("UserInfo").child(userModel.id)
+                                    .child("listJoinAuction").setValue(listJoinAuction);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
         changeChating();
     }
-
+    private boolean checkExist(ArrayList<String> listJoinAuction, String id) {
+        for(int i = 0; i < listJoinAuction.size(); i++){
+            if(listJoinAuction.get(i).equals(id)){
+                return true;
+            }
+        }
+        return false;
+    }
     public void changeChating() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Auction").child(sanPhamDauGia.loaiSP)
