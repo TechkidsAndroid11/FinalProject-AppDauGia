@@ -94,6 +94,7 @@ public class ChatingFragment extends Fragment {
                 chat.nameMess = userModel.hoten;
                 chat.avatarMess = userModel.anhAvatar;
                 chat.contentMess = etChat.getText().toString();
+                if(chat.contentMess.equals("")) return;
                 etChat.setText("");
                 sanPhamDauGia.lchat.add(chat);
                 databaseReference.setValue(sanPhamDauGia.lchat);

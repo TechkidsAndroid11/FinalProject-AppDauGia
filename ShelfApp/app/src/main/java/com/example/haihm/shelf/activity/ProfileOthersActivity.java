@@ -36,7 +36,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 public class ProfileOthersActivity extends AppCompatActivity {
     private static final String TAG = "ProfileOthersActivity";
     ImageView ivBack,ivCall,ivStar,ivAvatar;
-    TextView tvName,tvAddress;
+    TextView tvName,tvAddress,tvPhoneNumber;
     RatingBar ratingBar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -61,6 +61,7 @@ public class ProfileOthersActivity extends AppCompatActivity {
         ivCall = findViewById(R.id.iv_call);
         ivAvatar = findViewById(R.id.iv_avatar);
         tvAddress = findViewById(R.id.tv_address);
+        tvAddress = findViewById(R.id.tv_phone_number);
         tvName = findViewById(R.id.tv_name);
         ratingBar = findViewById(R.id.rb_rate);
         tabLayout = findViewById(R.id.tab_history);
@@ -97,6 +98,7 @@ public class ProfileOthersActivity extends AppCompatActivity {
         try{
             tvName.setText(userModel.hoten);
             tvAddress.setText(userModel.diaC);
+            tvPhoneNumber.setText(userModel.sdt);
             Picasso.with(this).load(userModel.anhAvatar)
                     .transform(new CropCircleTransformation()).into(ivAvatar);
             float rate = userModel.rate.tongLuotVote ==0 ? 0 :  userModel.rate.tongD / userModel.rate.tongLuotVote;

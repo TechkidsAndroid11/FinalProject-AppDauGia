@@ -293,7 +293,7 @@ public class AuctionDetailsFragment extends Fragment {
     }
 
     private View.OnClickListener showProfile(final String idUser) {
-
+        if(userModel.id.equals(idUser)) return null;
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
