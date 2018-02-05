@@ -74,6 +74,13 @@ public class VerifyPhoneRegisterFragment extends Fragment {
         return view;
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        avLoad.hide();
+    }
+
     private void setupUI(View view) {
         avLoad = view.findViewById(R.id.avLoad);
         tvResend= view.findViewById(R.id.tv_resend);

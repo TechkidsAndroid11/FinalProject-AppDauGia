@@ -1,0 +1,134 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="310dp"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/toolbar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center"
+                    android:layout_toEndOf="@+id/textView"
+                    android:layout_toRightOf="@+id/textView"
+                    android:src="@color/cardview_light_background" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:text="Phạm Quang Thắng"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin">
+
+                <RelativeLayout
+                    android:id="@+id/rl_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_shopping_cart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_shopping_cart_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/iv_shopping_cart"
+                        android:text="Cá nhân"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_settings_black_24dp" />
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <RelativeLayout
+
+            android:id="@+id/rl_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="#fff">
+
+            <Button
+                android:id="@+id/btDauGia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_corner"
+                android:padding="8dp"
+                android:text="Rao bán sản phẩm"
+                android:textColor="@color/colorPrimary" />
+
+            <Button
+                android:id="@+id/btBuy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/btDauGia"
+                android:background="@drawable/rounded_corner"
+                android:padding="8dp"
+                android:text="Tạo phiên đấu giá"
+                android:textColor="@color/colorPrimary" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_history"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/btBuy"></android.support.design.widget.TabLayout>
+        </RelativeLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/demo" />
+
+
+</android.support.design.widget.CoordinatorLayout>
