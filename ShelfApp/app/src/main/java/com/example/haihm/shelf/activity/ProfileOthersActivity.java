@@ -79,7 +79,7 @@ public class ProfileOthersActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userModel = dataSnapshot.child(id).getValue(UserModel.class);
-                Log.d(TAG, "onDataChange: "+userModel.hoten);
+                Log.d(TAG, "onDataChange: "+userModel.anhAvatar);
                 setData();
 
                 ViewPagerHistoryAdapter viewPagerHistoryAdapter = new ViewPagerHistoryAdapter(getSupportFragmentManager());
@@ -96,11 +96,12 @@ public class ProfileOthersActivity extends AppCompatActivity {
 
     private void setData() {
         try{
+            Picasso.with(this).load(userModel.anhAvatar)
+                    .transform(new CropCircleTransformation()).into(ivAvatar);
             tvName.setText(userModel.hoten);
             tvAddress.setText(userModel.diaC);
             tvPhoneNumber.setText(userModel.sdt);
-            Picasso.with(this).load(userModel.anhAvatar)
-                    .transform(new CropCircleTransformation()).into(ivAvatar);
+            Log.d(TAG, "setData: "+userModel.anhAvatar);
             float rate = userModel.rate.tongLuotVote ==0 ? 0 :  userModel.rate.tongD / userModel.rate.tongLuotVote;
             ratingBar.setRating(rate);
 
