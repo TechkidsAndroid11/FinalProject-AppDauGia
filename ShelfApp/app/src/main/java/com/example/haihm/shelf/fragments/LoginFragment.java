@@ -236,6 +236,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                                 EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
+                                getActivity().finish();
                             } else
                                 tvNotify.setText("Sai mật khẩu!!!!");
                         }
@@ -316,7 +317,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                             Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 } else {
                     if (user.getPhoneNumber() == null) {
                         avatar = String.valueOf(user.getPhotoUrl());

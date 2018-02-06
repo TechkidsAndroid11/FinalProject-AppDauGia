@@ -178,6 +178,10 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
             etMoTaSP.setError("Không được để trống");
             return;
         }
+        if (etMoTaSP.getText().toString().length() < 120) {
+            etMoTaSP.setError("Mô tả không được dưới 120 ký tự");
+            return;
+        }
         if (TextUtils.isEmpty(etgiaSP.getText())) {
             etgiaSP.setError("Không được để trống");
             return;
