@@ -125,27 +125,7 @@ public class MainRegisterFragment extends Fragment {
                 selectFuntion();
             }
         });
-        btRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkDuplicatedUsername(etUsername.getText().toString());
-                if (etPassword.getText().toString().equals("") || etUsername.getText().toString().equals("") || etVerifyPassword.getText().toString().equals("")) {
-                    tvNotify.setText("Bạn phải điền đầy đủ các thông tin chi tiết!");
-                } else if (avatar==null) {
-                    Log.d(TAG, "onClick: "+avatar);
-                    tvNotify.setText("Bạn phải thêm ảnh đại diện!");
-                } else if (etPassword.getText().toString().length() < 6) {
-                    tvNotify.setText("Mật khẩu phải có ít nhất 6 ký tự!");
-                } else if (!etPassword.getText().toString().equals(etVerifyPassword.getText().toString())) {
-                    tvNotify.setText("Nhập lại mật khẩu chưa đúng!");
-                } else if (check == false) {
-                    tvNotify.setText("Tài khoản đã tồn tại!");
-                    Log.d(TAG, "onClick: ton tai");
-                } else {
-                    registerAccount();
-                }
-            }
-        });
+
     }
 
     public void checkDuplicatedUsername(String username) {
@@ -256,7 +236,28 @@ public class MainRegisterFragment extends Fragment {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 avatar = String.valueOf(downloadUrl);
-                Log.d(TAG, "onSuccess: avatar: "+avatar);
+
+                btRegister.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        checkDuplicatedUsername(etUsername.getText().toString());
+                        if (etPassword.getText().toString().equals("") || etUsername.getText().toString().equals("") || etVerifyPassword.getText().toString().equals("")) {
+                            tvNotify.setText("Bạn phải điền đầy đủ các thông tin chi tiết!");
+                        } else if (avatar==null) {
+                            Log.d(TAG, "onClick: "+avatar);
+                            tvNotify.setText("Bạn phải thêm ảnh đại diện!");
+                        } else if (etPassword.getText().toString().length() < 6) {
+                            tvNotify.setText("Mật khẩu phải có ít nhất 6 ký tự!");
+                        } else if (!etPassword.getText().toString().equals(etVerifyPassword.getText().toString())) {
+                            tvNotify.setText("Nhập lại mật khẩu chưa đúng!");
+                        } else if (check == false) {
+                            tvNotify.setText("Tài khoản đã tồn tại!");
+                            Log.d(TAG, "onClick: ton tai");
+                        } else {
+                            registerAccount();
+                        }
+                    }
+                });
             }
         });
     }

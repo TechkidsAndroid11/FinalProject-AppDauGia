@@ -451,7 +451,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
                 Log.d(TAG, "onActivityResult: " + e.getMessage());
 
             }
