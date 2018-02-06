@@ -1,57 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <include
-                android:visibility="gone"
-                layout="@layout/fragment_common_item"
                 android:id="@+id/incl_enquipment"
-                />
+                layout="@layout/fragment_common_item"
+                android:visibility="gone" />
 
             <include
-                android:visibility="gone"
-                layout="@layout/fragment_common_item"
                 android:id="@+id/incl_it_product_type"
-                />
+                layout="@layout/fragment_common_item"
+                android:visibility="gone" />
 
             <include
-                android:visibility="gone"
-                layout="@layout/fragment_common_item"
                 android:id="@+id/incl_car_product_type"
-                />
+                layout="@layout/fragment_common_item"
+                android:visibility="gone" />
 
             <include
-                android:visibility="gone"
-                layout="@layout/fragment_common_item"
                 android:id="@+id/incl_furniture"
-                />
+                layout="@layout/fragment_common_item"
+                android:visibility="gone" />
 
             <include
-                android:visibility="gone"
-                layout="@layout/fragment_common_item"
                 android:id="@+id/incl_fashion_product_type"
-                />
+                layout="@layout/fragment_common_item"
+                android:visibility="gone" />
 
             <include
-                android:visibility="gone"
-                layout="@layout/fragment_common_item"
                 android:id="@+id/incl_cosmetic_product_type"
-                />
+                layout="@layout/fragment_common_item"
+                android:visibility="gone" />
 
             <include
-                android:visibility="gone"
-                layout="@layout/fragment_common_item"
                 android:id="@+id/incl_other"
-                />
+                layout="@layout/fragment_common_item"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

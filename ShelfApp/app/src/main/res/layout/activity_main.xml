@@ -48,11 +48,11 @@
 
 
     <android.support.v4.view.ViewPager
-        android:layout_marginBottom="56dp"
         android:id="@+id/vp_main_activity"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/app_bar_layout" />
+        android:layout_below="@+id/app_bar_layout"
+        android:layout_marginBottom="56dp" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tl_bottom_bar"

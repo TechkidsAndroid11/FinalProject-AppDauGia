@@ -2,8 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:layout_marginBottom="5dp"
-    >
+    android:layout_marginBottom="5dp">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -28,14 +27,14 @@
             android:paddingTop="@dimen/pad_def">
 
             <TextView
-                android:textSize="18sp"
-                android:textStyle="bold"
                 android:id="@+id/tv_auction_product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pad_def"
                 android:text="Giày thể thao"
-                android:textColor="@color/textColorBlack" />
+                android:textColor="@color/textColorBlack"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_auction_seller_name"
