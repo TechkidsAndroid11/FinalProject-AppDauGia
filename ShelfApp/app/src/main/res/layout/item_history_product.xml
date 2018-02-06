@@ -31,6 +31,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:text="Giày thể thao"
                     android:textColor="@color/textColorBlack" />
 
@@ -39,6 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="100.000đ"
+                    android:singleLine="true"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:gravity="center"

@@ -23,6 +23,7 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.event.OnClickProductEvent;
 import com.example.haihm.shelf.event.OnClickShowProfileEvent;
+import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.model.UserModel;
@@ -57,7 +58,7 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
     PagerIndicator pagerIndicator;
     SpinKitView skLoadImage;
     SanPhamRaoVat sanPhamRaoVat;
-    private UserModel seller = new UserModel();
+    private UserModel seller = new UserModel(),userModel = new UserModel();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +74,11 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
     public void OnReceivedClickProductEvent(OnClickProductEvent onClickProductEvent) {
         sanPhamRaoVat = onClickProductEvent.sanPhamRaoVat;
     }
-
+    @Subscribe(sticky = true)
+    public void ReceivedUserModel(OnClickUserModelEvent onClickUserModelEvent) {
+        userModel = onClickUserModelEvent.userModel;
+        Log.d(TAG, "ReceivedUserModel: " + userModel.sdt);
+    }
     private void setUpUI() {
         ivBack = findViewById(R.id.iv_back);
         ivAvatar = findViewById(R.id.iv_avatar_seller);
@@ -159,7 +164,7 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
     }
 
     private View.OnClickListener showProfile() {
-
+        if(userModel.id.equals(sanPhamRaoVat.nguoiB)) return null;
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {

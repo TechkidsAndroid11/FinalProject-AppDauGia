@@ -18,7 +18,7 @@ public class UserModel {
     public Rate rate;
     public ArrayList<String> listProduct;
     public ArrayList<String> listAuction;
-    public ArrayList<String> listJoinAution;
+    public ArrayList<String> listJoinAuction;
     public UserModel()
     {
         id = "";
@@ -29,7 +29,7 @@ public class UserModel {
         diaC = "";
         listProduct = new ArrayList<>();
         listAuction = new ArrayList<>();
-        listJoinAution = new ArrayList<>();
+        listJoinAuction = new ArrayList<>();
         rate = new Rate();
     }
 
@@ -43,7 +43,7 @@ public class UserModel {
         this.rate = rate;
         listProduct = new ArrayList<>();
         listAuction = new ArrayList<>();
-        listJoinAution = new ArrayList<>();
+        listJoinAuction = new ArrayList<>();
     }
 
     public UserModel(String id, String anhAvatar, String anhCover, String hoten, String password, String confirmPassword, String sdt, String diaC, Rate rate) {
@@ -58,7 +58,7 @@ public class UserModel {
         this.rate = rate;
         listProduct = new ArrayList<>();
         listAuction = new ArrayList<>();
-        listJoinAution = new ArrayList<>();
+        listJoinAuction = new ArrayList<>();
     }
 
     public String getPassword() {
