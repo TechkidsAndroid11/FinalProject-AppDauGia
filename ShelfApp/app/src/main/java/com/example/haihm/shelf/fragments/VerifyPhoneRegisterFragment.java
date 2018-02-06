@@ -59,7 +59,7 @@ public class VerifyPhoneRegisterFragment extends Fragment {
     }
     public VerifyPhoneRegisterFragment()
     {
-
+        Log.d(TAG, "VerifyPhoneRegisterFragment: ");
     }
 
     @Override
@@ -67,7 +67,7 @@ public class VerifyPhoneRegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_verify_phone, container, false);
-
+        Log.d(TAG, "onCreateView: "); 
         setupUI(view);
         avLoad.hide();
         addListener();
@@ -79,6 +79,19 @@ public class VerifyPhoneRegisterFragment extends Fragment {
     public void onStart() {
         super.onStart();
         avLoad.hide();
+        Log.d(TAG, "onStart: ");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
     }
 
     private void setupUI(View view) {

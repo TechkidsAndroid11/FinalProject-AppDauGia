@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     TextView tvSignIn, tvSignUp;
     EditText etUsername, etPass;
     LinearLayout linearLayout;
-    AVLoadingIndicatorView avLoad;
+    //AVLoadingIndicatorView avLoad;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -108,31 +108,20 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         setupUI(view);
-        avLoad.hide();
+      //  avLoad.hide();
         checkLogined();
         addListener();
 
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-        avLoad.hide();
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        avLoad.hide();
-        Log.d(TAG, "onResume: ");
-    }
+
 
 
     public void setupUI(View view) {
         linearLayout = view.findViewById(R.id.linearLayout);
-        avLoad = view.findViewById(R.id.avLoad);
+       // avLoad = view.findViewById(R.id.avLoad);
         userModel = new UserModel();
         btnLoginApp = view.findViewById(R.id.bt_login);
         btnLoginFacebook = view.findViewById(R.id.bt_register_with_facebook);
@@ -199,10 +188,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyPre", Context.MODE_PRIVATE);
         String Uid = sharedPreferences.getString("UserId", "NotFound");
+        Log.d(TAG, "checkLogined: "+Uid);
         if (!Uid.equals("NotFound")) {
 
-            linearLayout.setVisibility(View.GONE);
-            avLoad.show();
+//            linearLayout.setVisibility(View.GONE);
+//            avLoad.show();
 
             databaseReference.orderByChild("id").equalTo(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -308,8 +298,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     }
 
     public void checkDuplicatedIdDatabase(final FirebaseUser user) {
-        linearLayout.setVisibility(View.GONE);
-        avLoad.show();
+       // linearLayout.setVisibility(View.GONE);
+     //   avLoad.show();
         databaseReference.orderByChild("id").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

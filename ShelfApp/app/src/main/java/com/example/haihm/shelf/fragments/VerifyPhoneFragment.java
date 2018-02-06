@@ -119,7 +119,9 @@ public class VerifyPhoneFragment extends Fragment {
         tvResend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 resendCode();
+                Toast.makeText(getActivity(), "Hệ thống đang gửi lại mã xác nhận!!!", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -33,6 +33,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:padding="5dp"
+
             android:src="@drawable/ic_settings_black_24dp" />
 
         <ImageView
