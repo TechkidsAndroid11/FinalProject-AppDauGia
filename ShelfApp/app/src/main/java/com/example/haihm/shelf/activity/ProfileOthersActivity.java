@@ -99,7 +99,9 @@ public class ProfileOthersActivity extends AppCompatActivity {
             Picasso.with(this).load(userModel.anhAvatar)
                     .transform(new CropCircleTransformation()).into(ivAvatar);
             tvName.setText(userModel.hoten);
-            tvAddress.setText(userModel.diaC);
+            if(userModel.diaC.equals("")|| userModel.diaC == null){
+                tvAddress.setVisibility(View.INVISIBLE);
+            }else tvAddress.setText(userModel.diaC);
             tvPhoneNumber.setText(userModel.sdt);
             Log.d(TAG, "setData: "+userModel.anhAvatar);
             float rate = userModel.rate.tongLuotVote ==0 ? 0 :  userModel.rate.tongD / userModel.rate.tongLuotVote;

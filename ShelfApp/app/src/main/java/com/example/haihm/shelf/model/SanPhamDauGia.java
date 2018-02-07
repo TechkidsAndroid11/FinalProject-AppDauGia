@@ -8,7 +8,6 @@ import java.util.Date;
  */
 
 public class SanPhamDauGia extends SanPhamRaoVat {
-    public String idSP;
     public double buocGia;
     public double giaCaoNhat;
     public Date tgianKthuc;
@@ -18,16 +17,17 @@ public class SanPhamDauGia extends SanPhamRaoVat {
     public SanPhamDauGia() {
     }
 
-    public SanPhamDauGia(String nguoiB, String tenSP, ArrayList<String> anhSP, double giaSP,
-                         String motaSP, String loaiSP, String diaGD, double buocGia, double giaCaoNhat,
-                         Date date, String nguoiMua, ArrayList<Chat> lchat) {
-        super(nguoiB, tenSP, anhSP, giaSP, motaSP, loaiSP, diaGD);
+    public SanPhamDauGia(String tenSP, ArrayList<String> anhSP, double giaSP, String motaSP, String loaiSP,
+                         String diaGD, String nguoiB,
+                         double buocGia, double giaCaoNhat, Date tgianKthuc, String nguoiMua, ArrayList<Chat> lchat) {
+        super(tenSP, anhSP, giaSP, motaSP, loaiSP, diaGD, nguoiB);
         this.buocGia = buocGia;
         this.giaCaoNhat = giaCaoNhat;
-        this.tgianKthuc = date;
+        this.tgianKthuc = tgianKthuc;
         this.nguoiMua = nguoiMua;
         this.lchat = lchat;
     }
+
     public static class Chat{
         public String nameMess;
         public String avatarMess;

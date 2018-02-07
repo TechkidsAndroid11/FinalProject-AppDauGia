@@ -54,7 +54,7 @@ public class HistoryProductProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_history_product_profile, container, false);
         setupUI();
         EventBus.getDefault().register(this);
-        loadProduct();
+
         return view;
     }
     @Subscribe(sticky = true)
@@ -62,6 +62,7 @@ public class HistoryProductProfileFragment extends Fragment {
 
         userModel = onClickUserModelEvent.userModel;
         Log.d(TAG, "loadData: "+userModel.getHoten());
+        loadProduct();
     }
     private void loadProduct() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();

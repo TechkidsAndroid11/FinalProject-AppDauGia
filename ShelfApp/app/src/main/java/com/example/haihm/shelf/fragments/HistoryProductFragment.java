@@ -64,6 +64,7 @@ public class HistoryProductFragment extends Fragment {
                         SanPhamRaoVat sanPhamRaoVat = dataSnapshot.child(arr[i]).child(userModel.listProduct.get(j))
                                 .getValue(SanPhamRaoVat.class);
                         if(sanPhamRaoVat!=null){
+                            sanPhamRaoVat.idSP = userModel.listProduct.get(j);
                             listProduct.add(sanPhamRaoVat);
                             Log.d(TAG, "onDataChange_history: "+i+" "+userModel.hoten);
                         }

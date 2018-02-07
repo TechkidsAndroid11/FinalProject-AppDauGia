@@ -16,22 +16,26 @@ public class ViewPagerHistoryProfileAdapter extends FragmentStatePagerAdapter {
     private static final String TAG = "ViewPagerHistoryProfile";
     public ViewPagerHistoryProfileAdapter(FragmentManager fm) {
         super(fm);
+        Log.d(TAG, "ViewPagerHistoryProfileAdapter: ");
     }
 
     @Override
     public Fragment getItem(int position) {
+        Log.d(TAG, "getItem: ");
         switch (position)
         {
             case 0:
             {
+                Log.d(TAG, "getItem: " + position);
                 return new HistoryProductProfileFragment();
             }
             case 1:
             {
+                Log.d(TAG, "getItem: " + position);
                 return new HistoryAuctionProfileFragment();
             }
         }
-        return  null;
+        return null;
     }
 
     @Override

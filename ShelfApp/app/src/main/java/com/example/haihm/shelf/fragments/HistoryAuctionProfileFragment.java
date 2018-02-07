@@ -50,7 +50,7 @@ public class HistoryAuctionProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_history_auction_profile, container, false);
         setupUI();
         EventBus.getDefault().register(this);
-        loadAuction();
+
         return view;
     }
 
@@ -70,6 +70,7 @@ public class HistoryAuctionProfileFragment extends Fragment {
     public void loadData(OnClickUserModelEvent onClickUserModelEvent) {
 
         userModel = onClickUserModelEvent.userModel;
+        loadAuction();
     }
     private void loadAuction() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -77,19 +78,17 @@ public class HistoryAuctionProfileFragment extends Fragment {
         firebaseDatabase.getReference("Auction").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<SanPhamDauGia> tmp = new ArrayList<>();
+                listAuction.clear();
                 for(int i = 0; i < arr.length; i++){
                     for (int j = 0; j < userModel.listAuction.size(); j++) {
                         SanPhamDauGia sanPhamDauGia = dataSnapshot.child(arr[i]).child(userModel.listAuction.get(j))
                                 .getValue(SanPhamDauGia.class);
                         if(sanPhamDauGia!=null){
                             sanPhamDauGia.idSP = userModel.listAuction.get(j);
-                            tmp.add(sanPhamDauGia);
+                            listAuction.add(sanPhamDauGia);
                         }
                     }
                 }
-                listAuction.clear();
-                listAuction.addAll(tmp);
                 rvHistoryAuction.setVisibility(View.VISIBLE);
                 spinKitView.setVisibility(View.INVISIBLE);
                 adapter.notifyDataSetChanged();
