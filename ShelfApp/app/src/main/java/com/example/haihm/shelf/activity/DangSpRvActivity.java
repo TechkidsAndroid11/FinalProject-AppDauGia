@@ -160,7 +160,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             etMoTaSP.setError("Không được để trống");
             return;
         }
-        if (etMoTaSP.getText().toString().length() < 120) {
+        if (etMoTaSP.getText().toString().length() < 60) {
             etMoTaSP.setError("Mô tả không được dưới 120 ký tự");
             return;
         }
@@ -178,11 +178,11 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",", ""));
-        SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat( etTenSP.getText().toString(), getList(lanhSP),
+        SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(etTenSP.getText().toString(), getList(lanhSP),
                 giaSP,
                 etMoTaSP.getText().toString(), loaiSP,
                 etDiaC.getText().toString(),userModel.id);
-        databaseReference.child(loaiSP).push().setValue(sanPhamRaoVat, new DatabaseReference.CompletionListener() {
+        databaseReference.child(loaiSP).push().setValue(sanPhamRaoVat,new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseRefe) {
                 Toast.makeText(DangSpRvActivity.this, "Rao bán thành công", Toast.LENGTH_SHORT).show();

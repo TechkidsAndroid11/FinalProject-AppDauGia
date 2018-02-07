@@ -82,11 +82,12 @@ public class AuctionProductFragment extends Fragment {
                 sanPhamDauGiaList.clear();
                 //load data from firebase
                 for (DataSnapshot spDauGiaSnapShot : dataSnapshot.getChildren()){
+
                     SanPhamDauGia sanPhamDauGia = spDauGiaSnapShot.getValue(SanPhamDauGia.class);
                     sanPhamDauGia.idSP = spDauGiaSnapShot.getKey();
-
                     sanPhamDauGiaList.add(sanPhamDauGia);
-                    auctionProductAdapter.notifyItemChanged(sanPhamDauGiaList.indexOf(sanPhamDauGia));
+                    //auctionProductAdapter.notifyItemChanged(sanPhamDauGiaList.indexOf(sanPhamDauGia));
+                    auctionProductAdapter.notifyDataSetChanged();
                 }
                 avAuctionLoading.hide();
             }
