@@ -60,8 +60,7 @@ public class ProfileOthersActivity extends AppCompatActivity {
         ivStar = findViewById(R.id.iv_star);
         ivCall = findViewById(R.id.iv_call);
         ivAvatar = findViewById(R.id.iv_avatar);
-        tvAddress = findViewById(R.id.tv_address);
-        tvAddress = findViewById(R.id.tv_phone_number);
+        tvPhoneNumber = findViewById(R.id.tv_phone_number);
         tvName = findViewById(R.id.tv_name);
         ratingBar = findViewById(R.id.rb_rate);
         tabLayout = findViewById(R.id.tab_history);
@@ -99,9 +98,6 @@ public class ProfileOthersActivity extends AppCompatActivity {
             Picasso.with(this).load(userModel.anhAvatar)
                     .transform(new CropCircleTransformation()).into(ivAvatar);
             tvName.setText(userModel.hoten);
-            if(userModel.diaC.equals("")|| userModel.diaC == null){
-                tvAddress.setVisibility(View.INVISIBLE);
-            }else tvAddress.setText(userModel.diaC);
             tvPhoneNumber.setText(userModel.sdt);
             Log.d(TAG, "setData: "+userModel.anhAvatar);
             float rate = userModel.rate.tongLuotVote ==0 ? 0 :  userModel.rate.tongD / userModel.rate.tongLuotVote;

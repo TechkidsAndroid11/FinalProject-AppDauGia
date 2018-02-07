@@ -97,34 +97,15 @@
                         android:theme="@style/RatingBar_Profile" />
                 </RelativeLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/tv_address"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingRight="4dp"
-                    android:text="Địa chỉ"
-                    android:textColor="#deffffff"
-                    android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/tv_phone_number"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:paddingLeft="4dp"
-                    android:text="Hà nội"
+                    android:text="012344569767"
+                    android:layout_gravity="center_horizontal"
                     android:textColor="#deffffff"
                     android:textStyle="bold" />
-            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
