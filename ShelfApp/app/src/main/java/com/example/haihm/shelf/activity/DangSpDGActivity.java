@@ -178,6 +178,10 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
             etMoTaSP.setError("Không được để trống");
             return;
         }
+        if (etMoTaSP.getText().toString().length() < 60) {
+            etMoTaSP.setError("Mô tả không được dưới 120 ký tự");
+            return;
+        }
         if (TextUtils.isEmpty(etgiaSP.getText())) {
             etgiaSP.setError("Không được để trống");
             return;
@@ -203,10 +207,10 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         SanPhamDauGia.Chat chat = new SanPhamDauGia.Chat();
         chat.nameMess = "test";
         chats.add(chat);
-        SanPhamDauGia sanPhamDauGia = new SanPhamDauGia(userModel.id, etTenSP.getText().toString(),
+        SanPhamDauGia sanPhamDauGia = new SanPhamDauGia(etTenSP.getText().toString(),
                 getList(lanhSP), giaSP,
                 etMoTaSP.getText().toString(), loaiSP,
-                etDiaC.getText().toString(),
+                etDiaC.getText().toString(),userModel.id,
                 buocG, giaSP,tgKetThuc, "",chats);
 
         databaseReference.child(loaiSP).push().setValue(sanPhamDauGia, new DatabaseReference.CompletionListener() {
@@ -222,9 +226,12 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
                         Log.d(TAG, "onComplete: "+keyProduct);
                         firebaseDatabase.getReference("UserInfo").child(userModel.id)
                                 .child("listAuction").setValue(listAuction);
+                        userModel.listAuction = listAuction;
+                        EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+
+                        finish();
                     }
                 });
-                finish();
     }
     private ArrayList<String> getList(HashMap<String, String> lanhSP) {
         ArrayList<String> list = new ArrayList<>();

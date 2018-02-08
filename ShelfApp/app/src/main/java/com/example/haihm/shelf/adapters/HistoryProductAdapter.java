@@ -3,6 +3,7 @@ package com.example.haihm.shelf.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import java.util.Locale;
  */
 
 public class HistoryProductAdapter extends RecyclerView.Adapter<HistoryProductAdapter.HistoryProductViewHolder> {
+    private static final String TAG = "HistoryProductAdapter";
     ArrayList<SanPhamRaoVat> lsanPhamRaoVat;
     private View view;
     Context context;
@@ -46,10 +48,15 @@ public class HistoryProductAdapter extends RecyclerView.Adapter<HistoryProductAd
     @Override
     public void onBindViewHolder(HistoryProductViewHolder holder, int position) {
         holder.setData(lsanPhamRaoVat.get(position));
+        for(int i=0;i<lsanPhamRaoVat.size();i++)
+        {
+            Log.d(TAG, "onBindViewHolder: "+lsanPhamRaoVat.get(i).tenSP+" - "+lsanPhamRaoVat.get(i).loaiSP+" - "+lsanPhamRaoVat.get(i).nguoiB);
+        }
     }
 
     @Override
     public int getItemCount() {
+        Log.d(TAG, "getItemCount: "+lsanPhamRaoVat.size());
         return lsanPhamRaoVat.size();
     }
 

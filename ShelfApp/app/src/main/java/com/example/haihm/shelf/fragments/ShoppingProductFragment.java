@@ -79,6 +79,7 @@ public class ShoppingProductFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                sanPhamRaoVatList.clear();
                 //load data from firebase
                 for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()){
                     SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);

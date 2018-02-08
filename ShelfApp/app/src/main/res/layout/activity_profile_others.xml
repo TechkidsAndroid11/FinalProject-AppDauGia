@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/rl_header"
@@ -97,33 +97,15 @@
                         android:theme="@style/RatingBar_Profile" />
                 </RelativeLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_phone_number"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingRight="4dp"
-                    android:text="Địa chỉ"
-                    android:textColor="#deffffff"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_address"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:paddingLeft="4dp"
-                    android:text="Hà nội"
+                    android:text="012344569767"
+                    android:layout_gravity="center_horizontal"
                     android:textColor="#deffffff"
                     android:textStyle="bold" />
-            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
@@ -131,14 +113,16 @@
         android:id="@+id/tab_history"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        app:tabIndicatorColor="@color/colorPrimary"
-        android:layout_below="@id/rl_header" />
+        android:layout_below="@id/rl_header"
+        app:tabIndicatorColor="@color/colorPrimary" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tab_history">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tab_history">
 
     </android.support.v4.view.ViewPager>
 </RelativeLayout>

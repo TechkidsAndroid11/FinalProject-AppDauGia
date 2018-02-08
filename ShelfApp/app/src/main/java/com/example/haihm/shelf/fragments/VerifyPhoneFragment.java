@@ -78,6 +78,12 @@ public class VerifyPhoneFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        avLoad.hide();
+    }
+
     private void setupUI(View view) {
         tvResend= view.findViewById(R.id.tv_resend);
         tvDes = view.findViewById(R.id.tv_des);
@@ -113,7 +119,9 @@ public class VerifyPhoneFragment extends Fragment {
         tvResend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 resendCode();
+                Toast.makeText(getActivity(), "Hệ thống đang gửi lại mã xác nhận!!!", Toast.LENGTH_SHORT).show();
             }
         });
     }

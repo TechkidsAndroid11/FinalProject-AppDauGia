@@ -1,7 +1,6 @@
 package com.example.haihm.shelf.activity;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,21 +10,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.haihm.shelf.R;
-import com.example.haihm.shelf.adapters.ViewPagerAutionDetailsAdapter;
 import com.example.haihm.shelf.adapters.ViewPagerHistoryAdapter;
 import com.example.haihm.shelf.event.OnClickShowProfileEvent;
-import com.example.haihm.shelf.event.OnClickUserModelEvent;
-import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.UserModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,7 +36,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 public class ProfileOthersActivity extends AppCompatActivity {
     private static final String TAG = "ProfileOthersActivity";
     ImageView ivBack,ivCall,ivStar,ivAvatar;
-    TextView tvName,tvAddress;
+    TextView tvName,tvAddress,tvPhoneNumber;
     RatingBar ratingBar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -66,7 +60,7 @@ public class ProfileOthersActivity extends AppCompatActivity {
         ivStar = findViewById(R.id.iv_star);
         ivCall = findViewById(R.id.iv_call);
         ivAvatar = findViewById(R.id.iv_avatar);
-        tvAddress = findViewById(R.id.tv_address);
+        tvPhoneNumber = findViewById(R.id.tv_phone_number);
         tvName = findViewById(R.id.tv_name);
         ratingBar = findViewById(R.id.rb_rate);
         tabLayout = findViewById(R.id.tab_history);
@@ -84,7 +78,7 @@ public class ProfileOthersActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userModel = dataSnapshot.child(id).getValue(UserModel.class);
-                Log.d(TAG, "onDataChange: "+userModel.hoten);
+                Log.d(TAG, "onDataChange: "+userModel.anhAvatar);
                 setData();
 
                 ViewPagerHistoryAdapter viewPagerHistoryAdapter = new ViewPagerHistoryAdapter(getSupportFragmentManager());
@@ -101,10 +95,11 @@ public class ProfileOthersActivity extends AppCompatActivity {
 
     private void setData() {
         try{
-            tvName.setText(userModel.hoten);
-            tvAddress.setText(userModel.diaC);
             Picasso.with(this).load(userModel.anhAvatar)
                     .transform(new CropCircleTransformation()).into(ivAvatar);
+            tvName.setText(userModel.hoten);
+            tvPhoneNumber.setText(userModel.sdt);
+            Log.d(TAG, "setData: "+userModel.anhAvatar);
             float rate = userModel.rate.tongLuotVote ==0 ? 0 :  userModel.rate.tongD / userModel.rate.tongLuotVote;
             ratingBar.setRating(rate);
 

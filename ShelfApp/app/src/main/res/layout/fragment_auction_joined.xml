@@ -1,35 +1,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.haihm.shelf.fragments.AuctionJoinedFragment">
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/stl_auction_product"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        app:stl_indicatorAlwaysInCenter="false"
-        app:stl_indicatorWithoutPadding="false"
-        app:stl_indicatorThickness="0dp"
-        app:stl_overlineThickness="0dp"
-        app:stl_underlineThickness="0dp"
-        app:stl_dividerThickness="0dp"
+        app:stl_clickable="true"
         app:stl_defaultTabBackground="?attr/selectableItemBackground"
         app:stl_defaultTabTextAllCaps="true"
         app:stl_defaultTabTextColor="@drawable/tab_product_type"
-        app:stl_defaultTabTextSize="16sp"
         app:stl_defaultTabTextHorizontalPadding="16dp"
+        app:stl_defaultTabTextSize="16sp"
         app:stl_distributeEvenly="false"
-        app:stl_clickable="true"
-        app:stl_titleOffset="auto_center"
+        app:stl_dividerThickness="0dp"
         app:stl_drawDecorationAfterTab="false"
-        />
+        app:stl_indicatorAlwaysInCenter="false"
+        app:stl_indicatorThickness="0dp"
+        app:stl_indicatorWithoutPadding="false"
+        app:stl_overlineThickness="0dp"
+        app:stl_titleOffset="auto_center"
+        app:stl_underlineThickness="0dp" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_auction_product"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

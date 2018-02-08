@@ -1,9 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.haihm.shelf.fragments.HistoryProductFragment">
+    tools:context="com.example.haihm.shelf.fragments.HistoryAuctionProfileFragment">
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/sk_load"
@@ -14,9 +14,8 @@
         app:SpinKit_Color="@color/colorPrimary" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_history_product"
+        android:id="@+id/rv_history_auction"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp" />
+        android:layout_height="match_parent" />
 
-</RelativeLayout>
+</FrameLayout>
