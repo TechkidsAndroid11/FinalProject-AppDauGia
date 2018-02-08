@@ -9,6 +9,7 @@ import java.util.List;
  */
 
 public class SanPhamRaoVat {
+    public String idSP;
     public String tenSP;
     public ArrayList<String> anhSP ;
     public double giaSP;
@@ -16,15 +17,15 @@ public class SanPhamRaoVat {
     public String loaiSP;
     public String diaGD;
     public String nguoiB;
-    public SanPhamRaoVat(String nguoiB, String tenSP, ArrayList<String> anhSP, double giaSP,
-                         String motaSP, String loaiSP, String diaGD) {
-        this.nguoiB = nguoiB;
+
+    public SanPhamRaoVat(String tenSP, ArrayList<String> anhSP, double giaSP, String motaSP, String loaiSP, String diaGD, String nguoiB) {
         this.tenSP = tenSP;
         this.anhSP = anhSP;
         this.giaSP = giaSP;
         this.motaSP = motaSP;
         this.loaiSP = loaiSP;
         this.diaGD = diaGD;
+        this.nguoiB = nguoiB;
     }
 
     public SanPhamRaoVat() {

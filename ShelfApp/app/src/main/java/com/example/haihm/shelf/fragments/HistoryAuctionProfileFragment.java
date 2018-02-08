@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.ProfileOthersActivity;
 import com.example.haihm.shelf.adapters.HistoryAuctionAdapter;
+import com.example.haihm.shelf.adapters.HistoryAuctionProfileAdapter;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.SanPhamDauGia;
 import com.example.haihm.shelf.model.UserModel;
@@ -31,8 +32,9 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class HistoryAuctionProfileFragment extends Fragment {
+    private static final String TAG = "HistoryAuctionProfileFr";
     RecyclerView rvHistoryAuction;
-    HistoryAuctionAdapter adapter;
+    HistoryAuctionProfileAdapter adapter;
     ArrayList<SanPhamDauGia> listAuction = new ArrayList<>();
     SpinKitView spinKitView;
     View view;
@@ -61,7 +63,7 @@ public class HistoryAuctionProfileFragment extends Fragment {
         rvHistoryAuction.setVisibility(View.INVISIBLE);
         spinKitView.setVisibility(View.VISIBLE);
 
-        adapter = new HistoryAuctionAdapter(listAuction,getContext());
+        adapter = new HistoryAuctionProfileAdapter(listAuction,getContext());
         rvHistoryAuction.setAdapter(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
         rvHistoryAuction.setLayoutManager(gridLayoutManager);
@@ -77,19 +79,18 @@ public class HistoryAuctionProfileFragment extends Fragment {
         firebaseDatabase.getReference("Auction").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<SanPhamDauGia> tmp = new ArrayList<>();
+                Log.d(TAG, "loadAuction: ");
+                listAuction.clear();
                 for(int i = 0; i < arr.length; i++){
                     for (int j = 0; j < userModel.listAuction.size(); j++) {
                         SanPhamDauGia sanPhamDauGia = dataSnapshot.child(arr[i]).child(userModel.listAuction.get(j))
                                 .getValue(SanPhamDauGia.class);
                         if(sanPhamDauGia!=null){
                             sanPhamDauGia.idSP = userModel.listAuction.get(j);
-                            tmp.add(sanPhamDauGia);
+                            listAuction.add(sanPhamDauGia);
                         }
                     }
                 }
-                listAuction.clear();
-                listAuction.addAll(tmp);
                 rvHistoryAuction.setVisibility(View.VISIBLE);
                 spinKitView.setVisibility(View.INVISIBLE);
                 adapter.notifyDataSetChanged();
@@ -97,7 +98,7 @@ public class HistoryAuctionProfileFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d(TAG, "onCancelled: "+databaseError.getMessage());
             }
         });
     }

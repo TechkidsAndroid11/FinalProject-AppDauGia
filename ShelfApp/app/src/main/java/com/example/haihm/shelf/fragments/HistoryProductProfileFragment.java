@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.activity.ProfileOthersActivity;
 import com.example.haihm.shelf.adapters.HistoryProductAdapter;
+import com.example.haihm.shelf.adapters.HistoryProductProfileAdapter;
 import com.example.haihm.shelf.event.OnClickUserModelEvent;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.model.UserModel;
@@ -36,7 +37,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 public class HistoryProductProfileFragment extends Fragment {
     private static final String TAG = "HistoryProductProfileFr";
     RecyclerView rvHistoryProduct;
-    HistoryProductAdapter adapter;
+    HistoryProductProfileAdapter adapter;
     ArrayList<SanPhamRaoVat> listProduct = new ArrayList<>();
     SpinKitView spinKitView;
     View view;
@@ -74,7 +75,9 @@ public class HistoryProductProfileFragment extends Fragment {
                     for (int j = 0; j < userModel.listProduct.size(); j++) {
                         SanPhamRaoVat sanPhamRaoVat = dataSnapshot.child(arr[i]).child(userModel.listProduct.get(j))
                                 .getValue(SanPhamRaoVat.class);
+
                         if(sanPhamRaoVat!=null){
+                            sanPhamRaoVat.idSP = dataSnapshot.child(arr[i]).child(userModel.listProduct.get(j)).getKey();
                             listProduct.add(sanPhamRaoVat);
                         }
                     }
@@ -99,11 +102,12 @@ public class HistoryProductProfileFragment extends Fragment {
         spinKitView.setVisibility(View.VISIBLE);
         listProduct.clear();
 
-        adapter = new HistoryProductAdapter(listProduct,getContext());
+        adapter = new HistoryProductProfileAdapter(listProduct,getContext(),userModel);
         Log.d(TAG, "setupUI: listproduc"+listProduct.size());
         rvHistoryProduct.setAdapter(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
         rvHistoryProduct.setLayoutManager(gridLayoutManager);
+
     }
 
 }

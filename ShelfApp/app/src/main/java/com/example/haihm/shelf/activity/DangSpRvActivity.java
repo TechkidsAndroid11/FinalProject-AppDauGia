@@ -175,10 +175,10 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         double giaSP = Double.parseDouble(etgiaSP.getText().toString().replaceAll(",", ""));
-        SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(userModel.id, etTenSP.getText().toString(), getList(lanhSP),
+        SanPhamRaoVat sanPhamRaoVat = new SanPhamRaoVat(etTenSP.getText().toString(), getList(lanhSP),
                 giaSP,
                 etMoTaSP.getText().toString(), loaiSP,
-                etDiaC.getText().toString());
+                etDiaC.getText().toString(),userModel.id);
         databaseReference.child(loaiSP).push().setValue(sanPhamRaoVat,new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseRefe) {

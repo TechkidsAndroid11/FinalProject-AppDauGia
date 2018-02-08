@@ -203,10 +203,10 @@ public class DangSpDGActivity extends AppCompatActivity implements View.OnClickL
         SanPhamDauGia.Chat chat = new SanPhamDauGia.Chat();
         chat.nameMess = "test";
         chats.add(chat);
-        SanPhamDauGia sanPhamDauGia = new SanPhamDauGia(userModel.id, etTenSP.getText().toString(),
+        SanPhamDauGia sanPhamDauGia = new SanPhamDauGia(etTenSP.getText().toString(),
                 getList(lanhSP), giaSP,
                 etMoTaSP.getText().toString(), loaiSP,
-                etDiaC.getText().toString(),
+                etDiaC.getText().toString(),userModel.id,
                 buocG, giaSP,tgKetThuc, "",chats);
 
         databaseReference.child(loaiSP).push().setValue(sanPhamDauGia, new DatabaseReference.CompletionListener() {
