@@ -59,6 +59,8 @@ dependencies {
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
     //Recycler view animation
     compile 'jp.wasabeef:recyclerview-animators:2.2.7'
+    //Material search view
+    compile 'com.miguelcatalan:materialsearchview:1.4.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

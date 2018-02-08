@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haihm.shelf.R;
+import com.example.haihm.shelf.utils.Utils;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -22,7 +23,6 @@ import java.util.List;
  */
 public class ShoppingFragment extends Fragment {
     private static final String TAG = ShoppingFragment.class.toString();
-    public static final String PRODUCT_TYPE = "Product_Type";
     SmartTabLayout stlProductType;
     ViewPager vpProductList;
     private String[] productTypes;
@@ -58,7 +58,8 @@ public class ShoppingFragment extends Fragment {
         FragmentPagerItems fragmentPagerItems = new FragmentPagerItems(view.getContext());
         for (String productType : productTypeList) {
             Bundle bundle = new Bundle();
-            bundle.putString(PRODUCT_TYPE, productType);
+            bundle.putBoolean(Utils.IS_SEARCHABLE, false);
+            bundle.putString(Utils.PRODUCT_TYPE, productType);
             fragmentPagerItems.add(FragmentPagerItem.of(productType, ShoppingProductFragment.class, bundle));
         }
 

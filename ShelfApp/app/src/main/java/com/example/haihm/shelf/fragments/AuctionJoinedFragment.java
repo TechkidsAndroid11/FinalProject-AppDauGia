@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haihm.shelf.R;
+import com.example.haihm.shelf.utils.Utils;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -22,7 +23,6 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class AuctionJoinedFragment extends Fragment {
-    public static final String PRODUCT_TYPE = "Product_Type";
     SmartTabLayout stlAuctionProduct;
     ViewPager vpAuctionProduct;
     private String[] productTypes;
@@ -67,7 +67,7 @@ public class AuctionJoinedFragment extends Fragment {
         FragmentPagerItems fragmentPagerItems = new FragmentPagerItems(view.getContext());
         for (String productType : productTypeList) {
             Bundle bundle = new Bundle();
-            bundle.putString(PRODUCT_TYPE, productType);
+            bundle.putString(Utils.PRODUCT_TYPE, productType);
             fragmentPagerItems.add(FragmentPagerItem.of(productType, AuctionProductFragment.class, bundle));
         }
         FragmentPagerItemAdapter fragmentPagerItemAdapter = new FragmentPagerItemAdapter(getChildFragmentManager(), fragmentPagerItems);

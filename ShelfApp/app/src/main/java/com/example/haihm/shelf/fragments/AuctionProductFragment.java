@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.adapters.AuctionProductAdapter;
 import com.example.haihm.shelf.model.SanPhamDauGia;
+import com.example.haihm.shelf.utils.Utils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -66,7 +67,7 @@ public class AuctionProductFragment extends Fragment {
     private void setupDatabase() {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            String productType = bundle.getString(ShoppingFragment.PRODUCT_TYPE);
+            String productType = bundle.getString(Utils.PRODUCT_TYPE);
             Log.d(TAG, "onCreateView: " + productType);
             sanPhamDauGiaList = new ArrayList<>();
             firebaseDatabase = FirebaseDatabase.getInstance();
@@ -75,7 +76,6 @@ public class AuctionProductFragment extends Fragment {
     }
 
     private void loadData() {
-
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -86,8 +86,8 @@ public class AuctionProductFragment extends Fragment {
                     SanPhamDauGia sanPhamDauGia = spDauGiaSnapShot.getValue(SanPhamDauGia.class);
                     sanPhamDauGia.idSP = spDauGiaSnapShot.getKey();
                     sanPhamDauGiaList.add(sanPhamDauGia);
-                    //auctionProductAdapter.notifyItemChanged(sanPhamDauGiaList.indexOf(sanPhamDauGia));
-                    auctionProductAdapter.notifyDataSetChanged();
+                    auctionProductAdapter.notifyItemChanged(sanPhamDauGiaList.indexOf(sanPhamDauGia));
+//                    auctionProductAdapter.notifyDataSetChanged();
                 }
                 avAuctionLoading.hide();
             }
