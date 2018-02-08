@@ -14,6 +14,10 @@ import java.util.Locale;
  */
 
 public class Utils {
+    public static final String PRODUCT_TYPE = "Product_Type";
+    public static final String IS_SEARCHABLE = "Is_Searchable";
+    public static final String SEARCH_QUERY = "Search_Query";
+
     public static void openFragment(FragmentManager fragmentManagert, int layoutId, Fragment fragment) {
         // quản lý việc thêm, sửa, xóa or thay thế của Fragment
         FragmentTransaction fragmentTransaction = fragmentManagert.beginTransaction();

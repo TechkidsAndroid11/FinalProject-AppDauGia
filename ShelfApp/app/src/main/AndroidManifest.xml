@@ -37,15 +37,13 @@
             android:name=".activity.LoginActivity"
             android:configChanges="keyboardHidden"
             android:theme="@style/Theme.Design.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".activity.MainActivity">
-
         </activity>
 
         <provider
@@ -63,7 +61,14 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activity.ProductDetailActivity" />
         <activity android:name=".activity.ProfileOthersActivity" />
-        <activity android:name=".activity.ChangePasswordActivity"></activity>
+        <activity android:name=".activity.ChangePasswordActivity" />
+        <activity android:name=".activity.SearchableActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
     </application>
 
 </manifest>
