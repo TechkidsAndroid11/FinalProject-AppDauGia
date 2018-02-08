@@ -52,7 +52,7 @@ public class HistoryAuctionProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_history_auction_profile, container, false);
         setupUI();
         EventBus.getDefault().register(this);
-        loadAuction();
+
         return view;
     }
 
@@ -72,6 +72,7 @@ public class HistoryAuctionProfileFragment extends Fragment {
     public void loadData(OnClickUserModelEvent onClickUserModelEvent) {
 
         userModel = onClickUserModelEvent.userModel;
+        loadAuction();
     }
     private void loadAuction() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();

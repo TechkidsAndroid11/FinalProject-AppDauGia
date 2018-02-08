@@ -75,7 +75,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
     Button btnAuction, btnClassified;
     String avatar;
-    ImageView ivCover, ivAvatar,ivSetting;
+    ImageView ivCover, ivAvatar, ivSetting;
     TextView tvName;
     UserModel userModel;
     ViewPager vpHistory;
@@ -90,6 +90,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
     Uri uri;
     ScrollView scrollView;
     Bitmap bitmap;
+
     public ProfileFragment() {
         // Required empty public constructor
 
@@ -102,17 +103,27 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         setupUI(view);
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
         ivSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPopup(view);
             }
         });
-        EventBus.getDefault().register(this);
         loadHistory();
         addListener();
+        Log.d(TAG, "onCreateView: ");
         return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+
+    }
+
     private void setupUI(View view) {
         btnAuction = view.findViewById(R.id.btBuy);
         btnClassified = view.findViewById(R.id.btDauGia);
@@ -122,7 +133,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
         tabHistory = view.findViewById(R.id.tab_history);
         ivSetting = view.findViewById(R.id.iv_setting);
         appBar = view.findViewById(R.id.app_bar);
-        collapsingToolbarLayout= view.findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout = view.findViewById(R.id.toolbar_layout);
         toolbar = view.findViewById(R.id.toolbar);
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReferenceFromUrl("gs://shelfapp-e48fb.appspot.com");//
@@ -130,6 +141,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
         databaseReference = firebaseDatabase.getReference().child("UserInfo");
         //    scrollView = view.findViewById(R.id.scrollView);
     }
+
     private void addListener() {
         btnAuction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,11 +183,9 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
     }
 
 
-    public void showPopup(View v)
-    {
-        PopupMenu popupMenu = new PopupMenu(getActivity(),v);
-        if(userModel.getPassword()!=null)
-        {
+    public void showPopup(View v) {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+        if (userModel.getPassword() != null) {
             popupMenu.getMenu().add("Đổi mật khẩu").setTitle("Đổi mật khẩu");
         }
         popupMenu.getMenu().add("Đăng xuất").setTitle("Đăng xuất");
@@ -186,15 +196,12 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
-        if(item.getTitle().equals("Đổi mật khẩu"))
-        {
+        if (item.getTitle().equals("Đổi mật khẩu")) {
             Log.d(TAG, "onMenuItemClick: OKKKK");
             Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
             startActivity(intent);
 
-        }
-        else if(item.getTitle().equals("Đăng xuất"))
-        {
+        } else if (item.getTitle().equals("Đăng xuất")) {
             logout();
         }
         return true;
@@ -202,8 +209,8 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
     private void logout() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPre", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor =sharedPreferences.edit();
-        String Uid = sharedPreferences.getString("UserId","NotFound");
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String Uid = sharedPreferences.getString("UserId", "NotFound");
         editor.clear();
         editor.commit();
         Toast.makeText(getActivity(), "Bạn đã đăng xuất thành công!", Toast.LENGTH_SHORT).show();
@@ -232,7 +239,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
 
             }
         });
-        ViewPagerHistoryProfileAdapter adapter = new ViewPagerHistoryProfileAdapter(getFragmentManager());
+        ViewPagerHistoryProfileAdapter adapter = new ViewPagerHistoryProfileAdapter(getChildFragmentManager());
         vpHistory.setAdapter(adapter);
         vpHistory.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabHistory));
 
@@ -242,7 +249,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
     public void loadData(OnClickUserModelEvent onClickUserModelEvent) {
 
         userModel = onClickUserModelEvent.userModel;
-        Log.d(TAG, "loadData: "+userModel.getHoten()+" "+userModel.getSdt());
+        Log.d(TAG, "loadData: " + userModel.getHoten() + " " + userModel.getSdt());
         Log.d(TAG, userModel.getAnhAvatar());
         Picasso.with(getActivity()).load(userModel.getAnhAvatar()).transform(new CropCircleTransformation()).into(ivAvatar);
         tvName.setText(userModel.getHoten());
@@ -280,13 +287,12 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
         }).show();
 
     }
-    public void changeAvatarInFirebase()
-    {
+
+    public void changeAvatarInFirebase() {
         databaseReference.orderByChild("id").equalTo(userModel.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnap : dataSnapshot.getChildren())
-                {
+                for (DataSnapshot userSnap : dataSnapshot.getChildren()) {
                     userModel = userSnap.getValue(UserModel.class);
                     userModel.setAnhAvatar(avatar);
                     databaseReference.child(userSnap.getKey()).setValue(userModel);
@@ -345,7 +351,7 @@ public class ProfileFragment extends Fragment implements PopupMenu.OnMenuItemCli
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 avatar = String.valueOf(downloadUrl);
                 changeAvatarInFirebase();
-                Log.d(TAG, "onSuccess: avatar: "+avatar);
+                Log.d(TAG, "onSuccess: avatar: " + avatar);
             }
         });
     }

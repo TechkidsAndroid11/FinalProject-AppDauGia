@@ -160,11 +160,14 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
             etMoTaSP.setError("Không được để trống");
             return;
         }
+        if (etMoTaSP.getText().toString().length() < 60) {
+            etMoTaSP.setError("Mô tả không được dưới 120 ký tự");
+            return;
+        }
         if (TextUtils.isEmpty(etgiaSP.getText())) {
             etgiaSP.setError("Không được để trống");
             return;
         }
-
         if (TextUtils.isEmpty(etDiaC.getText())) {
             etDiaC.setError("Không được để trống");
             return;
@@ -185,16 +188,19 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(DangSpRvActivity.this, "Rao bán thành công", Toast.LENGTH_SHORT).show();
                 String keyProduct = databaseRefe.getKey();
                 ArrayList<String> listProduct = userModel.listProduct;
-                if(listProduct==null){
+                if (listProduct == null) {
                     listProduct = new ArrayList<>();
                 }
                 listProduct.add(keyProduct);
-                Log.d(TAG, "onComplete: "+keyProduct);
+                Log.d(TAG, "onComplete: " + keyProduct);
                 firebaseDatabase.getReference("UserInfo").child(userModel.id)
                         .child("listProduct").setValue(listProduct);
+                userModel.listProduct = listProduct;
+                EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
+                finish();
             }
         });
-        finish();
+
     }
 
     private ArrayList<String> getList(HashMap<String, String> lanhSP) {
@@ -217,7 +223,7 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
     @Subscribe(sticky = true)
     public void OnReceivedOnClickAddSanPhamEvent(OnClickAddSanPhamEvent onClickAddSanPhamEvent) {
         userModel = onClickAddSanPhamEvent.userModel;
-        Log.d(TAG, "OnReceivedOnClickAddSanPhamEvent: "+userModel.sdt);
+        Log.d(TAG, "OnReceivedOnClickAddSanPhamEvent: " + userModel.sdt);
     }
 
     private void selectFuntion() {

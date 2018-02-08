@@ -18,7 +18,8 @@ public class SanPhamRaoVat {
     public String diaGD;
     public String nguoiB;
 
-    public SanPhamRaoVat(String tenSP, ArrayList<String> anhSP, double giaSP, String motaSP, String loaiSP, String diaGD, String nguoiB) {
+    public SanPhamRaoVat(String tenSP, ArrayList<String> anhSP, double giaSP,
+                         String motaSP, String loaiSP, String diaGD, String nguoiB) {
         this.tenSP = tenSP;
         this.anhSP = anhSP;
         this.giaSP = giaSP;
