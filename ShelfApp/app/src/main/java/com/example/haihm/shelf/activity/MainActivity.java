@@ -104,14 +104,14 @@ public class MainActivity extends AppCompatActivity {
         vpMain.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tlBottomBar));
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//
-//        MenuItem searchItem = menu.findItem(R.id.action_search);
-//        svSearchView.setMenuItem(searchItem);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        svSearchView.setMenuItem(searchItem);
+        return true;
+    }
 
     private void setupBottomTabLayout() {
         //add bottom bar tab
@@ -130,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-//            case R.id.action_search:
-//                svSearchView.setVisibility(View.VISIBLE);
-//                return true;
+            case R.id.action_search:
+                svSearchView.setVisibility(View.VISIBLE);
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);

@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.haihm.shelf.R;
+import com.example.haihm.shelf.fragments.AuctionProductFragment;
 import com.example.haihm.shelf.fragments.ShoppingProductFragment;
 import com.example.haihm.shelf.model.SanPhamRaoVat;
 import com.example.haihm.shelf.utils.Utils;
@@ -49,7 +50,7 @@ public class SearchableActivity extends AppCompatActivity {
         bundle.putBoolean(Utils.IS_SEARCHABLE, true);
         bundle.putString(Utils.SEARCH_QUERY, searchQuery);
         fragmentPagerItems.add(FragmentPagerItem.of("Rao vặt", ShoppingProductFragment.class, bundle));
-//        fragmentPagerItems.add(FragmentPagerItem.of("Đấu giá", AuctionProductFragment.class));
+        fragmentPagerItems.add(FragmentPagerItem.of("Đấu giá", AuctionProductFragment.class, bundle));
 
         FragmentStatePagerItemAdapter fragmentStatePagerItemAdapter = new FragmentStatePagerItemAdapter(getSupportFragmentManager(), fragmentPagerItems);
         vpSearchable.setAdapter(fragmentStatePagerItemAdapter);
