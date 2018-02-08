@@ -21,17 +21,17 @@ public class ViewPagerHistoryProfileAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Log.d(TAG, "getItem: ");
+//        Log.d(TAG, "getItem: ");
         switch (position)
         {
             case 0:
             {
-                Log.d(TAG, "getItem: " + position);
+//                Log.d(TAG, "getItem: " + position);
                 return new HistoryProductProfileFragment();
             }
             case 1:
             {
-                Log.d(TAG, "getItem: " + position);
+//                Log.d(TAG, "getItem: " + position);
                 return new HistoryAuctionProfileFragment();
             }
         }
@@ -40,7 +40,7 @@ public class ViewPagerHistoryProfileAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        Log.d(TAG, "getCount: history");
+//        Log.d(TAG, "getCount: history");
         return 2;
     }
 }

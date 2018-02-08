@@ -83,7 +83,7 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
         public void setData(final SanPhamDauGia sanPhamDauGia) {
             Bitmap bitmap = ImageUtils.base64ToImage(sanPhamDauGia.anhSP.get(0));
             ivAuctionImage.setImageBitmap(bitmap);
-            tvAuctionPrice.setText("Bắt đầu từ: " + Utils.formatPrice(sanPhamDauGia.giaCaoNhat));
+            tvAuctionPrice.setText("Bắt đầu từ: " + Utils.formatPrice(sanPhamDauGia.giaSP));
             tvAuctionProductName.setText(sanPhamDauGia.tenSP);
 
             //set seller name
@@ -91,8 +91,13 @@ public class AuctionProductAdapter extends RecyclerView.Adapter<AuctionProductAd
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    userModel = dataSnapshot.child(sanPhamDauGia.nguoiB).getValue(UserModel.class);
-                    tvAuctionSellerName.setText(userModel.hoten);
+                    try {
+                        userModel = dataSnapshot.child(sanPhamDauGia.nguoiB).getValue(UserModel.class);
+                        tvAuctionSellerName.setText(userModel.hoten);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 }
 
                 @Override

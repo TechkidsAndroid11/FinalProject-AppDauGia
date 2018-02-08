@@ -90,8 +90,13 @@ public class ShoppingProductAdapter extends RecyclerView.Adapter<ShoppingProduct
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    userModel = dataSnapshot.child(sanPhamRaoVat.nguoiB).getValue(UserModel.class);
-                    tvProductSellerName.setText(userModel.hoten);
+                    try {
+                        userModel = dataSnapshot.child(sanPhamRaoVat.nguoiB).getValue(UserModel.class);
+                        tvProductSellerName.setText(userModel.hoten);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
