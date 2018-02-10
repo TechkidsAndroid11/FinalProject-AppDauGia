@@ -50,16 +50,36 @@ public class ShoppingFragment extends Fragment {
         productTypes = getResources().getStringArray(R.array.loai_sp);
         productTypeList = Arrays.asList(productTypes);
 
-        setupProductTypeTab(view);
+        Bundle queryBundle = this.getArguments();
+//        if (queryBundle.getBoolean(Utils.IS_SEARCHABLE)) {
+            setupSearchView(view, queryBundle);
+//        } else {
+//            setupNormalView(view);
+//        }
     }
 
+//    private void setupNormalView(View view) {
+//        FragmentPagerItems fragmentPagerItems = new FragmentPagerItems(view.getContext());
+//        for (String productType : productTypeList) {
+//            Bundle bundle = new Bundle();
+//            bundle.putString(Utils.PRODUCT_TYPE, productType);
+//            fragmentPagerItems.add(FragmentPagerItem.of(productType, ShoppingProductFragment.class, bundle));
+//        }
+//
+//        FragmentStatePagerItemAdapter fragmentStatePagerItemAdapter = new FragmentStatePagerItemAdapter(getChildFragmentManager(), fragmentPagerItems);
+//
+//        vpProductList.setAdapter(fragmentStatePagerItemAdapter);
+//        stlProductType.setViewPager(vpProductList);
+//    }
 
-    private void setupProductTypeTab(View view) {
+
+    private void setupSearchView(View view, Bundle queryBundle) {
         FragmentPagerItems fragmentPagerItems = new FragmentPagerItems(view.getContext());
         for (String productType : productTypeList) {
             Bundle bundle = new Bundle();
-            bundle.putBoolean(Utils.IS_SEARCHABLE, false);
+            bundle.putBoolean(Utils.IS_SEARCHABLE, queryBundle.getBoolean(Utils.IS_SEARCHABLE));
             bundle.putString(Utils.PRODUCT_TYPE, productType);
+            if (queryBundle.getString(Utils.SEARCH_QUERY) != null) bundle.putString(Utils.SEARCH_QUERY, queryBundle.getString(Utils.SEARCH_QUERY));
             fragmentPagerItems.add(FragmentPagerItem.of(productType, ShoppingProductFragment.class, bundle));
         }
 
@@ -67,8 +87,6 @@ public class ShoppingFragment extends Fragment {
 
         vpProductList.setAdapter(fragmentStatePagerItemAdapter);
         stlProductType.setViewPager(vpProductList);
-
-
     }
 
 

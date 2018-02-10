@@ -7,26 +7,6 @@
     android:orientation="vertical"
     tools:context="com.example.haihm.shelf.activity.SearchableActivity">
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="56dp"-->
-        <!--android:id="@+id/rl_app_bar">-->
-
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/tb_app_bar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="56dp"-->
-            <!--android:background="@color/mainColor"-->
-            <!--android:theme="@style/Theme.Design.Light.NoActionBar"-->
-            <!--app:titleTextColor="@color/textColor"/>-->
-
-        <!--<com.miguelcatalan.materialsearchview.MaterialSearchView-->
-            <!--android:id="@+id/sv_search_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-
-    <!--</RelativeLayout>-->
-
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/stl_searchable_tab"
         android:layout_width="match_parent"
@@ -34,14 +14,17 @@
         app:stl_clickable="true"
         app:stl_defaultTabBackground="?attr/selectableItemBackground"
         app:stl_defaultTabTextAllCaps="true"
-        app:stl_defaultTabTextColor="@drawable/tab_product_type"
+        app:stl_defaultTabTextColor="@drawable/tab_auction_joined"
         app:stl_defaultTabTextHorizontalPadding="16dp"
+        app:stl_defaultTabTextMinWidth="0dp"
         app:stl_defaultTabTextSize="16sp"
-        app:stl_distributeEvenly="false"
+        app:stl_distributeEvenly="true"
         app:stl_dividerThickness="0dp"
         app:stl_drawDecorationAfterTab="false"
         app:stl_indicatorAlwaysInCenter="false"
+        app:stl_indicatorCornerRadius="0dp"
         app:stl_indicatorThickness="0dp"
+        app:stl_indicatorWidth="0dp"
         app:stl_indicatorWithoutPadding="false"
         app:stl_overlineThickness="0dp"
         app:stl_titleOffset="auto_center"
@@ -51,10 +34,5 @@
         android:id="@+id/vp_searchable_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/rv_searchable_list"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"/>-->
 
 </LinearLayout>

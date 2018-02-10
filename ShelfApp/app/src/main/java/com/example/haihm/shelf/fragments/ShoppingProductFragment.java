@@ -60,37 +60,33 @@ public class ShoppingProductFragment extends Fragment {
 
         //if searchable
         bundle = this.getArguments();
+        setupDatabase();
         boolean isSearchable = bundle.getBoolean(Utils.IS_SEARCHABLE);
-        if (isSearchable){
-            setupDatabase(isSearchable);
+        Log.d(TAG, "setupUI: " + isSearchable);
+        if (isSearchable) {
             searchData();
         } else {
-            setupDatabase(isSearchable);
             loadData();
         }
         setupRecyclerView(view);
     }
 
-    private void setupDatabase(boolean isSearchable) {
+    private void setupDatabase() {
         sanPhamRaoVatList = new ArrayList<>();
-        if (!isSearchable) {
-            String productType = bundle.getString(Utils.PRODUCT_TYPE);
-            Log.d(TAG, "onCreateView: " + productType);
-            databaseReference = FirebaseDatabase.getInstance().getReference("Product").child(productType);
-        } else {
-            databaseReference = FirebaseDatabase.getInstance().getReference("Product");
-        }
-
+        String productType = bundle.getString(Utils.PRODUCT_TYPE);
+        Log.d(TAG, "onCreateView: " + productType);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Product").child(productType);
     }
 
     private void searchData() {
         String query = bundle.getString(Utils.SEARCH_QUERY);
+        Log.d(TAG, "searchData: " + query);
         Query searchQuery = databaseReference.equalTo(query);
         searchQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 sanPhamRaoVatList.clear();
-                for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()){
+                for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()) {
                     SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);
                     sanPhamRaoVatList.add(sanPhamRaoVat);
                     shoppingProductAdapter.notifyItemChanged(sanPhamRaoVatList.indexOf(sanPhamRaoVat));
@@ -112,7 +108,7 @@ public class ShoppingProductFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 sanPhamRaoVatList.clear();
                 //load data from firebase
-                for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()){
+                for (DataSnapshot spRaoVatSnapShot : dataSnapshot.getChildren()) {
                     SanPhamRaoVat sanPhamRaoVat = spRaoVatSnapShot.getValue(SanPhamRaoVat.class);
                     sanPhamRaoVatList.add(sanPhamRaoVat);
                     shoppingProductAdapter.notifyItemChanged(sanPhamRaoVatList.indexOf(sanPhamRaoVat));

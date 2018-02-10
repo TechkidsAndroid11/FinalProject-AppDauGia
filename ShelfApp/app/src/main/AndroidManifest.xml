@@ -39,12 +39,15 @@
             android:windowSoftInputMode="stateAlwaysHidden">
 
         </activity>
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
         </activity>
 
         <provider
@@ -63,13 +66,8 @@
         <activity android:name=".activity.ProductDetailActivity" />
         <activity android:name=".activity.ProfileOthersActivity" />
         <activity android:name=".activity.ChangePasswordActivity" />
-        <activity android:name=".activity.SearchableActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
-            </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
-        </activity>
+        <activity android:name=".activity.SearchableActivity"/>
+
     </application>
 
 </manifest>

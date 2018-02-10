@@ -51,7 +51,7 @@ public class AuctionFragment extends Fragment {
         FragmentPagerItems fragmentPagerItems = new FragmentPagerItems(view.getContext());
         fragmentPagerItems.add(FragmentPagerItem.of("Đang diễn ra", AuctionJoinedFragment.class, new Bundler().putBoolean(JOINED, false).get()));
         fragmentPagerItems.add(FragmentPagerItem.of("Đã tham gia", JoinedFragment.class));
-        final FragmentPagerItemAdapter fragmentPagerItemAdapter = new FragmentPagerItemAdapter(getChildFragmentManager(), fragmentPagerItems);
+        FragmentPagerItemAdapter fragmentPagerItemAdapter = new FragmentPagerItemAdapter(getChildFragmentManager(), fragmentPagerItems);
         vpAuction.setAdapter(fragmentPagerItemAdapter);
         stlAuctionJoined.setViewPager(vpAuction);
 
