@@ -7,10 +7,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -313,12 +313,14 @@ public class DangSpRvActivity extends AppCompatActivity implements View.OnClickL
         int vt = Integer.parseInt(i) - 1;
         for (int ii = 0; ii < lskPhoto.size(); ii++) {
             if (ii == vt) {
+                Log.e("click: ","false");
                 lskPhoto.get(ii).setVisibility(View.GONE);
                 livPhoto.get(ii).setVisibility(View.VISIBLE);
                 livPhoto.get(ii).setScaleType(ImageView.ScaleType.FIT_XY);
                 livPhoto.get(ii).setImageBitmap(bitmap);
             } else {
                 livPhoto.get(ii).setClickable(true);
+                Log.e("click: ","false");
             }
         }
     }

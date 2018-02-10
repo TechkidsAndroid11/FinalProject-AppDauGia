@@ -37,21 +37,17 @@ public class ImageUtils {
     }
 
     public static Bitmap base64ToImage(String base64Image) {
-        byte[] imageBytes = Base64.decode(base64Image, Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-
-        return bitmap;
+        byte[] imageBytes = Base64.decode(base64Image, 0);
+        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
     }
 
     public static String endcodeImageToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        Bitmap tmp = Bitmap.createScaledBitmap(bitmap,500,500,false);
-        tmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        String imageBas64 = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-//        Log.d(TAG, "endcodeImageToBase64: "+imageBas64);
-        return imageBas64;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        return Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
     }
+
 
     public static Uri getUriFromImage(Context context) {
         //creat temp file

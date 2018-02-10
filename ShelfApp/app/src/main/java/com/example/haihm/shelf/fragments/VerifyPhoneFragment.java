@@ -42,7 +42,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class VerifyPhoneFragment extends Fragment {
     private static final String TAG = "VerifyPhoneFragment";
-    public TextView tvDes,tvResend;
+    public TextView tvDes, tvResend;
     public EditText etCode;
     public Button btVerify;
     DatabaseReference databaseReference;
@@ -54,16 +54,16 @@ public class VerifyPhoneFragment extends Fragment {
     public PhoneAuthProvider.ForceResendingToken resendToken;
     public FirebaseAuth fbAuth;
     AVLoadingIndicatorView avLoad;
-    public VerifyPhoneFragment()
-    {
+
+    public VerifyPhoneFragment() {
 
     }
 
     @SuppressLint("ValidFragment")
     public VerifyPhoneFragment(String phoneVerificationId, UserModel userModel, String phone) {
-        this.phoneVerificationId =phoneVerificationId;
-        this.userModel=userModel;
-        this.phone=phone;
+        this.phoneVerificationId = phoneVerificationId;
+        this.userModel = userModel;
+        this.phone = phone;
     }
 
 
@@ -71,7 +71,7 @@ public class VerifyPhoneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_verify_phone, container, false);
+        View view = inflater.inflate(R.layout.fragment_verify_phone, container, false);
         setupUI(view);
         avLoad.hide();
         addListener();
@@ -85,7 +85,7 @@ public class VerifyPhoneFragment extends Fragment {
     }
 
     private void setupUI(View view) {
-        tvResend= view.findViewById(R.id.tv_resend);
+        tvResend = view.findViewById(R.id.tv_resend);
         tvDes = view.findViewById(R.id.tv_des);
         etCode = view.findViewById(R.id.et_verifyCode);
         btVerify = view.findViewById(R.id.bt_Verify);
@@ -95,23 +95,21 @@ public class VerifyPhoneFragment extends Fragment {
         avLoad = view.findViewById(R.id.avLoad);
         underLine();
     }
-    public void underLine()
-    {
+
+    public void underLine() {
 
         SpannableString content = new SpannableString("Gửi lại");
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         tvResend.setText(content);
     }
-    public void addListener()
-    {
+
+    public void addListener() {
         btVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(etCode.getText().toString().equals(""))
-                {
+                if (etCode.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Bạn chưa nhập mã code!!", Toast.LENGTH_SHORT).show();
-                }
-                else
+                } else
                     verifyCode();
                 btVerify.setEnabled(false);
             }
@@ -126,20 +124,19 @@ public class VerifyPhoneFragment extends Fragment {
         });
     }
 
-    public void verifyCode()
-    {
+    public void verifyCode() {
         String code = etCode.getText().toString();
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(phoneVerificationId,code);
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(phoneVerificationId, code);
         signInWithPhoneAuthCredential(credential);
     }
+
     private void signInWithPhoneAuthCredential(final PhoneAuthCredential credential) {
         fbAuth.signInWithCredential(credential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     userModel.setSdt(phone);
-                    Log.d(TAG, "onComplete: "+userModel.getHoten()+" "+userModel.getSdt());
+                    Log.d(TAG, "onComplete: " + userModel.getHoten() + " " + userModel.getSdt());
                     EventBus.getDefault().postSticky(new OnClickUserModelEvent(userModel));
 
                     Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -166,23 +163,25 @@ public class VerifyPhoneFragment extends Fragment {
             public void onVerificationCompleted(PhoneAuthCredential credential) {
                 // tvStatus.setText("Sign In");
 //                signInWithPhoneAuthCredential(credential);
+                Log.e("check login: ", "complete222");
             }
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                Log.d(TAG, "onVerificationFailed: "+e.getMessage());
+                Log.d(TAG, "onVerificationFailed: " + e.getMessage());
             }
+
             @Override
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
-                Log.d(TAG, "onCodeSent: ");
+                Log.e("check login: ", "complete 222");
                 phoneVerificationId = verificationId;
                 resendToken = token;
             }
         };
     }
-    public void resendCode()
-    {
+
+    public void resendCode() {
         String phoneNumber = phone;
         setupVerificationCallbacks();
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
