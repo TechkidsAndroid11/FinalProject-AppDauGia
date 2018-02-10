@@ -63,13 +63,13 @@ public class AuctionProductFragment extends Fragment {
         //load database
         bundle = this.getArguments();
         boolean isSearchable = bundle.getBoolean(Utils.IS_SEARCHABLE);
-        if (!isSearchable){
+//        if (!isSearchable){
             setupDatabase(isSearchable);
             loadData();
-        } else {
-            setupDatabase(isSearchable);
-            searchData();
-        }
+//        } else {
+//            setupDatabase(isSearchable);
+//            searchData();
+//        }
         setupRecyclerView(view);
     }
 
