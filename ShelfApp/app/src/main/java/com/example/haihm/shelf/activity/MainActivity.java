@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar tbAppBar;
     MaterialSearchView svSearchView;
     RelativeLayout rlAppBar;
+    boolean isSearchable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 setupToolbar(tab.getPosition());
-
             }
 
             @Override
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), query, true);
                 vpMain.setAdapter(mainPagerAdapter);
                 vpMain.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tlBottomBar));
+                isSearchable = true;
                 return false;
             }
 
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tbAppBar.setTitle("Đấu giá");
         }
+
     }
 
 
@@ -93,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
         svSearchView = findViewById(R.id.sv_search_view);
 
         tbAppBar.setTitle("Rao vặt");
+        if (isSearchable){
+            tbAppBar.setVisibility(View.GONE);
+        } else tbAppBar.setVisibility(View.VISIBLE);
         setSupportActionBar(tbAppBar);
         setupBottomTabLayout();
 
@@ -133,6 +138,16 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (svSearchView.isSearchOpen()){
+            svSearchView.closeSearch();
+            svSearchView.setVisibility(View.GONE);
+            isSearchable = false;
+        } else
+        super.onBackPressed();
     }
 
     //TODO: tìm kiếm

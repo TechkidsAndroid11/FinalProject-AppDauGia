@@ -81,7 +81,7 @@ public class ShoppingProductFragment extends Fragment {
     private void searchData() {
         String query = bundle.getString(Utils.SEARCH_QUERY);
         Log.d(TAG, "searchData: " + query);
-        Query searchQuery = databaseReference.equalTo(query);
+        Query searchQuery = databaseReference.orderByChild("tenSP").equalTo(query);
         searchQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
