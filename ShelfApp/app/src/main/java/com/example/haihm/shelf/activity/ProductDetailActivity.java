@@ -134,6 +134,9 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
             //
             tvDescription.setText(sanPhamRaoVat.motaSP);
             //
+            if(userModel.id.equals(sanPhamRaoVat.nguoiB)){
+                tvCall.setVisibility(View.GONE);
+            }
         }catch (Exception e ){e.printStackTrace();}
     }
 

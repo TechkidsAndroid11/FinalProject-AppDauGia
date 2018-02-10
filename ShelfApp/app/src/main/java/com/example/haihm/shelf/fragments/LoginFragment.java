@@ -55,6 +55,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -322,7 +323,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         avatar = String.valueOf(user.getPhotoUrl());
                         name = user.getDisplayName();
                         userModel = new UserModel(user.getUid(), fbAvatar, cover, fbName, phone, address, rate);
-                        Log.d(TAG, "onDataChange: Usermodel: " + userModel.getHoten());
+                        Log.d(TAG, "onDataChange: Usermodel: " + userModel.getHoten() +user.getUid()
+                        );
                         Utils.openFragment(getFragmentManager(), R.id.rl_main, new CheckPhoneFragment(userModel));
 
                     } else {
@@ -419,7 +421,27 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+//    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+//
+//        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+//        mAuth.signInWithCredential(credential)
+//                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            // Sign in success, update UI with the signed-in user's information
+//                            final FirebaseUser user = task.getResult().getUser();
+//                            System.out.println("USer: " + user.getUid());
+//                            checkDuplicatedIdDatabase(user);
+//
+//                        }
+//
+//
+//                    }
+//                });
+//    }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -427,22 +449,21 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            final FirebaseUser user = task.getResult().getUser();
-                            System.out.println("USer: " + user.getUid());
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Log.d(TAG, "onComplete: "+user);
                             checkDuplicatedIdDatabase(user);
-
+                        } else {
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }
 
-
+                        // ...
                     }
                 });
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -451,11 +472,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                Log.d(TAG, "onActivityResult: " + e.getMessage());
+                // Google Sign In failed, update UI appropriately
 
+                // ...
             }
         }
-
     }
 
     @Override

@@ -1,34 +1,28 @@
 package com.example.haihm.shelf.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.haihm.shelf.R;
 import com.example.haihm.shelf.adapters.MainPagerAdapter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 public class MainActivity extends AppCompatActivity {
-    SearchView searchView;
     TabLayout tlBottomBar;
     ViewPager vpMain;
     Toolbar tbAppBar;
     MaterialSearchView svSearchView;
     RelativeLayout rlAppBar;
-    AppBarLayout clAppBar;
-    TextView tvTabName;
+    boolean isSearchable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +36,7 @@ public class MainActivity extends AppCompatActivity {
         tlBottomBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
-                vpMain.setCurrentItem(tab.getPosition());
-                if (tab.getPosition() == 2) {
-                    tbAppBar.setVisibility(View.GONE);
-                    rlAppBar.setVisibility(View.GONE);
-                } else {
-                    tbAppBar.setVisibility(View.VISIBLE);
-                    rlAppBar.setVisibility(View.VISIBLE);
-                }
-
-                if (tab.getPosition() == 0){
-                    tbAppBar.setTitle("Rao vặt");
-                } else {
-                    tbAppBar.setTitle("Đấu giá");
-                }
+                setupToolbar(tab.getPosition());
             }
 
             @Override
@@ -73,9 +53,10 @@ public class MainActivity extends AppCompatActivity {
         svSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(getApplicationContext(), SearchableActivity.class);
-                intent.putExtra(Intent.ACTION_SEARCH, query);
-                startActivity(intent);
+                MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), query, true);
+                vpMain.setAdapter(mainPagerAdapter);
+                vpMain.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tlBottomBar));
+                isSearchable = true;
                 return false;
             }
 
@@ -86,20 +67,41 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setupToolbar(int position) {
+        vpMain.setCurrentItem(position);
+        if (position == 2) {
+            tbAppBar.setVisibility(View.GONE);
+            rlAppBar.setVisibility(View.GONE);
+        } else {
+            tbAppBar.setVisibility(View.VISIBLE);
+            rlAppBar.setVisibility(View.VISIBLE);
+        }
+
+        if (position == 0){
+            tbAppBar.setTitle("Rao vặt");
+        } else {
+            tbAppBar.setTitle("Đấu giá");
+        }
+
+    }
+
+
     @SuppressLint("WrongViewCast")
     private void setupUI() {
         tlBottomBar = findViewById(R.id.tl_bottom_bar);
         rlAppBar = findViewById(R.id.rl_app_bar);
         vpMain = findViewById(R.id.vp_main_activity);
-//        tvTabName = findViewById(R.id.tv_tab_layout_name);
         tbAppBar = findViewById(R.id.tb_app_bar);
         svSearchView = findViewById(R.id.sv_search_view);
 
         tbAppBar.setTitle("Rao vặt");
+        if (isSearchable){
+            tbAppBar.setVisibility(View.GONE);
+        } else tbAppBar.setVisibility(View.VISIBLE);
         setSupportActionBar(tbAppBar);
         setupBottomTabLayout();
 
-        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), false);
         vpMain.setAdapter(mainPagerAdapter);
         vpMain.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tlBottomBar));
     }
@@ -124,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
         tlBottomBar.getTabAt(1).setText("Đấu giá");
         tlBottomBar.getTabAt(2).setText("Tôi");
         tlBottomBar.setTabTextColors(Color.WHITE,Color.WHITE);
-
     }
 
     @Override
@@ -137,6 +138,16 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (svSearchView.isSearchOpen()){
+            svSearchView.closeSearch();
+            svSearchView.setVisibility(View.GONE);
+            isSearchable = false;
+        } else
+        super.onBackPressed();
     }
 
     //TODO: tìm kiếm
