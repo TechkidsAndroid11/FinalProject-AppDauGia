@@ -230,18 +230,15 @@ public class AuctionDetailsFragment extends Fragment {
 
                 @Override
                 public void onFinish() {
-                    etInputCost.setFocusable(false);
-                    etInputCost.setEnabled(false);
-                    etInputCost.setInputType(InputType.TYPE_NULL);
-                    ivGavel.setClickable(false);
+                    tvTimeRemaining.setText("Hết giờ");
+                    etInputCost.setVisibility(View.GONE);
+                    ivGavel.setVisibility(View.GONE);
                 }
             }.start();
         } else {
             tvTimeRemaining.setText("Hết giờ");
-            etInputCost.setFocusable(false);
-            etInputCost.setEnabled(false);
-            etInputCost.setInputType(InputType.TYPE_NULL);
-            ivGavel.setClickable(false);
+            etInputCost.setVisibility(View.GONE);
+            ivGavel.setVisibility(View.GONE);
         }
     }
 
