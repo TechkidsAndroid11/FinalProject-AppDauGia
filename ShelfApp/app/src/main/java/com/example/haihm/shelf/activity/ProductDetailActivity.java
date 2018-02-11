@@ -58,7 +58,8 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
     PagerIndicator pagerIndicator;
     SpinKitView skLoadImage;
     SanPhamRaoVat sanPhamRaoVat;
-    private UserModel seller = new UserModel(),userModel = new UserModel();
+    private UserModel seller = new UserModel(), userModel = new UserModel();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +75,13 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
     public void OnReceivedClickProductEvent(OnClickProductEvent onClickProductEvent) {
         sanPhamRaoVat = onClickProductEvent.sanPhamRaoVat;
     }
+
     @Subscribe(sticky = true)
     public void ReceivedUserModel(OnClickUserModelEvent onClickUserModelEvent) {
         userModel = onClickUserModelEvent.userModel;
         Log.d(TAG, "ReceivedUserModel: " + userModel.sdt);
     }
+
     private void setUpUI() {
         ivBack = findViewById(R.id.iv_back);
         ivAvatar = findViewById(R.id.iv_avatar_seller);
@@ -93,6 +96,7 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
         pagerIndicator = findViewById(R.id.pi_indicator);
         skLoadImage = findViewById(R.id.sk_load_image);
     }
+
     public void loadSellerFireBase() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("UserInfo");
@@ -105,13 +109,15 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
                     seller = new UserModel();
                 }
                 //
-                try{
+                try {
                     tvNameSeller.setText(seller.hoten);
                     Picasso.with(ProductDetailActivity.this).load(seller.anhAvatar)
                             .transform(new CropCircleTransformation()).into(ivAvatar);
-                    float rate = seller.rate.tongLuotVote==0?0: seller.rate.tongD / seller.rate.tongLuotVote;
+                    float rate = seller.rate.tongLuotVote == 0 ? 0 : seller.rate.tongD / seller.rate.tongLuotVote;
                     ratingBar.setRating(rate);
-                }catch (Exception e){e.printStackTrace();}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -120,8 +126,9 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
             }
         });
     }
+
     private void loadData() {
-        try{
+        try {
             loadImage(sanPhamRaoVat.anhSP);
             loadSellerFireBase();
             tvAddress.setText(sanPhamRaoVat.diaGD);
@@ -134,10 +141,12 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
             //
             tvDescription.setText(sanPhamRaoVat.motaSP);
             //
-            if(userModel.id.equals(sanPhamRaoVat.nguoiB)){
+            if (userModel.id.equals(sanPhamRaoVat.nguoiB)) {
                 tvCall.setVisibility(View.GONE);
             }
-        }catch (Exception e ){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void addController() {
@@ -167,12 +176,12 @@ public class ProductDetailActivity extends AppCompatActivity implements BaseSlid
     }
 
     private View.OnClickListener showProfile() {
-        if(userModel.id.equals(sanPhamRaoVat.nguoiB)) return null;
+        if (userModel.id.equals(sanPhamRaoVat.nguoiB)) return null;
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().postSticky(new OnClickShowProfileEvent(sanPhamRaoVat.nguoiB));
-                Intent intent = new Intent(ProductDetailActivity.this,ProfileOthersActivity.class);
+                Intent intent = new Intent(ProductDetailActivity.this, ProfileOthersActivity.class);
                 startActivity(intent);
                 Log.d(TAG, "onClick: ");
             }
